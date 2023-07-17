@@ -10,11 +10,11 @@ from games.util.util import scale_surface
 class BattleTanksEnv:
     
     def __init__(self):
-        
         pygame.init()
         
         self.screen = pygame.display.set_mode((1280, 720))
         self.clock = pygame.time.Clock()
+        self.fps = 60
         
         self.space = pymunk.Space()
         self.draw_util = pygame_util.DrawOptions(self.screen)
@@ -36,7 +36,7 @@ class BattleTanksEnv:
         self.tank.turret_left = keys[pygame.K_LEFT]
     
     def step(self):
-        self.space.step(1/60)
+        self.space.step(1/self.fps)
         self.tank.update()
     
     def reset(self):
@@ -44,11 +44,11 @@ class BattleTanksEnv:
     
     def render(self):
         self.screen.fill((255, 255, 255))
-        self.space.debug_draw(self.draw_util)
+        # self.space.debug_draw(self.draw_util)
         self.tank.update_render()
         self.tank.draw(self.screen)
         pygame.display.flip()
-        self.clock.tick(60)
+        self.clock.tick(self.fps)
     
     def close(self):
         pygame.quit()

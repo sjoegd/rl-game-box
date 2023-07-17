@@ -6,7 +6,7 @@ from .settings.constants import TANK_ROTATE_SPEED, TANK_SPEED, TURRET_BODY_OFFSE
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .battle_tanks_env import BattleTanksEnv
+    from .env import BattleTanksEnv
 
 class Tank(pygame.sprite.Sprite):
     
