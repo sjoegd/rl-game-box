@@ -1,2 +1,2 @@
 # RLGameBox
-A main repository for reinforcement learning games
+A collection of reinforcement learning games
