@@ -1,7 +1,7 @@
 # ENV TESTING
 
 import pygame
-from games.battle_tanks.battle_tanks_env import BattleTanksEnv
+from games.battle_tanks.env import BattleTanksEnv
 
 env = BattleTanksEnv()
 
