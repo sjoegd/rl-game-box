@@ -5,31 +5,41 @@ from pymunk import pygame_util
 from .tile import Tile
 from .tank import Tank
 
-from .settings.constants import MAP_HEIGHT, MAP_SCALE, MAP_WIDTH, ROCKET_COLLISION_TYPE, ROCKET_SCALE, SCALED_TILE_SIZE, TANK_COLLISION_TYPE, TANK_SCALE, TILE_COLLISION_TYPE
+from .settings.constants import (
+    FPS, ROCKET_EXPLOSION_INFO, MAP_HEIGHT, MAP_SCALE, MAP_WIDTH, ROCKET_BLUE_MASK, 
+    ROCKET_COLLISION_TYPE, ROCKET_RED_MASK, ROCKET_SCALE, 
+    SCALED_TILE_SIZE, TANK_BLUE_MASK, TANK_COLLISION_TYPE, TANK_EXPLOSION_INFO, 
+    TANK_RED_MASK, TANK_SCALE, TILE_COLLISION_TYPE
+)
 
 from games.util.util import conditional_convert_alpha, load_csv, load_images_from_sheet, scale_image
 
 class BattleTanksEnv:
     
-    def __init__(self):
+    def __init__(self, render_mode="human"):
         pygame.init()
         
+        self.render_mode = render_mode
+        
         self.screen = pygame.display.set_mode((MAP_WIDTH, MAP_HEIGHT))
+        self.draw_util = pygame_util.DrawOptions(self.screen)
         self.clock = pygame.time.Clock()
-        self.fps = 60
+        self.fps = FPS
         
         self.space = pymunk.Space()
-        self.draw_util = pygame_util.DrawOptions(self.screen)
         
         self.ground = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.tanks = pygame.sprite.Group()
         self.rockets = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
+        
         self.load_images()
         self.load_map("base")
         self.setup_collision_handlers()
-        self.tank_1 = Tank(400, 300, "blue", self)
-        self.tank_2 = Tank(500, 300, "red", self)
+        
+        self.tank_1 = Tank(400, 300, "blue", self, TANK_BLUE_MASK, TANK_RED_MASK, ROCKET_BLUE_MASK, ROCKET_RED_MASK)
+        self.tank_2 = Tank(500, 300, "red", self, TANK_RED_MASK, TANK_BLUE_MASK, ROCKET_RED_MASK, ROCKET_BLUE_MASK)
         self.tanks.add(self.tank_1, self.tank_2)
     
     def input(self):
@@ -51,7 +61,6 @@ class BattleTanksEnv:
         pass
     
     def render(self):
-        self.screen.fill((255, 255, 255))
         self.ground.draw(self.screen)
         # self.space.debug_draw(self.draw_util)
         self.walls.draw(self.screen)
@@ -61,6 +70,9 @@ class BattleTanksEnv:
         for rocket in self.rockets:
             rocket.update_render()
             rocket.draw(self.screen)
+        for explosion in self.explosions:
+            explosion.update_render()
+            explosion.draw(self.screen)
         pygame.display.flip()
         self.clock.tick(self.fps)
     
@@ -77,8 +89,12 @@ class BattleTanksEnv:
         
         def explode_rocket(arbiter, space, data):
             rocket = arbiter.shapes[0].sprite
-            rocket.kill()
-            self.space.remove(rocket.body, rocket.shape)
+            target = arbiter.shapes[1]
+            
+            if target.collision_type == TANK_COLLISION_TYPE:
+                target.sprite.take_damage(rocket.damage)
+            
+            rocket.explode()
             return False
         
         tank_stop_handler.post_solve = stop_tank
@@ -100,6 +116,7 @@ class BattleTanksEnv:
             "tracks": []
         }
         
+        self.explosions_images = {}
         
         for color in ["red", "blue"]:
             rocket_image = conditional_convert_alpha(
@@ -125,6 +142,14 @@ class BattleTanksEnv:
                 convert_alpha
             )
             self.tank_images["tracks"].append(track_image)
+
+        for (type, scale, length) in [ROCKET_EXPLOSION_INFO, TANK_EXPLOSION_INFO]:
+            explosion_sheet = conditional_convert_alpha(
+                scale_image(pygame.image.load(f"assets/battle_tanks/images/explosions/{type}_explosion.png"), scale),
+                convert_alpha
+            )
+            explosion_images = load_images_from_sheet(explosion_sheet, explosion_sheet.get_width()//length, explosion_sheet.get_height())
+            self.explosions_images[type] = explosion_images
 
         tileset_sheet = conditional_convert_alpha(
             scale_image(pygame.image.load("assets/battle_tanks/images/tilesets/jawbreaker.png"), MAP_SCALE),
