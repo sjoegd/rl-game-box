@@ -2,20 +2,31 @@ import math
 import pymunk
 
 # ---------- TANKS ---------- #
-TANK_SCALE = 0.75
-TANK_SPEED = 5 * TANK_SCALE
-TANK_ROTATE_SPEED = math.radians(3)
+TANK_SCALE          = 0.35
+TANK_SPEED          = 7.5 * TANK_SCALE
+TANK_ROTATE_SPEED   = math.radians(3)
 TURRET_ROTATE_SPEED = math.radians(5)
-TURRET_BODY_OFFSET = pymunk.Vec2d(0, 25) * TANK_SCALE
+TURRET_BODY_OFFSET  = pymunk.Vec2d(0, 25) * TANK_SCALE
+
+# ---------- ROCKETS ---------- #
+ROCKET_SCALE = 1.5
+ROCKET_SPEED = 15 * TANK_SCALE
 
 # ---------- BULLETS ---------- #
 
 # ---------- MAP ---------- #
+MAP_SCALE    = 3
+TILE_COLUMNS = 50
+TILE_ROWS    = 25
+TILE_SIZE    = 8
+SCALED_TILE_SIZE = TILE_SIZE * MAP_SCALE
+MAP_WIDTH    = TILE_COLUMNS * SCALED_TILE_SIZE
+MAP_HEIGHT   = TILE_ROWS * SCALED_TILE_SIZE
 
 # ---------- COLLISION TYPES ---------- #
 TANK_COLLISION_TYPE   = 1
 TILE_COLLISION_TYPE   = 2
-BULLET_COLLISION_TYPE = 3
+ROCKET_COLLISION_TYPE = 3
 
 # ---------- COLLISION MASKS ---------- #
 TANK_RED_MASK    = 0b000001
