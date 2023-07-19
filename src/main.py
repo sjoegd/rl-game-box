@@ -2,8 +2,10 @@
 
 import pygame
 from games.battle_tanks.env import BattleTanksEnv
+from games.tron_light_cycles.env import TronLightCyclesEnv
 
-env = BattleTanksEnv()
+# env = BattleTanksEnv()
+env = TronLightCyclesEnv()
 
 running = True
 while running:
