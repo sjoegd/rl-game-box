@@ -99,7 +99,7 @@ if __name__ == "__main__":
         
         if len(learning_memory) < learning_memory_size:
             learning_memory.append(new_model)
-        elif 1/learning_memory_size < random.random():
+        elif 1/learning_memory_size > random.random():
             learning_memory[random.randrange(0, learning_memory_size)] = new_model
             print("# --- Updated Learning Memory --- #")
             
