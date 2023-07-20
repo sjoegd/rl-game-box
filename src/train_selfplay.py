@@ -38,7 +38,7 @@ def make_selfplay_env(env_id="", player2_agent_choice=None):
 if __name__ == "__main__":
     
     if len(sys.argv) != 5:
-        raise Exception("Usage: python train_selfplay.py <env> <algorithm> <iteration> <resume>")
+        raise Exception("Usage: python train_selfplay.py <env_id> <algorithm> <iteration> <resume>")
 
     env_id = sys.argv[1]
     algorithm = sys.argv[2]

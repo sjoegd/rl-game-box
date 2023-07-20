@@ -105,7 +105,7 @@ class TronLightCyclesEnv(gym.Env):
     def step(self, action):
         if self.terminated:
             return None, None, True, False, {}
-                
+        
         self.perform_player1_action(action)
         self.perform_player2_action()
         
@@ -277,7 +277,7 @@ class TronLightCyclesEnv(gym.Env):
     
     def render_human(self):
         self.screen.fill((33, 33, 33))
-        self.space.debug_draw(self.draw_util)
+        # self.space.debug_draw(self.draw_util)
         for trail in self.trails:
             trail.draw(self.screen)
         for cycle in self.cycles:
