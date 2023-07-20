@@ -30,4 +30,4 @@ def load_csv(file: str) -> list[str]:
         return csv
 
 def conditional_convert_alpha(surface: pygame.Surface, should_convert: False) -> pygame.Surface:
-    return surface.convert_alpha() if should_convert else surface.convert()
+    return surface.convert_alpha() if should_convert else surface

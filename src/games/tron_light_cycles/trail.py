@@ -1,12 +1,10 @@
-
 from math import atan2, degrees
 import pygame
-
-from typing import TYPE_CHECKING
-
 import pymunk
 
-from games.tron_light_cycles.settings.constants import COLLISION_TYPE_TRAIL
+from .settings.constants import COLLISION_TYPE_TRAIL, MASK_TRAIL, TRAIL_RADIUS
+
+from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .env import TronLightCyclesEnv
     from .cycle import Cycle
@@ -21,14 +19,23 @@ class Trail(pygame.sprite.Sprite):
         self.base_image = self.env.trail_images[self.color]
         self.positions = []
         self.lines = []
-        self.unactive_filter = pymunk.ShapeFilter(categories=0)
-        self.activation_filter = pymunk.ShapeFilter(categories=pymunk.ShapeFilter.ALL_CATEGORIES())
+        self.unactive_filter = pymunk.ShapeFilter(categories=0, mask=0)
+        self.active_filter = pymunk.ShapeFilter(
+            categories=self.owner.mask ^ self.owner.enemy_mask, 
+            mask=MASK_TRAIL
+        )
         self.env.trails.add(self)
+    
+    def remove_trail(self):
+        for segment, _, _ in self.lines:
+            self.env.space.remove(segment.body, segment)
+        self.lines = []
+        self.kill()
     
     def activate_last_line(self):
         if len(self.lines) > 1:
             last_line = self.lines[-1]
-            last_line[0].filter = self.activation_filter
+            last_line[0].filter = self.active_filter
     
     def add_position(self, position):
         if len(self.positions) > 1:
@@ -43,7 +50,7 @@ class Trail(pygame.sprite.Sprite):
             body=body,
             a=position_1,
             b=position_2,
-            radius=5
+            radius=TRAIL_RADIUS
         )
         segment.filter = self.unactive_filter
         segment.collision_type = COLLISION_TYPE_TRAIL
@@ -60,10 +67,10 @@ class Trail(pygame.sprite.Sprite):
         length = vec_a.get_distance(vec_b) + segment.radius
         width = segment.radius*2
         center = (vec_a + vec_b) / 2
-        angle = -(degrees(atan2(y_b - y_a, x_b - x_a)) - 90)
+        angle = degrees(atan2(y_b - y_a, x_b - x_a)) - 90
         
         image = pygame.transform.scale(self.base_image, (int(width), int(length)))
-        image = pygame.transform.rotate(image, angle)
+        image = pygame.transform.rotate(image, -angle)
         rect = image.get_rect(center=center)
         
         self.lines.append((segment, image, rect))

@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 class Cycle(pygame.sprite.Sprite):
     
-    def __init__(self, x, y, color: str, env: 'TronLightCyclesEnv'):
+    def __init__(self, x, y, color: str, mask, enemy_mask, env: 'TronLightCyclesEnv'):
         super().__init__()
         
         self.env = env
@@ -24,24 +24,31 @@ class Cycle(pygame.sprite.Sprite):
         self.width = self.base_image.get_width()
         self.height = self.base_image.get_height()
         
+        self.mask = mask
+        self.enemy_mask = enemy_mask
+        
         self.body = pymunk.Body(body_type=pymunk.Body.DYNAMIC)
         self.body.position = (x, y)
-        self.shape = pymunk.Poly.create_box(self.body, size=(self.width, self.height))
+        self.shape = pymunk.Poly.create_box(self.body, size=(self.width, self.height*0.8))
         self.shape.density = 1
         self.shape.collision_type = COLLISION_TYPE_CYCLE
+        self.shape.filter = pymunk.ShapeFilter(mask=mask)
+        self.shape.sprite = self
         
         self.env.space.add(self.body, self.shape)
         
         self.speed = 5
-        self.turn_speed = radians(3)
+        self.turn_speed = radians(4)
         
         self.trail = Trail(self, self.env)
-        self.trail_cooldown_max = 6
+        self.trail_cooldown_max = 6 # Lower is cleaner, higher is efficient
         self.trail_cooldown = 0
         
-        self.forward = False
+        self.forward = True
         self.right = False
         self.left = False
+        
+        self.is_death = False
     
     def update(self):
         self.move()
@@ -76,6 +83,12 @@ class Cycle(pygame.sprite.Sprite):
             y = self.body.position.y + sin(self.body.angle) * ((self.width // 2) - self.speed*self.trail_cooldown_max//2)
             self.trail.activate_last_line() # always before adding position
             self.trail.add_position((x, y))
+    
+    def die(self):
+        self.is_death = True
+        self.trail.remove_trail()
+        self.kill()
+        self.env.space.remove(self.body, self.shape)
     
     def update_render(self):
         self.image = pygame.transform.rotate(self.base_image, -degrees(self.body.angle))
