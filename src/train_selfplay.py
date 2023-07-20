@@ -1,15 +1,15 @@
-from os import cpu_count
-import random
 import sys
-import gymnasium
+import random
+import os
+
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.callbacks import BaseCallback, EveryNTimesteps
 from stable_baselines3.common.atari_wrappers import MaxAndSkipEnv
 
+import gymnasium
 from games.tron_light_cycles.env import TronLightCyclesEnv  # noqa: F401
-# from games.battle_tanks.env import BattleTanksEnv
 
 class SelfPlaySaveCallback(BaseCallback):
     
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     
     file_path = f"models/{env_id}/{algorithm}/{algorithm}_{iteration}"
     
-    env_n = cpu_count()
+    env_n = os.cpu_count()
     
     env = make_vec_env(
         make_selfplay_env,
@@ -133,4 +133,5 @@ if __name__ == "__main__":
         model.learn(total_timesteps=total_learning_steps, reset_num_timesteps=False, callback=[save_n_steps_cb, update_n_steps_cb])
         print(f"# --- Finished iteration {i+1} of {learning_iterations} --- #")
     
+    model.save(file_path)
     print(f"# --- Finished training {algorithm} for {total_learning_steps} steps --- #")
