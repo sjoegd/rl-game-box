@@ -1,7 +1,7 @@
 import math
 
 # --------- Map ---------- #
-MAP_WIDTH = 1280
+MAP_WIDTH  = 1280
 MAP_HEIGHT = 720
 
 # --------- Misc ---------- #

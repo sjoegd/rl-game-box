@@ -3,12 +3,14 @@ import pymunk
 
 # ---------- MISC ---------- #
 FPS = 60
+FRAME_SKIP = 4
+MAX_TIMESTEPS = 2500
 
 # ---------- TANKS ---------- #
 TANK_SCALE          = 0.4
 TANK_SPEED          = 7.5 * TANK_SCALE
 TANK_ROTATE_SPEED   = math.radians(3)
-TURRET_ROTATE_SPEED = math.radians(5)
+TURRET_ROTATE_SPEED = math.radians(4)
 TURRET_BODY_OFFSET  = pymunk.Vec2d(0, 35) * TANK_SCALE
 
 # ---------- ROCKETS ---------- #
@@ -28,6 +30,12 @@ TILE_SIZE        = 8
 SCALED_TILE_SIZE = TILE_SIZE * MAP_SCALE
 MAP_WIDTH        = TILE_COLUMNS * SCALED_TILE_SIZE
 MAP_HEIGHT       = TILE_ROWS * SCALED_TILE_SIZE
+
+# ---------- POSITIONS ---------- #
+TANK_1_POSITION = (MAP_WIDTH * 0.075, MAP_HEIGHT * 0.5)
+TANK_2_POSITION = (MAP_WIDTH * 0.925, MAP_HEIGHT * 0.5)
+TANK_1_ANGLE    = math.pi / 2
+TANK_2_ANGLE    = -math.pi / 2
 
 # ---------- COLLISION TYPES ---------- #
 TANK_COLLISION_TYPE   = 1

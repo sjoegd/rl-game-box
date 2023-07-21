@@ -1,7 +1,7 @@
 import pygame
 import pymunk
 
-from .settings.constants import TILE_COLLISION_TYPE
+from .settings.constants import TILE_COLLISION_TYPE, TILE_MASK
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -23,4 +23,5 @@ class Tile(pygame.sprite.Sprite):
             self.body.position = x + (self.image.get_width() // 2), y + (self.image.get_height() // 2)
             self.shape = pymunk.Poly.create_box(self.body, size=(self.image.get_width(), self.image.get_height()))
             self.shape.collision_type = TILE_COLLISION_TYPE
+            self.shape.filter = pymunk.ShapeFilter(mask=TILE_MASK)
             self.env.space.add(self.body, self.shape)

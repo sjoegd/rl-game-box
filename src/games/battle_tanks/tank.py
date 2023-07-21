@@ -121,8 +121,8 @@ class Tank(pygame.sprite.Sprite):
             dy -= self.speed * math.sin(move_angle)
         
         if self.backward and not self.forward:
-            dx += self.speed * math.cos(move_angle)
-            dy += self.speed * math.sin(move_angle)
+            dx += self.speed/2 * math.cos(move_angle)
+            dy += self.speed/2 * math.sin(move_angle)
         
         if self.right:
             d_main_angle += self.rotate_speed

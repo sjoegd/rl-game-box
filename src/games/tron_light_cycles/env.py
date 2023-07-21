@@ -121,6 +121,9 @@ class TronLightCyclesEnv(gym.Env):
         
         self.steps_taken += 1
         
+        if self.render_in_step:
+            self.render()
+        
         return observation, reward, self.terminated, False, {}
     
     def perform_player1_action(self, action):
