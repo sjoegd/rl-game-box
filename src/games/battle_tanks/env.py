@@ -25,7 +25,7 @@ from games.util.util import conditional_convert_alpha, load_csv, load_images_fro
 """
     Reward Function:
     - 1.000 * End Reward      (-1 | 0 | 1)
-    - 0.005 * Timestep Reward (0 -> 1)
+    - 0.005 * Timestep Reward (0 -> -1)
     - 0.100   * Damage Reward (-1 | 0 | 1)
 """
 
