@@ -249,7 +249,7 @@ class BattleTanksEnv(gym.Env):
         
         # Timestep Reward
         timestep_reward = self.steps_taken / self.max_steps
-        reward += TIMESTEP_REWARD_WEIGHT * timestep_reward
+        reward -= TIMESTEP_REWARD_WEIGHT * timestep_reward
         
         # Damage Reward
         if tank_1_pre_hp > self.tank_1.hp:
