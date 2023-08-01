@@ -55,6 +55,7 @@ class TronLightCyclesEnv(gym.Env):
         self.ray_angle  = radians(360 / self.rays)
         self.ray_types  = 3 # wall, enemy cycle, trail
         
+        # TODO: Better observation space
         self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.ray_types*self.rays, ), dtype=np.float64)
         self.action_space      = gym.spaces.Discrete(3) # 0: left, 1: right, 2: none
         self.human_action      = 69

@@ -1,5 +1,7 @@
 from csv import reader
 from pathlib import Path
+from stable_baselines3.common.atari_wrappers import MaxAndSkipEnv
+import gymnasium
 import pygame
 
 def scale_image(surface: pygame.Surface, scale: float):
@@ -31,3 +33,6 @@ def load_csv(file: str) -> list[str]:
 
 def conditional_convert_alpha(surface: pygame.Surface, should_convert: False) -> pygame.Surface:
     return surface.convert_alpha() if should_convert else surface
+
+def create_frameskip_env(env: gymnasium.Env) -> gymnasium.Env:
+    return MaxAndSkipEnv(env, skip=env.frame_skip)

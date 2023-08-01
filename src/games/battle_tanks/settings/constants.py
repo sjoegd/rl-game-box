@@ -7,7 +7,7 @@ FRAME_SKIP = 4
 MAX_TIMESTEPS = 2500
 
 # ---------- TANKS ---------- #
-TANK_SCALE          = 0.4
+TANK_SCALE          = 0.385
 TANK_SPEED          = 7.5 * TANK_SCALE
 TANK_ROTATE_SPEED   = math.radians(3)
 TURRET_ROTATE_SPEED = math.radians(4)

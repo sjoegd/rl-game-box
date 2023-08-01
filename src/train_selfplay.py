@@ -10,6 +10,7 @@ from stable_baselines3.common.atari_wrappers import MaxAndSkipEnv
 
 import gymnasium
 from games.tron_light_cycles.env import TronLightCyclesEnv  # noqa: F401
+from games.battle_tanks.env import BattleTanksEnv  # noqa: F401
 
 class SelfPlaySaveCallback(BaseCallback):
     
