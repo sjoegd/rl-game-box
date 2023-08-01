@@ -56,6 +56,8 @@ class TronLightCyclesEnv(gym.Env):
         self.ray_types  = 3 # wall, enemy cycle, trail
         
         # TODO: Better observation space
+        # Ideas:
+        # - Let trail raycasts go through multiple trails, so cast one sees only the first collision, cast two sees the second, etc.
         self.observation_space = gym.spaces.Box(low=0, high=1, shape=(self.ray_types*self.rays, ), dtype=np.float64)
         self.action_space      = gym.spaces.Discrete(3) # 0: left, 1: right, 2: none
         self.human_action      = 69

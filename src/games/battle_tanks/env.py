@@ -22,6 +22,17 @@ from .settings.constants import (
 
 from games.util.util import conditional_convert_alpha, load_csv, load_images_from_sheet, scale_image
 
+"""
+    Reward Function:
+    - 1.000 * End Reward      (-1 | 0 | 1)
+    - 0.005 * Timestep Reward (0 -> 1)
+    - 0.100   * Damage Reward (-1 | 0 | 1)
+"""
+
+END_REWARD_WEIGHT      = 1
+TIMESTEP_REWARD_WEIGHT = 0.005
+DAMAGE_REWARD_WEIGHT   = 0.1
+
 class BattleTanksEnv(gym.Env):
     
     metadata = {'render_modes': ['human'], 'render_fps': FPS, 'player2_modes': ['random', 'agent', 'human']}
@@ -145,12 +156,15 @@ class BattleTanksEnv(gym.Env):
         self.perform_player1_action(action)
         self.perform_player2_action()
         
+        tank_1_pre_hp = self.tank_1.hp
+        tank_2_pre_hp = self.tank_2.hp
+        
         self.space.step(1/self.fps)
         self.tanks.update()
         self.rockets.update()
         
         is_human_action = (action == self.human_action)
-        reward      = self.calculate_reward() if not is_human_action else 0
+        reward      = self.calculate_reward(tank_1_pre_hp, tank_2_pre_hp) if not is_human_action else 0
         observation = self.get_observation(self.tank_1) if not is_human_action else self.observation_space.sample()
         
         if self.tank_1.is_death or self.tank_2.is_death:
@@ -224,8 +238,26 @@ class BattleTanksEnv(gym.Env):
         self.tank_2.turret_left  = keys[pygame.K_LEFT]
         self.tank_2.fire         = keys[pygame.K_SPACE]
     
-    def calculate_reward(self):
-        return 0
+    def calculate_reward(self, tank_1_pre_hp: int, tank_2_pre_hp: int):
+        reward = 0 
+
+        # End Reward
+        if self.tank_1.is_death:
+            reward -= END_REWARD_WEIGHT
+        if self.tank_2.is_death:
+            reward += END_REWARD_WEIGHT
+        
+        # Timestep Reward
+        timestep_reward = self.steps_taken / self.max_steps
+        reward += TIMESTEP_REWARD_WEIGHT * timestep_reward
+        
+        # Damage Reward
+        if tank_1_pre_hp > self.tank_1.hp:
+            reward -= DAMAGE_REWARD_WEIGHT
+        if tank_2_pre_hp > self.tank_2.hp:
+            reward += DAMAGE_REWARD_WEIGHT
+        
+        return reward
     
     def get_observation(self, tank: Tank):
         start = tank.main_body.position
