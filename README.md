@@ -9,4 +9,4 @@ Note: This project has recently switched from pygame to godot so older games hav
 None yet
 
 ### In Progress
-- Soccer 1v1
+- Soccer (1v1)

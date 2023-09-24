@@ -20,9 +20,3 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
-
-# Godot RL
-godot_rl_agents
-Godot RL Agents.csproj
-Godot RL Agents.sln
-AIController/
