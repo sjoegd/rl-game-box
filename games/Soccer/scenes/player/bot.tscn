@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmtlmnwosrv7k"]
+
+[ext_resource type="PackedScene" uid="uid://dgc5db36clcju" path="res://scenes/player/player.tscn" id="1_i3u7v"]
+[ext_resource type="Script" path="res://scenes/player/AIController.gd" id="2_1pl13"]
+[ext_resource type="Script" path="res://scenes/player/bot.gd" id="2_iuin2"]
+[ext_resource type="PackedScene" uid="uid://drvfihk5esgmv" path="res://addons/godot_rl_agents/sensors/sensors_2d/RaycastSensor2D.tscn" id="4_kuybg"]
+
+[node name="Bot" instance=ExtResource("1_i3u7v")]
+script = ExtResource("2_iuin2")
+is_left_team = true
+
+[node name="AIController" type="Node2D" parent="." index="2"]
+visible = false
+script = ExtResource("2_1pl13")
+
+[node name="BallSensor" parent="AIController" index="0" instance=ExtResource("4_kuybg")]
+visible = false
+rotation = 1.5708
+collision_mask = 2
+n_rays = 32.0
+ray_length = 1000
+cone_width = 180.0
+debug_draw = false
+
+[node name="PlayerSensor" parent="AIController" index="1" instance=ExtResource("4_kuybg")]
+visible = false
+rotation = 1.5708
+n_rays = 32.0
+ray_length = 1000
+cone_width = 180.0
+debug_draw = false
+
+[node name="StaticSensor" parent="AIController" index="2" instance=ExtResource("4_kuybg")]
+visible = false
+rotation = 1.5708
+collision_mask = 4
+n_rays = 32.0
+ray_length = 1000
+cone_width = 180.0
+debug_draw = false
+
+[node name="OwnGoalSensor" parent="AIController" index="3" instance=ExtResource("4_kuybg")]
+visible = false
+rotation = 3.14159
+collision_mask = 24
+n_rays = 16.0
+ray_length = 1000
+cone_width = 100.0
+
+[node name="EnemyGoalSensor" parent="AIController" index="4" instance=ExtResource("4_kuybg")]
+visible = false
+collision_mask = 24
+n_rays = 16.0
+ray_length = 1000
+cone_width = 100.0

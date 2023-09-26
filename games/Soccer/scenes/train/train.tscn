@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6vxyicn2xog"]
+
+[ext_resource type="Script" path="res://scenes/train/train.gd" id="1_7w8h8"]
+[ext_resource type="PackedScene" uid="uid://gfo4o3ilhwy1" path="res://scenes/field/field.tscn" id="1_h6kbp"]
+[ext_resource type="PackedScene" uid="uid://bmtlmnwosrv7k" path="res://scenes/player/bot.tscn" id="2_5p8oe"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="5_t5wt1"]
+
+[node name="Train" type="Node2D"]
+script = ExtResource("1_7w8h8")
+
+[node name="Field" parent="." instance=ExtResource("1_h6kbp")]
+
+[node name="Player1" parent="." instance=ExtResource("2_5p8oe")]
+position = Vector2(208, 345)
+scale = Vector2(3, 3)
+
+[node name="Player2" parent="." instance=ExtResource("2_5p8oe")]
+position = Vector2(1073, 345)
+scale = Vector2(3, 3)
+is_left_team = false
+
+[node name="BallSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("5_t5wt1")
+
+[connection signal="left_goal_scored" from="Field" to="." method="_on_left_goal_scored"]
+[connection signal="right_goal_scored" from="Field" to="." method="_on_right_goal_scored"]

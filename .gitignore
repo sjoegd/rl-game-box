@@ -10,6 +10,7 @@ pip-delete-this-directory.txt
 .conda
 .env
 .venv
+logs
 
 # Godot
 .godot/
@@ -21,3 +22,8 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 **/*.import
+
+# Godot RL
+**/AIController
+**/addons
+Godot RL **.*
