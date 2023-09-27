@@ -1,6 +1,8 @@
 class_name Bot
 extends Player
 
+# TODO: Better extension of Player, maybe a base PlayerController class that they both extend from?
+
 @onready var controller = $AIController
 @export var is_left_team: bool = true
 
@@ -8,6 +10,10 @@ func _process(_delta):
 	if controller.needs_reset:
 		controller.reset()
 	handle_player_input()
+
+func _physics_process(_delta):
+	super._physics_process(_delta)
+	# TODO: handle collision detection rewards here?
 
 func handle_player_input():
 	var direction_vector = calculate_direction_vector(
@@ -54,4 +60,4 @@ func reset():
 	super.reset()
 	controller.done = true
 	controller.needs_reset = true
-	
+

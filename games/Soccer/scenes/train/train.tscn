@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/train/train.gd" id="1_7w8h8"]
 [ext_resource type="PackedScene" uid="uid://gfo4o3ilhwy1" path="res://scenes/field/field.tscn" id="1_h6kbp"]
-[ext_resource type="PackedScene" uid="uid://bmtlmnwosrv7k" path="res://scenes/player/bot.tscn" id="2_5p8oe"]
+[ext_resource type="PackedScene" uid="uid://b46ux7in0nar" path="res://scenes/player/bot.tscn" id="2_5p8oe"]
 [ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="5_t5wt1"]
 
 [node name="Train" type="Node2D"]

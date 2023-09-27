@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/objects/ball.gd" id="1_gqebh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2psjs"]
-bounce = 1.0
+bounce = 0.75
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ms7r"]
 radius = 127.0
@@ -15,7 +15,7 @@ collision_mask = 7
 mass = 0.25
 physics_material_override = SubResource("PhysicsMaterial_2psjs")
 gravity_scale = 0.0
-linear_damp = 4.0
+linear_damp = 3.0
 angular_damp_mode = 1
 angular_damp = 0.05
 script = ExtResource("1_gqebh")

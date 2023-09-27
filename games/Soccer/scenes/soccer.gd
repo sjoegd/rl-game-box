@@ -6,13 +6,14 @@ var ball_scene = preload("res://scenes/objects/ball.tscn")
 @onready var player2: Player = $Players/Player2 as Player
 var ball: Ball 
 
-var player1_color: String = "red"
-var player2_color: String = "blue"
+@export var player1_color: String = "red"
+@export var player2_color: String = "blue"
 
 var team1_score: int = 0
 var team2_score: int = 0
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	player1.set_color(player1_color)
 	player2.set_color(player2_color)
 	reset()
@@ -28,6 +29,7 @@ func _on_right_goal_scored():
 func reset():
 	update_ui_score()
 	player1.reset()
+	player2.reset()
 	if ball:
 		ball.call_deferred("queue_free")
 	ball = create_new_ball()
@@ -46,6 +48,3 @@ func create_new_ball():
 	
 func _on_start_time_timeout():
 	get_tree().paused = false
-
-func _on_player_2_reset_game():
-	reset()

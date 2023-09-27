@@ -3,6 +3,9 @@ extends Node2D
 signal right_goal_scored
 signal left_goal_scored
 
+func _ready():
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+
 func _on_left_goal_ball_entered():
 	left_goal_scored.emit()
 

@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmtlmnwosrv7k"]
+[gd_scene load_steps=5 format=3 uid="uid://b46ux7in0nar"]
 
 [ext_resource type="PackedScene" uid="uid://dgc5db36clcju" path="res://scenes/player/player.tscn" id="1_i3u7v"]
-[ext_resource type="Script" path="res://scenes/player/AIController.gd" id="2_1pl13"]
 [ext_resource type="Script" path="res://scenes/player/bot.gd" id="2_iuin2"]
+[ext_resource type="Script" path="res://scenes/player/controller.gd" id="3_j61j4"]
 [ext_resource type="PackedScene" uid="uid://drvfihk5esgmv" path="res://addons/godot_rl_agents/sensors/sensors_2d/RaycastSensor2D.tscn" id="4_kuybg"]
 
 [node name="Bot" instance=ExtResource("1_i3u7v")]
@@ -11,7 +11,7 @@ is_left_team = true
 
 [node name="AIController" type="Node2D" parent="." index="2"]
 visible = false
-script = ExtResource("2_1pl13")
+script = ExtResource("3_j61j4")
 
 [node name="BallSensor" parent="AIController" index="0" instance=ExtResource("4_kuybg")]
 visible = false

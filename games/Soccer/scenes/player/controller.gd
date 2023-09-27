@@ -1,5 +1,12 @@
 extends AIController2D
 
+# TODO: Rename script to controller.gd
+
+# TODO: Find a better way to mirror own|enemy goal sensors
+# So that the agent knows which goal is his own and thus where to score
+
+# TODO: Implement the needs_reset checking and handling (maybe in train scene)
+
 @export var right_goal_collision_mask = 16
 @export var left_goal_collision_mask  = 8
 

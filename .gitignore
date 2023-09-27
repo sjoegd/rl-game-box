@@ -25,5 +25,5 @@ mono_crash.*.json
 
 # Godot RL
 **/AIController
-**/addons
+**/godot_rl_agents
 Godot RL **.*
