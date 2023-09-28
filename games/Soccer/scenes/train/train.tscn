@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/train/train.gd" id="1_7w8h8"]
 [ext_resource type="PackedScene" uid="uid://gfo4o3ilhwy1" path="res://scenes/field/field.tscn" id="1_h6kbp"]
-[ext_resource type="PackedScene" uid="uid://b46ux7in0nar" path="res://scenes/player/bot.tscn" id="2_5p8oe"]
+[ext_resource type="PackedScene" uid="uid://b46ux7in0nar" path="res://scenes/player/bot_player.tscn" id="2_5p8oe"]
 [ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="5_t5wt1"]
 
 [node name="Train" type="Node2D"]
@@ -24,6 +24,11 @@ position = Vector2(640, 360)
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("5_t5wt1")
+speed_up = 10
 
 [connection signal="left_goal_scored" from="Field" to="." method="_on_left_goal_scored"]
 [connection signal="right_goal_scored" from="Field" to="." method="_on_right_goal_scored"]
+[connection signal="need_reset" from="Player1" to="." method="_on_player_1_need_reset"]
+[connection signal="touched_ball" from="Player1" to="." method="_on_player_1_touched_ball"]
+[connection signal="need_reset" from="Player2" to="." method="_on_player_2_need_reset"]
+[connection signal="touched_ball" from="Player2" to="." method="_on_player_2_touched_ball"]

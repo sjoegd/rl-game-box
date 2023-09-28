@@ -16,7 +16,6 @@ mass = 0.25
 physics_material_override = SubResource("PhysicsMaterial_2psjs")
 gravity_scale = 0.0
 linear_damp = 3.0
-angular_damp_mode = 1
 angular_damp = 0.05
 script = ExtResource("1_gqebh")
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://gfo4o3ilhwy1" path="res://scenes/field/field.tscn" id="1_fm1kc"]
 [ext_resource type="Script" path="res://scenes/soccer.gd" id="1_r3eb1"]
-[ext_resource type="PackedScene" uid="uid://dgc5db36clcju" path="res://scenes/player/player.tscn" id="2_rs5r7"]
+[ext_resource type="PackedScene" uid="uid://dcgu400axebrj" path="res://scenes/player/human_player.tscn" id="3_kcg1i"]
 [ext_resource type="Script" path="res://scenes/timers/start_time.gd" id="4_6p8da"]
 [ext_resource type="PackedScene" uid="uid://cjmn6mcy1rta8" path="res://scenes/ui/ui.tscn" id="5_n2siq"]
 
@@ -14,10 +14,10 @@ script = ExtResource("1_r3eb1")
 [node name="Players" type="Node2D" parent="."]
 scale = Vector2(3, 3)
 
-[node name="Player1" parent="Players" instance=ExtResource("2_rs5r7")]
+[node name="Player1" parent="Players" instance=ExtResource("3_kcg1i")]
 position = Vector2(69.3333, 115)
 
-[node name="Player2" parent="Players" instance=ExtResource("2_rs5r7")]
+[node name="Player2" parent="Players" instance=ExtResource("3_kcg1i")]
 position = Vector2(357.333, 115)
 
 [node name="Timers" type="Node2D" parent="."]

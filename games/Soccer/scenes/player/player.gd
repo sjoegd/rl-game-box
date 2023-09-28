@@ -19,6 +19,12 @@ var last_animation: String
 @export var can_kick: bool = true
 @export var can_kick_ball: bool = true
 
+var input_left: bool = false
+var input_right: bool = false
+var input_up: bool = false
+var input_down: bool = false
+var input_kick: bool = false
+
 func _ready():
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	set_motion_mode(CharacterBody2D.MOTION_MODE_FLOATING)
@@ -31,28 +37,43 @@ func _physics_process(_delta):
 	handle_rigid_collisions()
 	
 func handle_player_input():
-	var direction_vector = Input.get_vector("left", "right", "up", "down")	
+	var direction_vector = calculate_direction_vector(
+		input_left, input_right, input_up, input_down
+	)
 	velocity = direction_vector * speed
 	
 	if not is_kicking:
 		set_direction(
-			Input.is_action_pressed("left"),
-			Input.is_action_pressed("right"),
-			Input.is_action_pressed("up"),
-			Input.is_action_pressed("down"),
+			input_left,
+			input_right,
+			input_up,
+			input_down,
 			direction_vector
 		)
 	
-	if last_animation and can_kick and Input.is_action_pressed("kick"):
+	if input_kick and can_kick:
 		$Kick/KickAnimation.play("kick")
+
+func calculate_direction_vector(left: bool, right: bool, up: bool, down: bool):
+	var direction_vector = Vector2.ZERO
+	
+	if left:
+		direction_vector.x -= 1
+	if right:
+		direction_vector.x += 1
+	if up:
+		direction_vector.y -= 1
+	if down:
+		direction_vector.y += 1
+		
+	return direction_vector.normalized()
 
 func handle_rigid_collisions():
 	for i in get_slide_collision_count():
-			var c = get_slide_collision(i)
-			if c.get_collider() is RigidBody2D:
-				var collider: RigidBody2D = c.get_collider() as RigidBody2D
-				collider.apply_central_impulse(-c.get_normal()*push_force)
-				collider.apply_impulse(-c.get_normal(), c.get_position()) # for angular velocity
+		var c = get_slide_collision(i)
+		if c.get_collider() is RigidBody2D:
+			var collider: RigidBody2D = c.get_collider() as RigidBody2D
+			collider.apply_central_impulse(-c.get_normal()*push_force)
 
 func set_direction(left: bool, right: bool, up: bool, down: bool, direction_vector: Vector2):
 	if(!animator):
@@ -61,11 +82,11 @@ func set_direction(left: bool, right: bool, up: bool, down: bool, direction_vect
 	if not (left or right or up or down):
 		animator.set_frame_and_progress(0, 0)
 		animator.pause()
+	else:
+		play_animation_direction(left, right, up, down)
 	
 	if direction_vector.length() > 0:
 		last_direction_vector = direction_vector
-		
-	play_animation_direction(left, right, up, down)
 
 func play_animation_direction(left: bool, right: bool, up: bool, down: bool):
 	var right_r = right and not left
