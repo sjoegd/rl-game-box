@@ -3,7 +3,6 @@ __pycache__/
 **/__pycache__/
 *.py[cod]
 *$py.class
-build/
 dist/
 pip-log.txt
 pip-delete-this-directory.txt
@@ -23,7 +22,3 @@ data_*/
 mono_crash.*.json
 **/*.import
 
-# Godot RL
-**/AIController
-**/godot_rl_agents
-Godot RL **.*
