@@ -9,7 +9,6 @@ pip-delete-this-directory.txt
 .conda
 .env
 .venv
-logs
 
 # Godot
 .godot/
