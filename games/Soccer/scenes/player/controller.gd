@@ -20,8 +20,8 @@ const BALL_VELOCITY_REWARD_MULTIPLIER: float = 0.0025
 @onready var ball_sensor   = $BallSensor as RaycastSensor2D
 @onready var player_sensor = $PlayerSensor as RaycastSensor2D
 @onready var static_sensor = $StaticSensor as RaycastSensor2D
-@onready var own_goal_sensor  = $OwnGoalSensor as RaycastSensor2D
-@onready var enemy_goal_sensor = $EnemyGoalSensor as RaycastSensor2D
+var own_goal_sensor: RaycastSensor2D
+var enemy_goal_sensor: RaycastSensor2D
 
 var go_left: bool = false
 var go_right: bool = false
@@ -32,10 +32,17 @@ var go_kick: bool = false
 var new_reward: float = 0.0
 
 func _ready():
-	if not $"..".is_left_team:
-		own_goal_sensor.rotation += PI
-		enemy_goal_sensor.rotation += PI
+	setup_goal_sensors()
 	super._ready()
+
+func setup_goal_sensors():
+	var goal_sensors = (
+		$GoalSensorsLeft if $"..".is_left_team 
+		else $GoalSensorsRight
+	) 
+	goal_sensors.process_mode = Node.PROCESS_MODE_INHERIT
+	own_goal_sensor = goal_sensors.get_node("OwnGoalSensor") as RaycastSensor2D
+	enemy_goal_sensor = goal_sensors.get_node("EnemyGoalSensor") as RaycastSensor2D
 
 func get_obs() -> Dictionary:	
 	var obs = (
@@ -46,7 +53,7 @@ func get_obs() -> Dictionary:
 		enemy_goal_sensor.get_observation() +
 		[int($"..".is_kicking)]
 	)
-	
+
 	return {"obs":obs}
 
 func get_reward() -> float:
@@ -87,6 +94,7 @@ func set_action(action) -> void:
 
 func reset():
 	super.reset()
+	done = false
 	new_reward = 0
 	go_left = false
 	go_right = false

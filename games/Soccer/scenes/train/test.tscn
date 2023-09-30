@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://c64jfo68g5h2h"]
+
+[ext_resource type="Script" path="res://scenes/train/test.gd" id="1_4rgve"]
+[ext_resource type="PackedScene" uid="uid://gfo4o3ilhwy1" path="res://scenes/field/field.tscn" id="2_rpru0"]
+[ext_resource type="PackedScene" uid="uid://b46ux7in0nar" path="res://scenes/player/bot_player.tscn" id="3_r2ovr"]
+[ext_resource type="PackedScene" uid="uid://dcgu400axebrj" path="res://scenes/player/human_player.tscn" id="4_acmsg"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="4_f5ev5"]
+
+[node name="Test" type="Node2D"]
+script = ExtResource("1_4rgve")
+
+[node name="Field" parent="." instance=ExtResource("2_rpru0")]
+
+[node name="Player1" parent="." instance=ExtResource("3_r2ovr")]
+position = Vector2(208, 345)
+scale = Vector2(3, 3)
+
+[node name="Player2" parent="." instance=ExtResource("4_acmsg")]
+position = Vector2(1073, 345)
+scale = Vector2(3, 3)
+
+[node name="BallSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("4_f5ev5")
+
+[connection signal="left_goal_scored" from="Field" to="." method="_on_left_goal_scored"]
+[connection signal="right_goal_scored" from="Field" to="." method="_on_right_goal_scored"]
+[connection signal="need_reset" from="Player1" to="." method="_on_player_1_need_reset"]

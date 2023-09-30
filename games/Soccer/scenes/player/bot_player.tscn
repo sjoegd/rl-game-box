@@ -9,6 +9,9 @@
 script = ExtResource("2_2agk8")
 is_left_team = true
 
+[node name="Kick" parent="." index="1"]
+metadata/_edit_lock_ = true
+
 [node name="AIController" type="Node2D" parent="." index="3"]
 visible = false
 script = ExtResource("3_4ag3d")
@@ -39,17 +42,41 @@ ray_length = 1000
 cone_width = 180.0
 debug_draw = false
 
-[node name="OwnGoalSensor" parent="AIController" index="3" instance=ExtResource("4_x8jb7")]
+[node name="GoalSensorsLeft" type="Node2D" parent="AIController" index="3"]
+process_mode = 4
 visible = false
 rotation = 3.14159
-collision_mask = 24
+
+[node name="OwnGoalSensor" parent="AIController/GoalSensorsLeft" index="0" instance=ExtResource("4_x8jb7")]
+visible = false
+collision_mask = 8
 n_rays = 16.0
 ray_length = 1000
 cone_width = 100.0
 
-[node name="EnemyGoalSensor" parent="AIController" index="4" instance=ExtResource("4_x8jb7")]
+[node name="EnemyGoalSensor" parent="AIController/GoalSensorsLeft" index="1" instance=ExtResource("4_x8jb7")]
 visible = false
-collision_mask = 24
+rotation = 3.14159
+collision_mask = 16
+n_rays = 16.0
+ray_length = 1000
+cone_width = 100.0
+
+[node name="GoalSensorsRight" type="Node2D" parent="AIController" index="4"]
+process_mode = 4
+visible = false
+
+[node name="OwnGoalSensor" parent="AIController/GoalSensorsRight" index="0" instance=ExtResource("4_x8jb7")]
+visible = false
+collision_mask = 16
+n_rays = 16.0
+ray_length = 1000
+cone_width = 100.0
+
+[node name="EnemyGoalSensor" parent="AIController/GoalSensorsRight" index="1" instance=ExtResource("4_x8jb7")]
+visible = false
+rotation = 3.14159
+collision_mask = 8
 n_rays = 16.0
 ray_length = 1000
 cone_width = 100.0
