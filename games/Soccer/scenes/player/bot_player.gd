@@ -19,7 +19,6 @@ func _process(_delta):
 
 func _physics_process(_delta):
 	super._physics_process(_delta)
-	update_sensor_directions(last_direction_vector)
 	handle_ball_touch_reward()
 
 func handle_ball_touch_reward():
@@ -27,16 +26,6 @@ func handle_ball_touch_reward():
 		var c = get_slide_collision(i)
 		if c.get_collider() is Ball:
 			touched_ball.emit()
-
-func update_sensor_directions(direction_vector: Vector2):
-	var offset = PI/2
-	var sensor_angle = direction_vector.angle() + offset
-	$AIController/BallSensor.rotation = sensor_angle
-	$AIController/PlayerSensor.rotation = sensor_angle
-	$AIController/StaticSensor.rotation = sensor_angle
-
-func add_reward(reward: float):
-	controller.new_reward += reward
 
 func reset():
 	super.reset()

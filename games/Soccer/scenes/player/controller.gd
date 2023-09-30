@@ -4,20 +4,17 @@ extends AIController2D
 # Also, check if sensors are working properly for both teams
 
 # Reward Function:
-#	10.0000 * Goal Reward (-1 | 0 | 1) 
+#	1.00000 * Goal Reward (-1 | 0 | 1) 
 #	0.00500 * Ball Touch (-1 | 0 | 1) 
-#	0.00125 * Distance Player to Ball (0 -> 1) 
-#	0.01000 * Distance Ball to Goal (0 -> 1) 
-#	0.00250 * Ball Velocity (0 -> 1) 
-const GOAL_REWARD_MULTIPLIER: float = 10
+#	0.00250 * Distance Player to Ball (0 -> 1) 
+#	0.00750 * Distance Ball to Goal (0 -> 1) 
+#	0.00125 * Ball Velocity (0 -> 1) 
+const GOAL_REWARD_MULTIPLIER: float = 1
 const BALL_TOUCH_REWARD_MULTIPLIER: float = 0.005
-const DISTANCE_PLAYER_TO_BALL_REWARD_MULTIPLIER: float = 0.00125
-const DISTANCE_BALL_TO_GOAL_REWARD_MULTIPLIER: float = 0.01
-const BALL_VELOCITY_REWARD_MULTIPLIER: float = 0.0025
+const DISTANCE_PLAYER_TO_BALL_REWARD_MULTIPLIER: float = 0.0025
+const DISTANCE_BALL_TO_GOAL_REWARD_MULTIPLIER: float = 0.0075
+const BALL_VELOCITY_REWARD_MULTIPLIER: float = 0.00125
 
-@onready var ball_sensor   = $BallSensor as RaycastSensor2D
-@onready var player_sensor = $PlayerSensor as RaycastSensor2D
-@onready var static_sensor = $StaticSensor as RaycastSensor2D
 var own_goal_sensor: RaycastSensor2D
 var enemy_goal_sensor: RaycastSensor2D
 
@@ -31,6 +28,7 @@ var new_reward: float = 0.0
 
 func _ready():
 	setup_goal_sensors()
+	setup_other_sensors()
 	super._ready()
 
 func setup_goal_sensors():
@@ -42,13 +40,45 @@ func setup_goal_sensors():
 	own_goal_sensor = goal_sensors.get_node("OwnGoalSensor") as RaycastSensor2D
 	enemy_goal_sensor = goal_sensors.get_node("EnemyGoalSensor") as RaycastSensor2D
 
-func get_obs() -> Dictionary:	
+func setup_other_sensors():
+	# If right team, rotate all sensors by 180 degrees (for mirror)
+	if not $"..".is_left_team:
+		for sensor in [$BallSensors, $PlayerSensors, $StaticSensors]:
+			var right = sensor.get_node("Right")
+			var left = sensor.get_node("Left")
+			right.rotation += PI
+			left.rotation += PI
+
+func get_obs() -> Dictionary:
+	var ball_sensor_right_obs = $BallSensors/Right.get_observation() 
+	var ball_sensor_left_obs = $BallSensors/Left.get_observation()
+	var player_sensor_right_obs = $PlayerSensors/Right.get_observation()
+	var player_sensor_left_obs = $PlayerSensors/Left.get_observation()
+	var static_sensor_right_obs = $StaticSensors/Right.get_observation()
+	var static_sensor_left_obs = $StaticSensors/Left.get_observation()
+	var own_goal_sensor_obs = own_goal_sensor.get_observation()
+	var enemy_goal_sensor_obs = enemy_goal_sensor.get_observation()
+	
+	# Reverse all sensors if right team (for mirror)
+	if not $"..".is_left_team:
+		ball_sensor_right_obs.reverse()
+		ball_sensor_left_obs.reverse()
+		player_sensor_right_obs.reverse()
+		player_sensor_left_obs.reverse()
+		static_sensor_right_obs.reverse()
+		static_sensor_left_obs.reverse()
+		own_goal_sensor_obs.reverse()
+		enemy_goal_sensor_obs.reverse()
+	
 	var obs = (
-		player_sensor.get_observation()     +
-		ball_sensor.get_observation()       +
-		static_sensor.get_observation()     +
-		own_goal_sensor.get_observation()   +
-		enemy_goal_sensor.get_observation() +
+		ball_sensor_right_obs   +
+		ball_sensor_left_obs    +
+		player_sensor_right_obs +
+		player_sensor_left_obs  +
+		static_sensor_right_obs +
+		static_sensor_left_obs  +
+		own_goal_sensor_obs     +
+		enemy_goal_sensor_obs   +
 		[int($"..".is_kicking)]
 	)
 
