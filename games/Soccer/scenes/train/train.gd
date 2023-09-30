@@ -3,6 +3,8 @@ extends Node2D
 var ball_scene = preload("res://scenes/objects/ball.tscn")
 var ball: Ball
 
+# TODO: Instead of having an extra Test scene, give this a player overwrite option
+
 # TODO: Update so that it maybe pulls width and height
 var max_player_to_ball_distance: float = Vector2.ZERO.distance_to(Vector2(1280, 720))
 var max_ball_to_goal_distance: float = Vector2.ZERO.distance_to(Vector2(1280, 360))

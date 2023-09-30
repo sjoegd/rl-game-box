@@ -21,6 +21,7 @@ is_left_team = false
 
 [node name="BallSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(640, 360)
+metadata/_edit_lock_ = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("5_t5wt1")

@@ -8,7 +8,7 @@ extends Node
 
 const MAJOR_VERSION := "0"
 const MINOR_VERSION := "3" 
-const DEFAULT_PORT := "11008"
+const DEFAULT_PORT := "11008" #11008
 const DEFAULT_SEED := "1"
 var stream : StreamPeerTCP = null
 var connected = false
