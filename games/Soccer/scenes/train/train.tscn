@@ -24,7 +24,7 @@ position = Vector2(640, 360)
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("5_t5wt1")
-speed_up = 10
+speed_up = 12
 
 [connection signal="left_goal_scored" from="Field" to="." method="_on_left_goal_scored"]
 [connection signal="right_goal_scored" from="Field" to="." method="_on_right_goal_scored"]
