@@ -84,11 +84,18 @@ func get_action_space() -> Dictionary:
 	}
 
 func set_action(action) -> void:
-	go_left  = action["left_action"] == 1
-	go_right = action["right_action"] == 1
-	go_up    = action["up_action"] == 1
-	go_down  = action["down_action"] == 1
-	go_kick  = action["kick_action"] == 1	
+	if $"..".is_left_team:
+		go_left  = action["left_action"] == 1
+		go_right = action["right_action"] == 1
+		go_up    = action["up_action"] == 1
+		go_down  = action["down_action"] == 1
+		go_kick  = action["kick_action"] == 1
+	else: # Mirror horizontally for right team
+		go_left  = action["right_action"] == 1
+		go_right = action["left_action"] == 1
+		go_up    = action["up_action"] == 1
+		go_down  = action["down_action"] == 1
+		go_kick  = action["kick_action"] == 1
 
 func reset():
 	super.reset()
