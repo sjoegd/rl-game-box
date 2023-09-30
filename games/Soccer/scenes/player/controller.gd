@@ -1,16 +1,14 @@
 extends AIController2D
 
-# TODO: Find a better way to mirror own|enemy goal sensors
-# So that the agent knows which goal is his own and thus where to score
-
-# TODO: Implement the needs_reset checking and handling (maybe in train scene)
+# TODO: Mirror actions for right team
+# Also, check if sensors are working properly for both teams
 
 # Reward Function:
-#	TODO - 10.0000 * Goal Reward (-1 | 0 | 1) 
-#	TODO - 0.00500 * Ball Touch (-1 | 0 | 1) 
-#	TODO - 0.00125 * Distance Player to Ball (0 -> 1) 
-#	TODO - 0.01000 * Distance Ball to Goal (0 -> 1) 
-#	TODO - 0.00250 * Ball Velocity (0 -> 1) 
+#	10.0000 * Goal Reward (-1 | 0 | 1) 
+#	0.00500 * Ball Touch (-1 | 0 | 1) 
+#	0.00125 * Distance Player to Ball (0 -> 1) 
+#	0.01000 * Distance Ball to Goal (0 -> 1) 
+#	0.00250 * Ball Velocity (0 -> 1) 
 const GOAL_REWARD_MULTIPLIER: float = 10
 const BALL_TOUCH_REWARD_MULTIPLIER: float = 0.005
 const DISTANCE_PLAYER_TO_BALL_REWARD_MULTIPLIER: float = 0.00125
