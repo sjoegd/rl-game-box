@@ -10,6 +10,7 @@ None yet
 
 ### In Progress
 - 2D Soccer (1v1)
+- BallHopper (test game)
 
 ## How to use
 
