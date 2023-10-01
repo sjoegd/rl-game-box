@@ -13,11 +13,13 @@ script = ExtResource("1_7w8h8")
 [node name="Player1" parent="." instance=ExtResource("2_5p8oe")]
 position = Vector2(208, 345)
 scale = Vector2(3, 3)
+player_overwrite = true
 
 [node name="Player2" parent="." instance=ExtResource("2_5p8oe")]
 position = Vector2(1073, 345)
 scale = Vector2(3, 3)
 is_left_team = false
+player_overwrite = false
 
 [node name="BallSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(640, 360)
@@ -25,7 +27,6 @@ metadata/_edit_lock_ = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("5_t5wt1")
-speed_up = 12
 
 [connection signal="left_goal_scored" from="Field" to="." method="_on_left_goal_scored"]
 [connection signal="right_goal_scored" from="Field" to="." method="_on_right_goal_scored"]

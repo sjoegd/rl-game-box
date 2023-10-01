@@ -8,6 +8,7 @@
 [node name="BotPlayer" instance=ExtResource("1_0ge2u")]
 script = ExtResource("2_2agk8")
 is_left_team = true
+player_overwrite = false
 
 [node name="Kick" parent="." index="1"]
 metadata/_edit_lock_ = true
