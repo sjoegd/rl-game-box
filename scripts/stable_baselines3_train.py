@@ -113,7 +113,7 @@ if args.inference and args.resume_model_path is None:
 if args.env_path is None and args.viz:
     print("Info: Using --viz without --env_path set has no effect, in-editor training will always render.")
 
-env = StableBaselinesGodotEnv(env_path=args.env_path, show_window=args.viz, seed=args.seed, n_parallel=args.n_parallel,
+env = StableBaselinesGodotEnv(env_path=args.env_path, show_window=args.viz, n_parallel=args.n_parallel,
                               speedup=args.speedup)
 env = VecMonitor(env)
 
