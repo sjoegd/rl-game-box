@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="BallHopper"
-run/main_scene="res://scenes/game/game.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+run/main_scene="res://scenes/train/train.tscn"
+config/features=PackedStringArray("4.1", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
