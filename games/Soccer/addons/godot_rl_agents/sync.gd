@@ -1,14 +1,14 @@
 extends Node
 # --fixed-fps 2000 --disable-render-loop
 @export_range(1, 10, 1, "or_greater") var action_repeat := 8
-@export_range(1, 25, 1, "or_greater") var speed_up = 1
+@export_range(1, 10, 1, "or_greater") var speed_up = 1
 @export var onnx_model_path := ""
 
 @onready var start_time = Time.get_ticks_msec()
 
 const MAJOR_VERSION := "0"
 const MINOR_VERSION := "3" 
-const DEFAULT_PORT := "11008" #11008
+const DEFAULT_PORT := "11008"
 const DEFAULT_SEED := "1"
 var stream : StreamPeerTCP = null
 var connected = false
@@ -43,16 +43,20 @@ func _initialize():
 	Engine.time_scale = _get_speedup() * 1.0
 	prints("physics ticks", Engine.physics_ticks_per_second, Engine.time_scale, _get_speedup(), speed_up)
 	
-	connected = connect_to_server()
-	if connected:
-		_set_heuristic("model")
-		_handshake()
-		_send_env_info()
-	elif onnx_model_path != "":
+	# Run inference if onnx model path is set, otherwise wait for server connection
+	var run_onnx_model_inference : bool = onnx_model_path != ""
+	if run_onnx_model_inference:
+		assert(FileAccess.file_exists(onnx_model_path), "Onnx Model Path set on Sync node does not exist: " + onnx_model_path)
 		onnx_model = ONNXModel.new(onnx_model_path, 1)
 		_set_heuristic("model")
-	else:
-		_set_heuristic("human")  
+	else:		
+		connected = connect_to_server()
+		if connected:
+			_set_heuristic("model")
+			_handshake()
+			_send_env_info()
+		else:
+			_set_heuristic("human")  
 		
 	_set_seed()
 	_set_action_repeat()
@@ -86,8 +90,9 @@ func _physics_process(delta):
 		if need_to_send_obs:
 			need_to_send_obs = false
 			var reward = _get_reward_from_agents()
-			_reset_agents_if_done() # this ensures the new observation is from the next env instance : NEEDS REFACTOR
 			var done = _get_done_from_agents()
+			#_reset_agents_if_done() # this ensures the new observation is from the next env instance : NEEDS REFACTOR
+			
 			var obs = _get_obs_from_agents()
 			
 			var reply = {
@@ -234,6 +239,8 @@ func _set_action_repeat():
 func disconnect_from_server():
 	stream.disconnect_from_host()
 
+
+
 func handle_message() -> bool:
 	# get json message: reset, step, close
 	var message = _get_dict_json_message()
@@ -287,10 +294,11 @@ func _call_method_on_agents(method):
 		
 	return returns
 
+
 func _reset_agents_if_done():
 	for agent in agents:
-		if agent.done:
-			agent.needs_reset = true
+		if agent.get_done(): 
+			agent.set_done_false()
 
 func _reset_all_agents():
 	for agent in agents:
@@ -315,8 +323,7 @@ func _get_done_from_agents():
 	var dones = [] 
 	for agent in agents:
 		var done = agent.get_done()
-		if done: 
-			agent.set_done_false()
+		if done: agent.set_done_false()
 		dones.append(done)
 	return dones    
 	

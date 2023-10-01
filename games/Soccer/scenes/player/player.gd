@@ -1,155 +1,81 @@
-class_name Player
 extends CharacterBody2D
+class_name Player
 
-# TODO: Collision Animation
-# - Animate CollisionShape together with the sprite
-# - Maybe use AnimationSprite toget with AnimationPlayer?
-
-@onready var start_position = position
-
+@export var push_force: float = 5.0
+@export var kick_force: float = 50.0
 @export var speed: float = 300.0
-@export var push_force: float = 25.0
-@export var kick_force: float = 200
+@export var starting_direction: String = "right"
+@export var turning_cooldown_sec: float = 0.05
+@export var color: String = "red"
 
-var animator: AnimatedSprite2D
-var last_direction_vector: Vector2
-var last_animation: String
+var sprite: AnimatedSprite2D
 
-@export var is_kicking: bool = false
-@export var can_kick: bool = true
-@export var can_kick_ball: bool = true
+@onready var current_direction_index = direction_cycle.find(starting_direction)
+var direction_cycle = ["down", "down_left", "left", "up_left", "up", "up_right", "right", "down_right"]
+var direction_to_vector = {
+	"down": Vector2(0, 1),
+	"down_left": Vector2(-1, 1).normalized(),
+	"down_right": Vector2(1, 1).normalized(),
+	"up": Vector2(0, -1),
+	"up_left": Vector2(-1, -1).normalized(),
+	"up_right": Vector2(1, -1).normalized(),
+	"left": Vector2(-1, 0),
+	"right": Vector2(1, 0)
+}
 
-var input_left: bool = false
+var can_turn: bool = true
+
+var input_forward: bool = false
+var input_backward: bool = false
 var input_right: bool = false
-var input_up: bool = false
-var input_down: bool = false
-var input_kick: bool = false
+var input_left: bool = false
 
 func _ready():
-	process_mode = Node.PROCESS_MODE_PAUSABLE
-	set_motion_mode(CharacterBody2D.MOTION_MODE_FLOATING)
-
-func _process(_delta):
-	handle_player_input()
+	sprite = $Sprites.get_node(color.capitalize()) as AnimatedSprite2D
+	sprite.process_mode = Node.PROCESS_MODE_INHERIT
+	sprite.visible = true
 
 func _physics_process(_delta):
-	move_and_slide()
-	handle_rigid_collisions()
 	
-func handle_player_input():
-	var direction_vector = calculate_direction_vector(
-		input_left, input_right, input_up, input_down
-	)
-	velocity = direction_vector * speed
+	var speed_d = 0
+	var direction_d = 0
 	
-	if not is_kicking:
-		set_direction(
-			input_left,
-			input_right,
-			input_up,
-			input_down,
-			direction_vector
-		)
+	# TODO: For human heuristic, parse direction from input, no turning
 	
-	if input_kick and can_kick:
-		$Kick/KickAnimation.play("kick")
-
-func calculate_direction_vector(left: bool, right: bool, up: bool, down: bool):
-	var direction_vector = Vector2.ZERO
+	if Input.is_action_pressed("forward"):
+		speed_d += 1
+	if Input.is_action_pressed("backward"):
+		speed_d -= 0.5
 	
-	if left:
-		direction_vector.x -= 1
-	if right:
-		direction_vector.x += 1
-	if up:
-		direction_vector.y -= 1
-	if down:
-		direction_vector.y += 1
+	if can_turn:
+		if Input.is_action_pressed("right"):
+			direction_d += 1
+		if Input.is_action_pressed("left"):
+			direction_d -= 1
 		
-	return direction_vector.normalized()
+		if direction_d != 0:
+			can_turn = false
+			var turn_timer = get_tree().create_timer(turning_cooldown_sec, true, true)
+			turn_timer.connect("timeout", _on_turn_timer_timeout)
+	
+	current_direction_index = (current_direction_index + direction_d) % direction_cycle.size()
+	var current_direction = direction_cycle[current_direction_index]
+	var current_direction_vector = direction_to_vector[current_direction]
+	velocity = current_direction_vector * speed * speed_d
+	
+	move_and_slide()
+	handle_ball_collisions()
+	
+	sprite.play(current_direction, speed_d)
+	if speed_d == 0:
+		sprite.set_frame_and_progress(0, 0)
 
-func handle_rigid_collisions():
+func handle_ball_collisions():
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
-		if c.get_collider() is RigidBody2D:
-			var collider: RigidBody2D = c.get_collider() as RigidBody2D
+		var collider = c.get_collider()
+		if collider is Ball:
 			collider.apply_central_impulse(-c.get_normal()*push_force)
 
-func set_direction(left: bool, right: bool, up: bool, down: bool, direction_vector: Vector2):
-	if(!animator):
-		return
-	
-	if not (left or right or up or down):
-		animator.set_frame_and_progress(0, 0)
-		animator.pause()
-	else:
-		play_animation_direction(left, right, up, down)
-	
-	if direction_vector.length() > 0:
-		last_direction_vector = direction_vector
-
-func play_animation_direction(left: bool, right: bool, up: bool, down: bool):
-	var right_r = right and not left
-	var left_r  = left and not right
-	var up_r    = up and not down
-	var down_r  = down and not up
-	
-	var animation: String = ""
-	
-	if not up_r and not down_r:
-		if right_r:
-			animation = "right"
-		if left_r:
-			animation = "left"
-	elif up_r:
-		if right_r:
-			animation = "up_right"
-		elif left_r:
-			animation = "up_left"
-		else:
-			animation = "up"
-	elif down_r:
-		if right_r:
-			animation = "down_right"
-		elif left_r:
-			animation = "down_left"
-		else:
-			animation = "down"
-	
-	if animation != "":
-		animator.play(animation)
-		last_animation = animation
-
-func set_color(color: String):
-	var sprite = $Sprite.get_node(color.capitalize())
-	if sprite:
-		animator = sprite as AnimatedSprite2D
-		reset()
-
-func reset():
-	animator.play("down")
-	last_animation = "down"
-	animator.pause()
-	animator.visible = true
-	position = start_position
-
-func start_kick():
-	animator.play(last_animation + "_kick")
-	set_kick_direction()
-
-func set_kick_direction():
-	var angle = last_direction_vector.angle() - PI/2
-	$Kick/Area2D.rotation = angle
-
-func _on_kick_body_entered(body):
-	if body is Ball and can_kick_ball:
-		apply_ball_impulse(body)
-		can_kick_ball = false
-
-func apply_ball_impulse(ball: Ball):
-	var vec = $Kick/Area2D/CollisionPolygon2D.global_position.direction_to(ball.position).normalized()
-	ball.apply_central_impulse(vec*kick_force)
-
-func on_kick_end():
-	animator.play(last_animation)
-	animator.pause()
+func _on_turn_timer_timeout():
+	can_turn = true

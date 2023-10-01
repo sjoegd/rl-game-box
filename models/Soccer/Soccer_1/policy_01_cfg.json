@@ -1,1 +1,0 @@
-{"learning_rate": 5.8562896293272416e-05, "exploration_loss_coeff": 0.0006983300603535162, "ppo_clip_value": 1.1314165878467684, "value_loss_coeff": 0.5, "ppo_clip_ratio": 0.2, "max_grad_norm": 0.7762337146801888}
