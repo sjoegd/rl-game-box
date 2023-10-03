@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg4uws554fvv"]
+
+[ext_resource type="PackedScene" uid="uid://drvfihk5esgmv" path="res://addons/godot_rl_agents/sensors/sensors_2d/RaycastSensor2D.tscn" id="1_eq2vl"]
+[ext_resource type="Script" path="res://scenes/player/raycaster.gd" id="2_ulv5s"]
+
+[node name="Raycaster" instance=ExtResource("1_eq2vl")]
+script = ExtResource("2_ulv5s")

@@ -82,8 +82,6 @@ func _spawn_nodes():
 		ray.collision_mask = collision_mask
 		add_child(ray)
 		rays.append(ray)
-		
-		
 		_angles.append(start + i * step)
 	
 func _physics_process(delta: float) -> void:

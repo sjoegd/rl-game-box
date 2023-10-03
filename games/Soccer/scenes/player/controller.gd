@@ -3,11 +3,10 @@ class_name Controller
 
 @onready var mirrored: bool = not ($".." as Player).is_left_team
 
-var player_sensor: RaycastSensor2D
-var ball_sensor: RaycastSensor2D
-var static_sensor: RaycastSensor2D
-var left_goal_sensor: RaycastSensor2D
-var right_goal_sensor: RaycastSensor2D
+var player_sensor: Raycaster
+var ball_sensor: Raycaster
+var static_sensor: Raycaster
+var goal_sensor: Raycaster
 
 var action_up: bool = false
 var action_down: bool = false
@@ -18,29 +17,25 @@ func _ready():
 	setup_sensors()
 	super._ready()
 
+# TODO: Custom rays for left and right goal (so that the agent knows where to score exactly)
+
 func setup_sensors():
-	player_sensor = $PlayerSensor as RaycastSensor2D
-	ball_sensor = $BallSensor as RaycastSensor2D
-	static_sensor = $StaticSensor as RaycastSensor2D
-	left_goal_sensor = $GoalSensors/RightGoalSensor if mirrored else $GoalSensors/LeftGoalSensor
-	right_goal_sensor = $GoalSensors/LeftGoalSensor if mirrored else $GoalSensors/RightGoalSensor
-	
-	if mirrored:
-		player_sensor.rotation_degrees += 180
-		ball_sensor.rotation_degrees += 180
-		static_sensor.rotation_degrees += 180
-		player_sensor._spawn_nodes()
-		ball_sensor._spawn_nodes()
-		static_sensor._spawn_nodes()
+	player_sensor = $PlayerSensor as Raycaster
+	ball_sensor = $BallSensor as Raycaster
+	static_sensor = $StaticSensor as Raycaster
+	goal_sensor = $GoalSensor as Raycaster
+	player_sensor.init(mirrored)
+	ball_sensor.init(mirrored)
+	static_sensor.init(mirrored)
+	goal_sensor.init(mirrored)
 
 func get_obs() -> Dictionary:
 	return {
 		"obs":
-			player_sensor.get_observation()    +
-			ball_sensor.get_observation()      +
-			static_sensor.get_observation()    +
-			left_goal_sensor.get_observation() +
-			right_goal_sensor.get_observation()
+			player_sensor.get_observation() +
+			ball_sensor.get_observation()   +
+			static_sensor.get_observation() +
+			goal_sensor.get_observation()
 	}
 
 func get_reward() -> float:	
@@ -73,8 +68,8 @@ func set_action(action) -> void:
 		action_right = action["right"] == 1
 		action_left = action["left"] == 1
 	else:
-		action_up = action["down"] == 1
-		action_down = action["up"] == 1
+		action_up = action["up"] == 1
+		action_down = action["down"] == 1
 		action_right = action["left"] == 1
 		action_left = action["right"] == 1
 
@@ -85,23 +80,23 @@ REWARD FUNCTION:
 		1.0 x (1 | 0 | -1)
 	
 	BALL_TOUCHED:
-		0.025 x (1 | 0 | -1)
+		0.0025 x (1 | 0 | -1)
 	
 	BALL_VELOCITY: 
-		0.0125 x (0 -> 1)
+		0.00125 x (0 -> 1)
 	
 	DISTANCE_BALL_GOAL:
-		0.05 x (0 -> 1)
+		0.005 x (0 -> 1)
 	
 	DISTANCE_PLAYER_BALL: 
-		0.025 x (0 -> 1)
+		0.0025 x (0 -> 1)
 """
 
 var GOAL_SCORED_REWARD: float = 1.0
-var BALL_TOUCHED_REWARD: float = 0.025
-var BALL_VELOCITY_REWARD: float = 0.0125
-var DISTANCE_BALL_GOAL_REWARD: float = 0.05
-var DISTANCE_PLAYER_BALL_REWARD: float = 0.025
+var BALL_TOUCHED_REWARD: float = 0.0025
+var BALL_VELOCITY_REWARD: float = 0.00125
+var DISTANCE_BALL_GOAL_REWARD: float = 0.005
+var DISTANCE_PLAYER_BALL_REWARD: float = 0.0025
 
 func on_goal_scored_reward(value: float):
 	reward += GOAL_SCORED_REWARD * value
