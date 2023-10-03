@@ -148,6 +148,6 @@
     "pbt_start_mutation": 1000000,
     "env_agents": 2
   },
-  "git_hash": "c28b75092fccd50460db07c565e56ad1758216e7",
+  "git_hash": "b839f9574a35ded6874608c376a34cffe824ff52",
   "git_repo_name": "git@github.com:sjoegd/rl-game-box.git"
 }
