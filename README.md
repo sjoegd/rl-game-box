@@ -24,7 +24,7 @@ Then install all requirements using:
 
 There are already build executivables present for each finished game, simply run these if you want to play them yourself.
 
-If you want to use a model to control an agent, use one of the provided test scripts in ```scripts/```.
+If you want to use or train a model to control an agent, use one of the provided train and test scripts in ```scripts/```.
 
 ## Author
 Created by Sjoegd

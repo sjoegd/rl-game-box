@@ -1,74 +1,102 @@
 extends CharacterBody2D
 class_name Player
 
+signal needs_reset
+signal touched_ball
+
 @export var push_force: float = 5.0
 @export var kick_force: float = 50.0
 @export var speed: float = 300.0
-@export var starting_direction: String = "right"
-@export var turning_cooldown_sec: float = 0.05
 @export var color: String = "red"
+@export var is_left_team: bool = true
 
 var sprite: AnimatedSprite2D
+@onready var starting_animation: String = "right" if is_left_team else "left"
+@onready var last_animation = starting_animation
+@onready var controller: Controller = $AIController2D as Controller
+@onready var starting_position: Vector2 = position
 
-@onready var current_direction_index = direction_cycle.find(starting_direction)
-var direction_cycle = ["down", "down_left", "left", "up_left", "up", "up_right", "right", "down_right"]
-var direction_to_vector = {
-	"down": Vector2(0, 1),
-	"down_left": Vector2(-1, 1).normalized(),
-	"down_right": Vector2(1, 1).normalized(),
-	"up": Vector2(0, -1),
-	"up_left": Vector2(-1, -1).normalized(),
-	"up_right": Vector2(1, -1).normalized(),
-	"left": Vector2(-1, 0),
-	"right": Vector2(1, 0)
-}
-
-var can_turn: bool = true
-
-var input_forward: bool = false
-var input_backward: bool = false
+var input_up: bool = false
+var input_down: bool = false
 var input_right: bool = false
 var input_left: bool = false
 
 func _ready():
+	setup_sprite()
+	controller.init(self)
+	
+func setup_sprite():
 	sprite = $Sprites.get_node(color.capitalize()) as AnimatedSprite2D
 	sprite.process_mode = Node.PROCESS_MODE_INHERIT
 	sprite.visible = true
+	start_sprite()
+
+func start_sprite():
+	sprite.play(starting_animation)
+	sprite.pause()
+
+func game_over():
+	controller.done = true
+	controller.needs_reset = true
+
+func reset():
+	position = starting_position
+	velocity = Vector2.ZERO
+	controller.reset()
+	start_sprite()
 
 func _physics_process(_delta):
+	if controller.needs_reset:
+		needs_reset.emit()
+		return
 	
-	var speed_d = 0
-	var direction_d = 0
+	if controller.heuristic == "human":
+		input_up = Input.is_action_pressed("up")
+		input_down = Input.is_action_pressed("down")
+		input_right = Input.is_action_pressed("right")
+		input_left = Input.is_action_pressed("left")
+	else:
+		input_up = controller.action_up
+		input_down = controller.action_down
+		input_right = controller.action_right
+		input_left = controller.action_left
 	
-	# TODO: For human heuristic, parse direction from input, no turning
-	
-	if Input.is_action_pressed("forward"):
-		speed_d += 1
-	if Input.is_action_pressed("backward"):
-		speed_d -= 0.5
-	
-	if can_turn:
-		if Input.is_action_pressed("right"):
-			direction_d += 1
-		if Input.is_action_pressed("left"):
-			direction_d -= 1
-		
-		if direction_d != 0:
-			can_turn = false
-			var turn_timer = get_tree().create_timer(turning_cooldown_sec, true, true)
-			turn_timer.connect("timeout", _on_turn_timer_timeout)
-	
-	current_direction_index = (current_direction_index + direction_d) % direction_cycle.size()
-	var current_direction = direction_cycle[current_direction_index]
-	var current_direction_vector = direction_to_vector[current_direction]
-	velocity = current_direction_vector * speed * speed_d
-	
+	velocity = calculate_direction_vector(input_up, input_down, input_right, input_left) * speed
+	set_animation(input_up, input_down, input_right, input_left, velocity.length())
 	move_and_slide()
 	handle_ball_collisions()
-	
-	sprite.play(current_direction, speed_d)
-	if speed_d == 0:
+
+func calculate_direction_vector(up: bool, down: bool, right: bool, left: bool) -> Vector2:
+	var vec = Vector2.ZERO
+	if up:
+		vec.y -= 1
+	if down:
+		vec.y += 1
+	if right:
+		vec.x += 1
+	if left:
+		vec.x -= 1
+	return vec.normalized()
+
+func set_animation(up: bool, down: bool, right: bool, left: bool, current_speed: float):
+	if not (up or down or right or left) or current_speed == 0:
 		sprite.set_frame_and_progress(0, 0)
+		sprite.pause()
+		return
+	
+	var new_animation = ""
+	
+	if up and not down:
+		new_animation = "up"
+	if down and not up:
+		new_animation = "down"
+	if right and not left:
+		new_animation += "_right" if new_animation.length() > 0 else "right"
+	if left and not right:
+		new_animation += "_left" if new_animation.length() > 0 else "left"
+	
+	sprite.play(new_animation)
+	last_animation = new_animation
 
 func handle_ball_collisions():
 	for i in get_slide_collision_count():
@@ -76,6 +104,4 @@ func handle_ball_collisions():
 		var collider = c.get_collider()
 		if collider is Ball:
 			collider.apply_central_impulse(-c.get_normal()*push_force)
-
-func _on_turn_timer_timeout():
-	can_turn = true
+			touched_ball.emit()

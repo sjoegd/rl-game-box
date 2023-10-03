@@ -1,9 +1,10 @@
-[gd_scene load_steps=72 format=3 uid="uid://b8acts3s3hs83"]
+[gd_scene load_steps=73 format=3 uid="uid://b8acts3s3hs83"]
 
 [ext_resource type="Texture2D" uid="uid://d3ahmsq0bnjhk" path="res://assets/player_blue.png" id="1_4dpi3"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_23r7n"]
 [ext_resource type="Texture2D" uid="uid://fnmdqj1up76h" path="res://assets/player_red.png" id="2_sdnsw"]
 [ext_resource type="Script" path="res://scenes/player/controller.gd" id="4_yvbya"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sensors/sensors_2d/RaycastSensor2D.gd" id="5_y5uy3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_okg6i"]
 radius = 5.0
@@ -567,3 +568,40 @@ animation = &"down"
 
 [node name="AIController2D" type="Node2D" parent="."]
 script = ExtResource("4_yvbya")
+
+[node name="PlayerSensor" type="Node2D" parent="AIController2D"]
+visible = false
+script = ExtResource("5_y5uy3")
+n_rays = 32.0
+ray_length = 1500
+
+[node name="BallSensor" type="Node2D" parent="AIController2D"]
+visible = false
+script = ExtResource("5_y5uy3")
+collision_mask = 2
+n_rays = 32.0
+ray_length = 1500
+
+[node name="StaticSensor" type="Node2D" parent="AIController2D"]
+visible = false
+script = ExtResource("5_y5uy3")
+collision_mask = 4
+n_rays = 32.0
+ray_length = 1500
+
+[node name="GoalSensors" type="Node2D" parent="AIController2D"]
+
+[node name="LeftGoalSensor" type="Node2D" parent="AIController2D/GoalSensors"]
+visible = false
+rotation = 3.14159
+script = ExtResource("5_y5uy3")
+collision_mask = 8
+ray_length = 750
+cone_width = 180.0
+
+[node name="RightGoalSensor" type="Node2D" parent="AIController2D/GoalSensors"]
+visible = false
+script = ExtResource("5_y5uy3")
+collision_mask = 16
+ray_length = 750
+cone_width = 180.0

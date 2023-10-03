@@ -95,7 +95,6 @@ func get_observation() -> Array:
 		return self.calculate_raycasts()
 	return self._obs
 	
-
 func calculate_raycasts() -> Array:
 	var result = []
 	for ray in rays:
