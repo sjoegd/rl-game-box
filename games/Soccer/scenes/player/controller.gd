@@ -30,12 +30,15 @@ func setup_sensors():
 	goal_sensor.init(mirrored)
 
 func get_obs() -> Dictionary:
+	var obs = (
+		player_sensor.get_observation() +
+		ball_sensor.get_observation()   +
+		static_sensor.get_observation() +
+		goal_sensor.get_observation()
+	)
+	
 	return {
-		"obs":
-			player_sensor.get_observation() +
-			ball_sensor.get_observation()   +
-			static_sensor.get_observation() +
-			goal_sensor.get_observation()
+		"obs":obs
 	}
 
 func get_reward() -> float:	
@@ -77,26 +80,26 @@ func set_action(action) -> void:
 REWARD FUNCTION:
 	
 	GOAL_SCORED:
-		1.0 x (1 | 0 | -1)
+		100.0 x (1 | 0 | -1)
 	
 	BALL_TOUCHED:
-		0.0025 x (1 | 0 | -1)
+		0.25 x (1 | 0 | -1)
 	
 	BALL_VELOCITY: 
-		0.00125 x (0 -> 1)
+		0.125 x (0 -> 1)
 	
 	DISTANCE_BALL_GOAL:
-		0.005 x (0 -> 1)
+		0.75 x (0 -> 1)
 	
 	DISTANCE_PLAYER_BALL: 
-		0.0025 x (0 -> 1)
+		0.25 x (0 -> 1)
 """
 
-var GOAL_SCORED_REWARD: float = 1.0
-var BALL_TOUCHED_REWARD: float = 0.0025
-var BALL_VELOCITY_REWARD: float = 0.00125
-var DISTANCE_BALL_GOAL_REWARD: float = 0.005
-var DISTANCE_PLAYER_BALL_REWARD: float = 0.0025
+var GOAL_SCORED_REWARD: float = 100.0
+var BALL_TOUCHED_REWARD: float = 0.25
+var BALL_VELOCITY_REWARD: float = 0.125
+var DISTANCE_BALL_GOAL_REWARD: float = 0.75
+var DISTANCE_PLAYER_BALL_REWARD: float = 0.25
 
 func on_goal_scored_reward(value: float):
 	reward += GOAL_SCORED_REWARD * value

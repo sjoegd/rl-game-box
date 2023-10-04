@@ -9,4 +9,5 @@
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_oifeu")
-speed_up = 12
+action_repeat = 4
+speed_up = 15

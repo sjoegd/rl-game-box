@@ -1,1 +1,0 @@
-{"exploration_loss_coeff": 0.001, "ppo_clip_ratio": 0.2, "ppo_clip_value": 1.0, "value_loss_coeff": 0.5, "max_grad_norm": 0.5, "learning_rate": 5e-05}

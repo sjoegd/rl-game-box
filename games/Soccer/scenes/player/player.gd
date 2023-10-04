@@ -9,6 +9,7 @@ signal touched_ball
 @export var speed: float = 300.0
 @export var color: String = "red"
 @export var is_left_team: bool = true
+@export var human_overwrite: bool = false
 
 var sprite: AnimatedSprite2D
 @onready var starting_animation: String = "right" if is_left_team else "left"
@@ -50,7 +51,7 @@ func _physics_process(_delta):
 		needs_reset.emit()
 		return
 	
-	if controller.heuristic == "human":
+	if controller.heuristic == "human" or human_overwrite:
 		input_up = Input.is_action_pressed("up")
 		input_down = Input.is_action_pressed("down")
 		input_right = Input.is_action_pressed("right")
