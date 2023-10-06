@@ -251,7 +251,7 @@ func handle_message() -> bool:
 		return true
 		
 	if message["type"] == "reset":
-		print("resetting all agents")
+		#print("resetting all agents")
 		_reset_all_agents()
 		just_reset = true
 		get_tree().set_pause(false) 

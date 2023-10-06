@@ -587,8 +587,36 @@ collision_mask = 4
 n_rays = 32.0
 ray_length = 1500
 
-[node name="GoalSensor" type="Node2D" parent="AIController2D"]
+[node name="GoalSensorsLeft" type="Node2D" parent="AIController2D"]
+
+[node name="OwnSensor" type="Node2D" parent="AIController2D/GoalSensorsLeft"]
+rotation = 3.14159
 script = ExtResource("5_3vxaa")
-collision_mask = 24
-n_rays = 32.0
+collision_mask = 8
 ray_length = 1500
+cone_width = 180.0
+debug_draw = false
+
+[node name="EnemySensor" type="Node2D" parent="AIController2D/GoalSensorsLeft"]
+script = ExtResource("5_3vxaa")
+collision_mask = 16
+ray_length = 1500
+cone_width = 180.0
+debug_draw = false
+
+[node name="GoalSensorRight" type="Node2D" parent="AIController2D"]
+
+[node name="OwnSensor" type="Node2D" parent="AIController2D/GoalSensorRight"]
+rotation = 3.14159
+script = ExtResource("5_3vxaa")
+collision_mask = 16
+ray_length = 1500
+cone_width = 180.0
+debug_draw = false
+
+[node name="EnemySensor" type="Node2D" parent="AIController2D/GoalSensorRight"]
+script = ExtResource("5_3vxaa")
+collision_mask = 8
+ray_length = 1500
+cone_width = 180.0
+debug_draw = false

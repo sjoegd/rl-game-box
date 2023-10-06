@@ -6,7 +6,8 @@ class_name Controller
 var player_sensor: Raycaster
 var ball_sensor: Raycaster
 var static_sensor: Raycaster
-var goal_sensor: Raycaster
+var goal_sensor_own: Raycaster
+var goal_sensor_enemy: Raycaster
 
 var action_up: bool = false
 var action_down: bool = false
@@ -17,24 +18,28 @@ func _ready():
 	setup_sensors()
 	super._ready()
 
-# TODO: Custom rays for left and right goal (so that the agent knows where to score exactly)
-
 func setup_sensors():
 	player_sensor = $PlayerSensor as Raycaster
 	ball_sensor = $BallSensor as Raycaster
 	static_sensor = $StaticSensor as Raycaster
-	goal_sensor = $GoalSensor as Raycaster
+	
+	var goal_sensors = $GoalSensorRight if mirrored else $GoalSensorsLeft
+	goal_sensor_own = goal_sensors.get_node("OwnSensor") as Raycaster
+	goal_sensor_enemy = goal_sensors.get_node("EnemySensor") as Raycaster
+	
 	player_sensor.init(mirrored)
 	ball_sensor.init(mirrored)
 	static_sensor.init(mirrored)
-	goal_sensor.init(mirrored)
+	goal_sensor_own.init(mirrored)
+	goal_sensor_enemy.init(mirrored)
 
 func get_obs() -> Dictionary:
 	var obs = (
 		player_sensor.get_observation() +
 		ball_sensor.get_observation()   +
 		static_sensor.get_observation() +
-		goal_sensor.get_observation()
+		goal_sensor_own.get_observation() +
+		goal_sensor_enemy.get_observation()
 	)
 	
 	return {

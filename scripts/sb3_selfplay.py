@@ -1,75 +1,138 @@
-import gymnasium as gym
+import argparse
+import os
+import pathlib
 import numpy as np
+
 from stable_baselines3 import PPO
-from godot_rl.wrappers.stable_baselines_wrapper import StableBaselinesGodotEnv
+from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
+from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 
-# TODO: Vectorize
-# Find possible other ways to do this
-# Check if speedup doesn't break things (see if steps are still correct)
+from godot_rl.core.godot_env import GodotEnv
+from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 
-# Currently only supports a single environment with 2 players
-class SelfPlayGodotEnv(gym.Env):
-    def __init__(
-        self,
-        env: StableBaselinesGodotEnv
-    ):
-        self.env = env
-        self.model = None
-        self.observation_space = env.observation_space.spaces["obs"]
-        self.action_space = env.action_space
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(allow_abbrev=False)
 
-    def set_model(self, model: PPO):
-        self.model = model
-    
-    def step(self, action: np.ndarray):
-        model_action = self.get_model_action()
+    parser.add_argument(
+        "--env_path",
+        default=None,
+        type=str
+    )
+
+    parser.add_argument(
+        "--save_parent_folder_path",
+        default=None,
+        type=str
+    )
+
+    parser.add_argument(
+        "--save_model_name",
+        default=None,
+        type=str
+    )
+
+    parser.add_argument(
+        "--viz",
+        default=False,
+        type=bool
+    )
+
+    parser.add_argument(
+        "--speedup",
+        default=15,
+        type=int
+    )
+
+    parser.add_argument(
+        "--agents_per_env",
+        default=2,
+        type=int
+    )
+
+    parser.add_argument(
+        "--n_parallel",
+        default=1,
+        type=int
+    )
+
+    parser.add_argument(
+        "--action_repeat",
+        default=4,
+        type=int
+    )
+
+    parser.add_argument(
+        "--max_past_agents",
+        default=10,
+        type=int
+    )
+
+    parser.add_argument(
+        "--total_timesteps",
+        default=1_000_000,
+        type=int
+    )
+
+    parser.add_argument(
+        "--total_iterations",
+        default=100,
+        type=int
+    )
+
+    args = parser.parse_args()
+    base_port = GodotEnv.DEFAULT_PORT
+
+    save_parent_path = pathlib.Path(args.save_parent_folder_path)
+    save_path = pathlib.Path(save_parent_path, args.save_model_name)
+    temp_path = pathlib.Path(save_parent_path, "temp")
+
+    if not os.path.exists(save_parent_path):
+        os.mkdir(save_parent_path)
+    if not os.path.exists(temp_path):
+        os.mkdir(temp_path)
+
+    def make_env(p):
+        def make_env_p():
+            return SelfPlayGodotEnv(
+                env_path=args.env_path,
+                show_window=args.viz,
+                speedup=args.speedup,
+                agents_per_env=args.agents_per_env,
+                action_repeat=args.action_repeat,
+                port=base_port+p
+            )
+        return make_env_p
+
+    env_makers = [make_env(p) for p in range(args.n_parallel)]
+
+    venv = DummyVecEnv(env_makers)
+    env = VecMonitor(venv)
+
+    past_agent_paths = []
+    max_past_agents = args.max_past_agents
+    total_timesteps = args.total_timesteps
+    total_iterations = args.total_iterations
+    steps_per_iteration = total_timesteps // total_iterations
+
+    agent = PPO(policy="MlpPolicy", env=env, verbose=1)
+
+    for it in range(total_iterations):
+        print("--------------------")
+        print("Iteration: {}".format(it))
+        print("--------------------")
         
-        obs, rewards, done, info = self.env.step(np.array([action, model_action]))
+        agent.learn(steps_per_iteration, reset_num_timesteps=False)
         
-        obs = obs["obs"]
-        step_obs = np.array(obs[0], np.float32)
-        self.latest_model_obs = np.array(obs[1], np.float32)
+        past_agent_path = pathlib.Path(temp_path, "agent_{}".format(it))
+        past_agent_paths.append(past_agent_path)
+        agent.save(past_agent_path)
+        agent.save(save_path)
         
-        return step_obs, rewards[0], (done[0] or done[1]), False, {}
-    
-    def reset(self, seed=0):
-        obs = self.env.reset()["obs"]
-        self.latest_model_obs = np.array(obs[1], np.float32)
-        return np.array(obs[0], np.float32), {}
-    
-    def get_model_action(self):
-        model_action = self.action_space.sample()
-        if self.latest_model_obs is not None and self.model is not None:
-            model_action, _ = self.model.predict(self.latest_model_obs, deterministic=True)
-        return model_action
+        if len(past_agent_paths) > max_past_agents:
+            removed_past_agent_path = past_agent_paths.pop(np.random.randint(len(past_agent_paths)))
+            os.remove(removed_past_agent_path + ".zip")
+        
+        venv.env_method("choose_models", past_agent_paths)
 
-env = StableBaselinesGodotEnv(
-    env_path="games/Soccer/build/soccer_train.exe",
-    show_window=True,
-    speedup=10
-)
-env = SelfPlayGodotEnv(env)
-
-agent = PPO(policy="MlpPolicy", env=env)
-env.set_model(agent)
-
-past_agents = []
-max_past_agents = 10
-total_timesteps = 1_000_000
-total_iterations = 100
-steps_per_iteration = total_timesteps // total_iterations
-
-for i in range(total_iterations):
-    print("Iteration:", i)
-    agent.learn(steps_per_iteration, reset_num_timesteps=False)
-    agent.save("models/soccer_ppo")
-    new_agent = PPO.load("models/soccer_ppo")
-    past_agents.append(new_agent)
-    if len(past_agents) > max_past_agents:
-        past_agents.pop(0)
-    env.set_model(past_agents[np.random.randint(len(past_agents))])
-
-agent.save("models/soccer_ppo")
-env.close()
-
-
+    agent.save(save_path)
+    env.close()
