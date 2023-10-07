@@ -84,11 +84,13 @@ class SelfPlayGodotEnvAsync(VecEnv):
         self.env.close()
     
     def parse_obs(self, obs: np.ndarray):
+        # Get the obs for the first player for every parallel env
         step_obs = []
         for i in range(self.n_parallel):
             step_obs.append(obs[i*self.agents_per_env])
         step_obs = np.array(step_obs, np.float32)
         
+        # Get the obs for each model for every parallel env
         for i in range(self.agents_per_env):
             self.latest_models_obs[i] = [None for _ in range(self.n_parallel)]
             for j in range(self.n_parallel):

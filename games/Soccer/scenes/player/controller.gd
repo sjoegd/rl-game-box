@@ -88,7 +88,7 @@ REWARD FUNCTION:
 		100.0 x (1 | 0 | -1)
 	
 	BALL_TOUCHED:
-		0.25 x (1 | 0 | -1)
+		0.025 x (1 | 0 | -1)
 	
 	BALL_VELOCITY: 
 		0.125 x (0 -> 1)
@@ -101,7 +101,7 @@ REWARD FUNCTION:
 """
 
 var GOAL_SCORED_REWARD: float = 100.0
-var BALL_TOUCHED_REWARD: float = 0.25
+var BALL_TOUCHED_REWARD: float = 0.025
 var BALL_VELOCITY_REWARD: float = 0.125
 var DISTANCE_BALL_GOAL_REWARD: float = 0.75
 var DISTANCE_PLAYER_BALL_REWARD: float = 0.25
