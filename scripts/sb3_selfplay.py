@@ -1,6 +1,7 @@
 import argparse
 import os
 import pathlib
+import shutil
 import numpy as np
 
 from stable_baselines3 import PPO
@@ -193,12 +194,13 @@ if __name__ == "__main__":
             
             if len(past_agent_paths) > max_past_agents:
                 removed_past_agent_path = past_agent_paths.pop(np.random.randint(len(past_agent_paths)))
-                os.remove(removed_past_agent_path + ".zip")
+                os.remove(removed_past_agent_path.with_suffix(".zip"))
             
             if args.is_async:
                 venv.choose_models(past_agent_paths)
             else:
                 venv.env_method("choose_models", past_agent_paths)
 
+        shutil.rmtree(temp_path)
         agent.save(save_path)
         env.close()
