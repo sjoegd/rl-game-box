@@ -33,47 +33,35 @@ class SelfPlayGodotEnvAsync(VecEnv):
         self.action_space = self.env.action_space
         self.n_parallel = n_parallel
         self.agents_per_env = agents_per_env - 1
-        self.models = [None for _ in range(self.agents_per_env)]
-        self.latest_models_obs = [[None for _ in range(self.n_parallel)] for _ in range(self.agents_per_env)]
+        self.env_models = [SelfPlayEnvModel(self, self.agents_per_env) for _ in range(self.n_parallel)]
 
-    def set_model(self, agent_num: int, model_path: str):
-        self.models[agent_num] = PPO.load(model_path)
-        print(f"Loaded model {model_path} for agent {agent_num}")
-    
-    def choose_model(self, agent_num: int, model_paths: list[str]):
-        model_path = model_paths[np.random.randint(len(model_paths))]
-        self.set_model(agent_num, model_path)
-    
     def choose_models(self, model_paths: list[str]):
-        for i in range(self.agents_per_env):
-            self.choose_model(i, model_paths)
+        for env_model in self.env_models:
+            env_model.choose_models(model_paths)
     
     def step(self, action: np.ndarray):
-        model_actions = self.get_model_actions()
-        
-        total_actions = []
+        # Get and combine actions from all models
+        total_model_actions = []
         for i in range(self.n_parallel):
-            total_actions.append(action[i])
-            total_actions.append(model_actions[i])
+            total_model_actions.append(action[i])
+            total_model_actions += self.env_models[i].get_model_actions()
         
-        obs, rewards, dones, _ = self.env.step(np.array(total_actions))
+        # Step the environment
+        obs, rewards, dones, _ = self.env.step(np.array(total_model_actions))
         obs = obs["obs"]
         
+        # Get information for main model
         step_obs = self.parse_obs(obs)
-        
-        # Get the rewards for the first player for every parallel env
         step_rewards = []
-        for i in range(self.n_parallel):
-            step_rewards.append(rewards[i*self.agents_per_env])
-        step_rewards = np.array(step_rewards, np.float32)
-        
-        # Get the dones for each parallel env
         step_dones = []
         for i in range(self.n_parallel):
-            env_dones = dones[i*self.agents_per_env:(i+1)*self.agents_per_env]
+            step_rewards.append(rewards[i * (self.agents_per_env + 1)])
+            # Check whether any agent of the env is done
+            env_dones = dones[i * (self.agents_per_env + 1) : (i + 1) * (self.agents_per_env + 1)]
             step_dones.append(True in env_dones)
-        step_dones = np.array(step_dones, bool)
-            
+        step_rewards = np.array(step_rewards)
+        step_dones = np.array(step_dones)
+        
         return step_obs, step_rewards, step_dones, [{} for _ in range(self.n_parallel)]
     
     def reset(self, seed=0):
@@ -83,40 +71,16 @@ class SelfPlayGodotEnvAsync(VecEnv):
     def close(self):
         self.env.close()
     
-    def parse_obs(self, obs: np.ndarray):
-        # Get the obs for the first player for every parallel env
+    def parse_obs(self, obs):
         step_obs = []
         for i in range(self.n_parallel):
-            step_obs.append(obs[i*self.agents_per_env])
-        step_obs = np.array(step_obs, np.float32)
-        
-        # Get the obs for each model for every parallel env
-        for i in range(self.agents_per_env):
-            self.latest_models_obs[i] = [None for _ in range(self.n_parallel)]
-            for j in range(self.n_parallel):
-                self.latest_models_obs[i][j] = obs[j*self.agents_per_env + (i + 1)]
-            self.latest_models_obs[i] = np.array(self.latest_models_obs[i], np.float32)
-        
-        return step_obs
-    
-    def get_model_action(self, agent_num: int):
-        model_actions = []
+            step_obs.append(obs[i * (self.agents_per_env + 1)])
         
         for i in range(self.n_parallel):
-            model_action = self.action_space.sample()
-            model_obs = self.latest_models_obs[agent_num][i]
-            if self.models[agent_num] is not None and model_obs is not None:
-                model_action, _ = self.models[agent_num].predict(model_obs, deterministic=True)
-            model_actions.append(model_action)
-            
-        return model_actions
-    
-    def get_model_actions(self):
-        model_actions = []
-        for i in range(self.agents_per_env):
-            model_action = self.get_model_action(i)
-            model_actions += model_action
-        return model_actions
+            for j in range(self.agents_per_env):
+                self.env_models[i].set_latest_model_obs(j, obs[(i * (self.agents_per_env + 1)) + (j + 1)])
+        
+        return np.array(step_obs)
     
     @property 
     def num_envs(self) -> int:
@@ -145,9 +109,40 @@ class SelfPlayGodotEnvAsync(VecEnv):
     def step_wait(self): 
         return self.results
 
-# Notes:
-# obs = [array * agents_per_env * n_parallel]
-# rewards = [float * agents_per_env * n_parallel]
-# dones = [bool * agents_per_env * n_parallel]
-
-
+class SelfPlayEnvModel:
+    
+    def __init__(self, env: SelfPlayGodotEnvAsync, agents_per_env: int):
+        self.env = env
+        self.agents_per_env = agents_per_env
+        self.models = [None for _ in range(agents_per_env)]
+        self.latest_models_obs = [None for _ in range(agents_per_env)]
+    
+    def set_model(self, agent_n: int, model_path: str):
+        self.models[agent_n] = PPO.load(model_path)
+        print(f"Loaded model {model_path} for agent {agent_n}")
+    
+    def choose_model(self, agent_n: int, model_paths: list[str]):
+        model_path = model_paths[np.random.randint(len(model_paths))]
+        self.set_model(agent_n, model_path)
+    
+    def choose_models(self, model_paths: list[str]):
+        for i in range(self.agents_per_env):
+            self.choose_model(i, model_paths)
+    
+    def set_latest_model_obs(self, agent_n: int, obs: np.ndarray):
+        self.latest_models_obs[agent_n] = obs
+    
+    def get_model_action(self, agent_n: int):
+        model_action = self.env.action_space.sample()
+        model_obs = self.latest_models_obs[agent_n]
+        model = self.models[agent_n]
+        if model is not None and model_obs is not None:
+            model_action, _ = model.predict(model_obs, deterministic=True)
+        return model_action
+    
+    def get_model_actions(self):
+        model_actions = []
+        for i in range(self.agents_per_env):
+            model_action = self.get_model_action(i)
+            model_actions.append(model_action)
+        return model_actions
