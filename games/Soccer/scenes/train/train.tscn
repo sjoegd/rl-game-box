@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bspnddtw5d31y"]
+
+[ext_resource type="PackedScene" uid="uid://c0pb4l6hxosol" path="res://scenes/game/game.tscn" id="1_1gnl6"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_oifeu"]
+
+[node name="Train" type="Node2D"]
+
+[node name="Game" parent="." instance=ExtResource("1_1gnl6")]
+random_start_positions = true
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_oifeu")
+action_repeat = 4
+speed_up = 8

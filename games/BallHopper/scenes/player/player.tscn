@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctkur3lmc0d17"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_agq75"]
+[ext_resource type="Script" path="res://scenes/player/controller.gd" id="2_xw7xn"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sensors/sensors_2d/RaycastSensor2D.gd" id="3_sqgw8"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qufkn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rpkr3"]
+size = Vector2(6, 1)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 5
+script = ExtResource("1_agq75")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(6, 1)
+texture = SubResource("CanvasTexture_qufkn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rpkr3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_rpkr3")
+
+[node name="AIController2D" type="Node2D" parent="."]
+script = ExtResource("2_xw7xn")
+
+[node name="BallSensor" type="Node2D" parent="AIController2D"]
+visible = false
+rotation = -1.5708
+script = ExtResource("3_sqgw8")
+collision_mask = 2
+ray_length = 1000
+cone_width = 180.0
+debug_draw = false
+
+[node name="StaticSensor" type="Node2D" parent="AIController2D"]
+visible = false
+rotation = -1.5708
+script = ExtResource("3_sqgw8")
+collision_mask = 4
+ray_length = 1000
+cone_width = 180.0
+debug_draw = false
