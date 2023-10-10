@@ -13,6 +13,7 @@ var action_up: bool = false
 var action_down: bool = false
 var action_right: bool = false
 var action_left: bool = false
+var action_dash: bool = false
 
 func _ready():
 	setup_sensors()
@@ -22,7 +23,6 @@ func setup_sensors():
 	player_sensor = $PlayerSensor as Raycaster
 	ball_sensor = $BallSensor as Raycaster
 	static_sensor = $StaticSensor as Raycaster
-	
 	var goal_sensors = $GoalSensorRight if mirrored else $GoalSensorsLeft
 	goal_sensor_own = goal_sensors.get_node("OwnSensor") as Raycaster
 	goal_sensor_enemy = goal_sensors.get_node("EnemySensor") as Raycaster
@@ -34,12 +34,30 @@ func setup_sensors():
 	goal_sensor_enemy.init(mirrored)
 
 func get_obs() -> Dictionary:
+	"""
+	TODO: More obs?
+		- Ball velocity
+		- ?
+	"""
 	var obs = (
 		player_sensor.get_observation() +
 		ball_sensor.get_observation()   +
 		static_sensor.get_observation() +
 		goal_sensor_own.get_observation() +
-		goal_sensor_enemy.get_observation()
+		goal_sensor_enemy.get_observation() +
+		[
+			# Previous Action Observations
+			float(action_up),
+			float(action_down),
+			float(action_right),
+			float(action_left),
+			float(action_dash)
+		] +
+		[
+			# Dash Observations
+			float((_player as Player).can_dash),
+			float((_player as Player).is_dashing),
+		]
 	)
 	
 	return {
@@ -66,20 +84,31 @@ func get_action_space() -> Dictionary:
 		"left": {
 			"size": 2,
 			"action_type": "discrete"
+		},
+		"dash": {
+			"size": 2,
+			"action_type": "discrete"
 		}
 	}
 	
 func set_action(action) -> void:
+	action_up = action["up"] == 1
+	action_down = action["down"] == 1
 	if not mirrored:
-		action_up = action["up"] == 1
-		action_down = action["down"] == 1
 		action_right = action["right"] == 1
 		action_left = action["left"] == 1
 	else:
-		action_up = action["up"] == 1
-		action_down = action["down"] == 1
 		action_right = action["left"] == 1
 		action_left = action["right"] == 1
+	action_dash = action["dash"] == 1
+
+func reset():
+	action_up = false
+	action_down = false
+	action_right = false
+	action_left = false
+	action_dash = false
+	super.reset()
 
 """
 REWARD FUNCTION:
@@ -93,16 +122,25 @@ REWARD FUNCTION:
 	BALL_VELOCITY: 
 		0.125 x (0 -> 1)
 	
+	MIN_BALL_VELOCITY:
+		0.125 x (0 | -1)
+	
 	DISTANCE_BALL_GOAL:
-		0.75 x (0 -> 1)
+		0.75 x (-1 -> 1)
 	
 	DISTANCE_PLAYER_BALL: 
-		0.25 x (0 -> 1)
+		0.25 x (-1 -> 1)
+"""
+
+"""
+	TODO:
+	Fix or remove ball touch reward
 """
 
 var GOAL_SCORED_REWARD: float = 100.0
 var BALL_TOUCHED_REWARD: float = 0.025
 var BALL_VELOCITY_REWARD: float = 0.125
+var MIN_BALL_VELOCITY_REWARD: float = 0.125
 var DISTANCE_BALL_GOAL_REWARD: float = 0.75
 var DISTANCE_PLAYER_BALL_REWARD: float = 0.25
 
@@ -114,6 +152,9 @@ func on_ball_touched_reward(value: float):
 
 func on_ball_velocity_reward(value: float):
 	reward += BALL_VELOCITY_REWARD * value
+
+func on_min_ball_velocity_reward(value: float):
+	reward += MIN_BALL_VELOCITY_REWARD * value
 
 func on_distance_ball_goal_reward(value: float):
 	reward += DISTANCE_BALL_GOAL_REWARD * value

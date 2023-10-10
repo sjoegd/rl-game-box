@@ -9,7 +9,7 @@ script = ExtResource("1_fgtmr")
 
 [node name="Field" parent="." instance=ExtResource("1_lxm5n")]
 
-[node name="BallSpawn" type="Marker2D" parent="."]
+[node name="CenterPoint" type="Marker2D" parent="."]
 position = Vector2(648, 360)
 
 [node name="Player1" parent="." instance=ExtResource("3_ohg5s")]

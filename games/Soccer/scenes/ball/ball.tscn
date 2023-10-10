@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://nqbqlveu6jvj" path="res://assets/football.png" id="1_s67dv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kt0ov"]
-bounce = 0.5
+bounce = 0.9
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c1xua"]
 radius = 127.142

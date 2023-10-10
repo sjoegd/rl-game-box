@@ -6,7 +6,9 @@
 [node name="Train" type="Node2D"]
 
 [node name="Game" parent="." instance=ExtResource("1_1gnl6")]
+random_start_positions = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_oifeu")
-action_repeat = 1
+action_repeat = 4
+speed_up = 8

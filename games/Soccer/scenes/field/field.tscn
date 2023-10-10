@@ -98,6 +98,22 @@ shape = SubResource("RectangleShape2D_ivv78")
 position = Vector2(1295, 571)
 shape = SubResource("RectangleShape2D_ivv78")
 
+[node name="TopLeftCorner" type="CollisionPolygon2D" parent="Borders"]
+position = Vector2(648, 9)
+polygon = PackedVector2Array(-630, 34, -605, 9, -630, 9)
+
+[node name="TopRightCorner" type="CollisionPolygon2D" parent="Borders"]
+position = Vector2(1903, 9)
+polygon = PackedVector2Array(-625, 34, -625, 9, -650, 9)
+
+[node name="BottomLeftCorner" type="CollisionPolygon2D" parent="Borders"]
+position = Vector2(648, 688)
+polygon = PackedVector2Array(-630, 14, -605, 14, -630, -11)
+
+[node name="BottomRightCorner" type="CollisionPolygon2D" parent="Borders"]
+position = Vector2(1903, 688)
+polygon = PackedVector2Array(-650, 14, -625, 14, -625, -11)
+
 [node name="LeftGoal" parent="." instance=ExtResource("3_syn73")]
 position = Vector2(1, 360)
 collision_layer = 12
