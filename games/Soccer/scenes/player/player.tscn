@@ -574,13 +574,13 @@ metadata/_edit_group_ = true
 
 [node name="PlayerSensor" type="Node2D" parent="AIController2D"]
 script = ExtResource("5_3vxaa")
-n_rays = 32.0
+n_rays = 48.0
 ray_length = 1500
 
 [node name="BallSensor" type="Node2D" parent="AIController2D"]
 script = ExtResource("5_3vxaa")
 collision_mask = 2
-n_rays = 32.0
+n_rays = 64.0
 ray_length = 1500
 
 [node name="StaticSensor" type="Node2D" parent="AIController2D"]

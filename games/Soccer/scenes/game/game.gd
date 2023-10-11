@@ -22,7 +22,7 @@ var game_height: float = 720
 
 var max_distance_ball_goal = Vector2.ZERO.distance_to(Vector2(game_width, game_height/2))
 var max_distance_player_ball = Vector2.ZERO.distance_to(Vector2(game_width, game_height))
-@export var min_ball_velocity: float = 50.0
+@onready var min_ball_velocity: float = ball.max_velocity * 0.1
 
 func _ready():
 	player1.init(self)

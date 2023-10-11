@@ -11,6 +11,7 @@ class SelfPlayGodotEnv(gym.Env):
         agents_per_env: int = 2,
         show_window: bool = False,
         speedup: int = 1,
+        human_overwrite: bool = False,
         port=GodotEnv.DEFAULT_PORT,
         action_repeat: int = 1
     ):  
@@ -23,6 +24,7 @@ class SelfPlayGodotEnv(gym.Env):
                 "action_repeat": action_repeat,
             }
         )
+        self.human_overwrite = human_overwrite
         self.observation_space = self.env.observation_space.spaces["obs"]
         self.action_space = self.env.action_space
         self.agents_per_env = agents_per_env - 1
@@ -59,6 +61,8 @@ class SelfPlayGodotEnv(gym.Env):
         return step_obs
     
     def get_model_action(self, agent_num: int):
+        if self.human_overwrite:
+            return np.zeros(self.action_space.shape)
         model_action = self.action_space.sample()
         model_obs = self.latest_models_obs[agent_num]
         model = self.models[agent_num]

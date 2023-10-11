@@ -126,7 +126,7 @@ REWARD FUNCTION:
 		0.05 x (0 -> 1)
 	
 	MIN_BALL_VELOCITY:
-		0.1 x (0 | -1)
+		0.25 x (0 | -1)
 	
 	DISTANCE_BALL_GOAL:
 		0.5 x (-1 -> 1)
@@ -135,17 +135,11 @@ REWARD FUNCTION:
 		0.1 x (-1 -> 1)
 """
 
-"""
-TODO:
-	- Maybe increase the ray count for obs
-		- Allows for more accurate obs
-			- Makes the models bigger and more expensive though
-"""
 
 var GOAL_SCORED_REWARD: float = 100.0
 var BALL_TOUCHED_REWARD: float = 0.025
 var BALL_VELOCITY_REWARD: float = 0.05
-var MIN_BALL_VELOCITY_REWARD: float = 0.1
+var MIN_BALL_VELOCITY_REWARD: float = 0.25
 var DISTANCE_BALL_GOAL_REWARD: float = 0.5
 var DISTANCE_PLAYER_BALL_REWARD: float = 0.1
 

@@ -72,7 +72,7 @@ func _physics_process(_delta):
 		return
 	
 	if not disable_input:
-		if controller.heuristic == "human" or human_overwrite:
+		if controller.heuristic == "human":
 			input_up = Input.is_action_pressed("up")
 			input_down = Input.is_action_pressed("down")
 			input_right = Input.is_action_pressed("right")
@@ -84,6 +84,28 @@ func _physics_process(_delta):
 			input_right = controller.action_right
 			input_left = controller.action_left
 			input_dash = controller.action_dash
+		
+		if human_overwrite:
+			var pressed = ["up", "down", "right", "left", "dash"].map(	
+				func(action):
+					return Input.is_action_pressed(action)
+			)
+
+			if pressed.any(
+				func(p):
+					return p
+			):
+				input_up = Input.is_action_pressed("up") 
+				input_down = Input.is_action_pressed("down") 
+				input_right = Input.is_action_pressed("right") 
+				input_left = Input.is_action_pressed("left") 
+				input_dash = Input.is_action_pressed("dash")
+			else:
+				input_up = controller.action_up
+				input_down = controller.action_down
+				input_right = controller.action_right
+				input_left = controller.action_left
+				input_dash = controller.action_dash
 	
 	if not is_dashing:
 		var direction = calculate_direction_vector(input_up, input_down, input_right, input_left)
@@ -146,6 +168,7 @@ func reset_dash():
 
 func handle_animation(up: bool, down: bool, right: bool, left: bool, current_speed: float):	
 	if not (up or down or right or left) or current_speed == 0:
+		sprite.play(last_animation)
 		sprite.set_frame_and_progress(0, 0)
 		sprite.pause()
 		return

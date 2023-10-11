@@ -45,19 +45,25 @@ if __name__ == "__main__":
     
     args, _ = parser.parse_known_args()
     
+    model_paths = args.load_model_paths.split(", ")
+    model_paths = [pathlib.Path(path) for path in model_paths]
+    agent_path = model_paths[0]
+    opponent_paths = model_paths[1:]
+    
+    human_overwrite = (len(opponent_paths)==0)
+    
     env = SelfPlayGodotEnv(
         env_path=args.env_path,
         speedup=args.speedup,
         agents_per_env=args.agents_per_env,
         action_repeat=args.action_repeat,
-        show_window=True
+        show_window=True,
+        human_overwrite=human_overwrite
     )
     
-    model_paths = args.load_model_paths.split(", ")
-    model_paths = [pathlib.Path(path) for path in model_paths]
-    
-    agent = PPO.load(model_paths[0])
-    opponent_paths = model_paths[1:]
+    agent = PPO.load(agent_path)
+    if not human_overwrite:
+        env.choose_models(opponent_paths)
     
     for _ in range(args.num_episodes):
         if len(opponent_paths) > 0:
