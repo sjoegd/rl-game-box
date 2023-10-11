@@ -34,11 +34,10 @@ func setup_sensors():
 	goal_sensor_enemy.init(mirrored)
 
 func get_obs() -> Dictionary:
-	"""
-	TODO: More obs?
-		- Ball velocity
-		- ?
-	"""
+	
+	var ball = (_player as Player).my_game.ball
+	var ball_velocity = ball.linear_velocity.length() / ball.max_velocity
+	
 	var obs = (
 		player_sensor.get_observation() +
 		ball_sensor.get_observation()   +
@@ -57,6 +56,10 @@ func get_obs() -> Dictionary:
 			# Dash Observations
 			float((_player as Player).can_dash),
 			float((_player as Player).is_dashing),
+		] +
+		[
+			# Ball Observations
+			float(ball_velocity)
 		]
 	)
 	
@@ -120,29 +123,31 @@ REWARD FUNCTION:
 		0.025 x (1 | 0 | -1)
 	
 	BALL_VELOCITY: 
-		0.125 x (0 -> 1)
+		0.05 x (0 -> 1)
 	
 	MIN_BALL_VELOCITY:
-		0.125 x (0 | -1)
+		0.1 x (0 | -1)
 	
 	DISTANCE_BALL_GOAL:
-		0.75 x (-1 -> 1)
+		0.5 x (-1 -> 1)
 	
 	DISTANCE_PLAYER_BALL: 
-		0.25 x (-1 -> 1)
+		0.1 x (-1 -> 1)
 """
 
 """
-	TODO:
-	Fix or remove ball touch reward
+TODO:
+	- Maybe increase the ray count for obs
+		- Allows for more accurate obs
+			- Makes the models bigger and more expensive though
 """
 
 var GOAL_SCORED_REWARD: float = 100.0
 var BALL_TOUCHED_REWARD: float = 0.025
-var BALL_VELOCITY_REWARD: float = 0.125
-var MIN_BALL_VELOCITY_REWARD: float = 0.125
-var DISTANCE_BALL_GOAL_REWARD: float = 0.75
-var DISTANCE_PLAYER_BALL_REWARD: float = 0.25
+var BALL_VELOCITY_REWARD: float = 0.05
+var MIN_BALL_VELOCITY_REWARD: float = 0.1
+var DISTANCE_BALL_GOAL_REWARD: float = 0.5
+var DISTANCE_PLAYER_BALL_REWARD: float = 0.1
 
 func on_goal_scored_reward(value: float):
 	reward += GOAL_SCORED_REWARD * value

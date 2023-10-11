@@ -25,6 +25,8 @@ var max_distance_player_ball = Vector2.ZERO.distance_to(Vector2(game_width, game
 @export var min_ball_velocity: float = 50.0
 
 func _ready():
+	player1.init(self)
+	player2.init(self)
 	reset()
 
 func _physics_process(_delta):

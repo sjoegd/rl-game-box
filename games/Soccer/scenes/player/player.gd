@@ -34,6 +34,11 @@ var input_right: bool = false
 var input_left: bool = false
 var input_dash: bool = false
 
+var my_game: Game
+
+func init(game: Game):
+	my_game = game
+
 func _ready():
 	setup_sprite()
 	controller.init(self)

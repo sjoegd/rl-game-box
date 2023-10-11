@@ -5,7 +5,13 @@ from godot_rl.wrappers.stable_baselines_wrapper import StableBaselinesGodotEnv
 from stable_baselines3.common.vec_env.base_vec_env import VecEnv
 from godot_rl.core.godot_env import GodotEnv
 
-# TODO: Test
+"""
+TODO: 
+    - Test if correct
+        - Works with any agents_per_env (if game supports it of course)
+        - Gives correct obs, rewards, actions
+        - Actually faster than the sync selfplay godot env
+"""
 
 class SelfPlayGodotEnvAsync(VecEnv):
     def __init__(
@@ -38,11 +44,11 @@ class SelfPlayGodotEnvAsync(VecEnv):
         for env_model in self.env_models:
             env_model.choose_models(model_paths)
     
-    def step(self, action: np.ndarray):
+    def step(self, actions: np.ndarray):
         # Get and combine actions from all models
         total_model_actions = []
         for i in range(self.n_parallel):
-            total_model_actions.append(action[i])
+            total_model_actions.append(actions[i])
             total_model_actions += self.env_models[i].get_model_actions()
         
         # Step the environment
@@ -86,7 +92,7 @@ class SelfPlayGodotEnvAsync(VecEnv):
         return self.n_parallel
     
     def env_is_wrapped(self, wrapper_class=None, indices=None) -> List[bool]:
-        return [False] * (self.n_parallel)
+        return [False] * self.n_parallel
 
     def env_method(self):
         raise NotImplementedError()
@@ -108,6 +114,7 @@ class SelfPlayGodotEnvAsync(VecEnv):
     def step_wait(self): 
         return self.results
 
+# TODO: Rename to something better
 class SelfPlayEnvModel:
     
     def __init__(self, env: SelfPlayGodotEnvAsync, agents_per_env: int):
