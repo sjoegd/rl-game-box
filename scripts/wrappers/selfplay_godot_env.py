@@ -45,21 +45,25 @@ class SelfPlayGodotEnv(gym.Env):
         model_actions = self.get_model_actions()
         obs, rewards, done, info = self.env.step(np.array([action] + model_actions))
         obs = obs["obs"]
-        step_obs = np.array(obs[0], np.float32)
-        for i in range(self.agents_per_env):
-            self.latest_models_obs[i] = np.array(obs[i+1], np.float32)
-        return step_obs, rewards[0], (done[0] or done[1]), False, {}
+        step_obs = self.parse_obs(obs)
+        return step_obs, rewards[0], (True in done), False, {}
     
     def reset(self, seed=0):
         obs = self.env.reset()["obs"]
-        self.latest_model_obs = np.array(obs[1], np.float32)
-        return np.array(obs[0], np.float32), {}
+        return self.parse_obs(obs), {}
+    
+    def parse_obs(self, obs: np.ndarray):
+        step_obs = np.array(obs[0], np.float32)
+        for i in range(self.agents_per_env):
+            self.latest_models_obs[i] = np.array(obs[i+1], np.float32)
+        return step_obs
     
     def get_model_action(self, agent_num: int):
         model_action = self.action_space.sample()
         model_obs = self.latest_models_obs[agent_num]
-        if self.models[agent_num] is not None and model_obs is not None:
-            model_action, _ = self.models[agent_num].predict(model_obs, deterministic=True)
+        model = self.models[agent_num]
+        if model is not None and model_obs is not None:
+            model_action, _ = model.predict(model_obs, deterministic=True)
         return model_action
     
     def get_model_actions(self):

@@ -6,7 +6,6 @@ from stable_baselines3.common.vec_env.base_vec_env import VecEnv
 from godot_rl.core.godot_env import GodotEnv
 
 # TODO: Test
-# TODO: Add support for a model per n_parallel (currently only supports 1 model for all)
 
 class SelfPlayGodotEnvAsync(VecEnv):
     def __init__(
