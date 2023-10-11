@@ -15,6 +15,7 @@ from wrappers.selfplay_godot_env_async import SelfPlayGodotEnvAsync
 
 """
 TODO:
+    - Add support for better PPO hyperparameters
     - Add support for arg overwrites when resuming training
     - Training should also support single agent env (remove train script from godot-rl-agents)
         - Maybe works automatically with selfplay env set to 1 agent

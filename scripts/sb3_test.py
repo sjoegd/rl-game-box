@@ -45,8 +45,6 @@ if __name__ == "__main__":
     
     args, _ = parser.parse_known_args()
     
-    print(args.env_path)
-    
     env = SelfPlayGodotEnv(
         env_path=args.env_path,
         speedup=args.speedup,
@@ -55,7 +53,7 @@ if __name__ == "__main__":
         show_window=True
     )
     
-    model_paths = args.load_model_paths.split(",")
+    model_paths = args.load_model_paths.split(", ")
     model_paths = [pathlib.Path(path) for path in model_paths]
     
     agent = PPO.load(model_paths[0])
@@ -69,3 +67,5 @@ if __name__ == "__main__":
         while not done:
             action, _ = agent.predict(obs, deterministic=True)
             obs, _, done, _, _ = env.step(action)
+    
+    env.close()
