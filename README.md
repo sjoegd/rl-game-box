@@ -6,6 +6,7 @@ Note: This project has recently switched from pygame to godot so older versions 
 ## Games
 ### In Progress
 - 2D Soccer (1v1)
+- 2D Racing 
 - BallHopper 
 ### BallHopper
 
