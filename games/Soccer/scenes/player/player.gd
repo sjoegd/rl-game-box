@@ -167,7 +167,7 @@ func reset_dash():
 	can_dash = true
 
 func handle_animation(up: bool, down: bool, right: bool, left: bool, current_speed: float):	
-	if not (up or down or right or left) or current_speed == 0:
+	if not (up or down or right or left) or current_speed < 0.2*speed:
 		sprite.play(last_animation)
 		sprite.set_frame_and_progress(0, 0)
 		sprite.pause()
