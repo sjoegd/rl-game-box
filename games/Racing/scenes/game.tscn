@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://834o0w4b4axh"]
+
+[ext_resource type="PackedScene" uid="uid://dabtnropd8ejx" path="res://scenes/track.tscn" id="1_bglyu"]
+[ext_resource type="PackedScene" uid="uid://ccfb8mi3wr5r3" path="res://scenes/car.tscn" id="2_wx1gl"]
+
+[node name="Game" type="Node3D"]
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+shadow_enabled = true
+
+[node name="Nissan GTR" parent="." instance=ExtResource("2_wx1gl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7841, 12.5335, 9.45783)
+
+[node name="Track" parent="." instance=ExtResource("1_bglyu")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
