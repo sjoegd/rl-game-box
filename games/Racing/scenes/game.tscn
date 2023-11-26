@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://834o0w4b4axh"]
+
+[ext_resource type="PackedScene" uid="uid://dabtnropd8ejx" path="res://scenes/track.tscn" id="1_bglyu"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_ff754"]
+[ext_resource type="PackedScene" uid="uid://ccfb8mi3wr5r3" path="res://scenes/car.tscn" id="2_wx1gl"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="4_pm0rc"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_ff754")
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+shadow_enabled = true
+
+[node name="Track" parent="." instance=ExtResource("1_bglyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+
+[node name="StartingGrid" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="1" type="Marker3D" parent="StartingGrid"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15, 0, 15)
+
+[node name="Cars" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="Car1" parent="Cars" instance=ExtResource("2_wx1gl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("4_pm0rc")
+action_repeat = 4
+speed_up = 12

@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsx4qgnp1uhal"]
+
+[ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_2nbg7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eu8m6"]
+transparency = 1
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(0.160784, 1, 0.298039, 0.105882)
+albedo_texture_force_srgb = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_sqm60"]
+material = SubResource("StandardMaterial3D_eu8m6")
+size = Vector3(1, 5, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d0q2x"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(0.211765, 1, 0.396078, 0.494118)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1tuu4"]
+points = PackedVector3Array(8.75, 2.5, 0.5, 8.75, 2.5, -0.5, -8.75, 2.5, 0.5, 8.75, -2.5, 0.5, 8.75, -2.5, -0.5, -8.75, 2.5, -0.5, -8.75, -2.5, 0.5, -8.75, -2.5, -0.5)
+
+[node name="CheckPoint" type="Node3D"]
+script = ExtResource("1_2nbg7")
+
+[node name="CheckPointLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.25, 2.5, 0)
+mesh = SubResource("BoxMesh_sqm60")
+surface_material_override/0 = SubResource("StandardMaterial3D_d0q2x")
+
+[node name="CheckPointRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25, 2.5, 0)
+mesh = SubResource("BoxMesh_sqm60")
+surface_material_override/0 = SubResource("StandardMaterial3D_d0q2x")
+
+[node name="CarDetector" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CarDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("ConvexPolygonShape3D_1tuu4")
+
+[connection signal="body_entered" from="CarDetector" to="." method="_on_car_detected"]

@@ -1,0 +1,330 @@
+[gd_scene load_steps=32 format=3 uid="uid://dabtnropd8ejx"]
+
+[ext_resource type="Script" path="res://scripts/track.gd" id="1_c2ksm"]
+[ext_resource type="Script" path="res://utility/resources/track_part.gd" id="2_dpqbh"]
+[ext_resource type="MeshLibrary" uid="uid://b80kvnjlx6sn1" path="res://utility/mesh_libraries/race_kit_meshlib.tres" id="3_n17gc"]
+
+[sub_resource type="Resource" id="Resource_g4n4x"]
+script = ExtResource("2_dpqbh")
+id = "right"
+mesh_index = 0
+finish_mesh_index = -1
+position_update = Vector3i(1, 0, 0)
+successors = Array[String](["right", "right_down_small", "right_up_small", "right_down_big", "right_up_big"])
+finish_successor = "right_finish"
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_a15u1"]
+script = ExtResource("2_dpqbh")
+id = "left"
+mesh_index = 0
+finish_mesh_index = -1
+position_update = Vector3i(-1, 0, 0)
+successors = Array[String](["left", "left_up_small", "left_down_small", "left_up_big", "left_down_big"])
+finish_successor = "left_finish"
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_amjd4"]
+script = ExtResource("2_dpqbh")
+id = "up"
+mesh_index = 6
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, -1)
+successors = Array[String](["up", "up_right_small", "up_left_small", "up_right_big", "up_left_big"])
+finish_successor = "up_finish"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_31crc"]
+script = ExtResource("2_dpqbh")
+id = "down"
+mesh_index = 6
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, 1)
+successors = Array[String](["down", "down_right_small", "down_left_small", "down_right_big", "down_left_big"])
+finish_successor = "down_finish"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_iw152"]
+script = ExtResource("2_dpqbh")
+id = "right_start"
+mesh_index = 1
+finish_mesh_index = -1
+position_update = Vector3i(1, 0, 0)
+successors = Array[String](["right"])
+finish_successor = "right"
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_ojn18"]
+script = ExtResource("2_dpqbh")
+id = "left_start"
+mesh_index = 2
+finish_mesh_index = -1
+position_update = Vector3i(-1, 0, 0)
+successors = Array[String](["left"])
+finish_successor = "left"
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_7jl81"]
+script = ExtResource("2_dpqbh")
+id = "up_start"
+mesh_index = 7
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, -1)
+successors = Array[String](["up"])
+finish_successor = "up"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_68gl5"]
+script = ExtResource("2_dpqbh")
+id = "down_start"
+mesh_index = 8
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, 1)
+successors = Array[String](["down"])
+finish_successor = "down"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_qe60x"]
+script = ExtResource("2_dpqbh")
+id = "right_finish"
+mesh_index = 3
+finish_mesh_index = 5
+position_update = Vector3i(1, 0, 0)
+successors = Array[String]([])
+finish_successor = ""
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_cxkfh"]
+script = ExtResource("2_dpqbh")
+id = "left_finish"
+mesh_index = 4
+finish_mesh_index = 5
+position_update = Vector3i(-1, 0, 0)
+successors = Array[String]([])
+finish_successor = ""
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_478gs"]
+script = ExtResource("2_dpqbh")
+id = "up_finish"
+mesh_index = 9
+finish_mesh_index = 11
+position_update = Vector3i(0, 0, -1)
+successors = Array[String]([])
+finish_successor = ""
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_h3q1d"]
+script = ExtResource("2_dpqbh")
+id = "down_finish"
+mesh_index = 10
+finish_mesh_index = 11
+position_update = Vector3i(0, 0, 1)
+successors = Array[String]([])
+finish_successor = ""
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_2by8y"]
+script = ExtResource("2_dpqbh")
+id = "right_down_small"
+mesh_index = 12
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, 1)
+successors = Array[String](["down", "down_right_small", "down_left_small", "down_right_big", "down_left_big"])
+finish_successor = "down"
+checkpoint_rotation = Vector3(0, 45, 0)
+checkpoint_position = Vector3(-4.7, 0, 4.1)
+
+[sub_resource type="Resource" id="Resource_62ck2"]
+script = ExtResource("2_dpqbh")
+id = "right_down_big"
+mesh_index = 16
+finish_mesh_index = -1
+position_update = Vector3i(1, 0, 2)
+successors = Array[String](["down", "down_right_small", "down_left_small", "down_right_big", "down_left_big"])
+finish_successor = "down"
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, 3)
+
+[sub_resource type="Resource" id="Resource_7cjun"]
+script = ExtResource("2_dpqbh")
+id = "right_up_small"
+mesh_index = 15
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, -1)
+successors = Array[String](["up", "up_right_small", "up_left_small", "up_right_big", "up_left_big"])
+finish_successor = "up"
+checkpoint_rotation = Vector3(0, -45, 0)
+checkpoint_position = Vector3(-4.7, 0, -4.1)
+
+[sub_resource type="Resource" id="Resource_o6rea"]
+script = ExtResource("2_dpqbh")
+id = "right_up_big"
+mesh_index = 23
+finish_mesh_index = -1
+position_update = Vector3i(1, 0, -2)
+successors = Array[String](["up", "up_right_small", "up_left_small", "up_right_big", "up_left_big"])
+finish_successor = "up"
+checkpoint_rotation = Vector3(0, -90, 0)
+checkpoint_position = Vector3(0, 0, -3)
+
+[sub_resource type="Resource" id="Resource_pfn55"]
+script = ExtResource("2_dpqbh")
+id = "left_down_small"
+mesh_index = 13
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, 1)
+successors = Array[String](["down", "down_right_small", "down_left_small", "down_right_big", "down_left_big"])
+finish_successor = "down"
+checkpoint_rotation = Vector3(0, -45, 0)
+checkpoint_position = Vector3(4.7, 0, 4.1)
+
+[sub_resource type="Resource" id="Resource_mccpn"]
+script = ExtResource("2_dpqbh")
+id = "left_down_big"
+mesh_index = 19
+finish_mesh_index = -1
+position_update = Vector3i(-1, 0, 2)
+successors = Array[String](["down", "down_right_small", "down_left_small", "down_right_big", "down_left_big"])
+finish_successor = "down"
+checkpoint_rotation = Vector3(0, -90, 0)
+checkpoint_position = Vector3(0, 0, 3)
+
+[sub_resource type="Resource" id="Resource_rfmy3"]
+script = ExtResource("2_dpqbh")
+id = "left_up_small"
+mesh_index = 14
+finish_mesh_index = -1
+position_update = Vector3i(0, 0, -1)
+successors = Array[String](["up", "up_right_small", "up_left_small", "up_right_big", "up_left_big"])
+finish_successor = "up"
+checkpoint_rotation = Vector3(0, 45, 0)
+checkpoint_position = Vector3(4.7, 0, -4.1)
+
+[sub_resource type="Resource" id="Resource_goklf"]
+script = ExtResource("2_dpqbh")
+id = "left_up_big"
+mesh_index = 20
+finish_mesh_index = -1
+position_update = Vector3i(-1, 0, -2)
+successors = Array[String](["up", "up_right_small", "up_left_small", "up_right_big", "up_left_big"])
+finish_successor = "up"
+checkpoint_rotation = Vector3(0, 90, 0)
+checkpoint_position = Vector3(0, 0, -3)
+
+[sub_resource type="Resource" id="Resource_w17rb"]
+script = ExtResource("2_dpqbh")
+id = "down_right_small"
+mesh_index = 14
+finish_mesh_index = -1
+position_update = Vector3i(1, 0, 0)
+successors = Array[String](["right", "right_up_small", "right_down_small", "right_up_big", "right_down_big"])
+finish_successor = "right"
+checkpoint_rotation = Vector3(0, 45, 0)
+checkpoint_position = Vector3(4.7, 0, -4.1)
+
+[sub_resource type="Resource" id="Resource_kdyny"]
+script = ExtResource("2_dpqbh")
+id = "down_right_big"
+mesh_index = 21
+finish_mesh_index = -1
+position_update = Vector3i(2, 0, 1)
+successors = Array[String](["right", "right_up_small", "right_down_small", "right_up_big", "right_down_big"])
+finish_successor = "right"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(3, 0, 0)
+
+[sub_resource type="Resource" id="Resource_enqmx"]
+script = ExtResource("2_dpqbh")
+id = "down_left_small"
+mesh_index = 15
+finish_mesh_index = -1
+position_update = Vector3i(-1, 0, 0)
+successors = Array[String](["left", "left_up_small", "left_down_small", "left_up_big", "left_down_big"])
+finish_successor = "left"
+checkpoint_rotation = Vector3(0, -45, 0)
+checkpoint_position = Vector3(-4.7, 0, -4.1)
+
+[sub_resource type="Resource" id="Resource_lfopf"]
+script = ExtResource("2_dpqbh")
+id = "down_left_big"
+mesh_index = 22
+finish_mesh_index = -1
+position_update = Vector3i(-2, 0, 1)
+successors = Array[String](["left", "left_up_small", "left_down_small", "left_up_big", "left_down_big"])
+finish_successor = "left"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(-3, 0, 0)
+
+[sub_resource type="Resource" id="Resource_x25af"]
+script = ExtResource("2_dpqbh")
+id = "up_right_small"
+mesh_index = 13
+finish_mesh_index = -1
+position_update = Vector3i(1, 0, 0)
+successors = Array[String](["right", "right_up_small", "right_down_small", "right_up_big", "right_down_big"])
+finish_successor = "right"
+checkpoint_rotation = Vector3(0, -45, 0)
+checkpoint_position = Vector3(4.7, 0, 4.1)
+
+[sub_resource type="Resource" id="Resource_stb81"]
+script = ExtResource("2_dpqbh")
+id = "up_right_big"
+mesh_index = 18
+finish_mesh_index = -1
+position_update = Vector3i(2, 0, -1)
+successors = Array[String](["right", "right_up_small", "right_down_small", "right_up_big", "right_down_big"])
+finish_successor = "right"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(3, 0, 0)
+
+[sub_resource type="Resource" id="Resource_ewugw"]
+script = ExtResource("2_dpqbh")
+id = "up_left_small"
+mesh_index = 12
+finish_mesh_index = -1
+position_update = Vector3i(-1, 0, 0)
+successors = Array[String](["left", "left_up_small", "left_down_small", "left_up_big", "left_down_big"])
+finish_successor = "left"
+checkpoint_rotation = Vector3(0, 45, 0)
+checkpoint_position = Vector3(-4.7, 0, 4.1)
+
+[sub_resource type="Resource" id="Resource_n617r"]
+script = ExtResource("2_dpqbh")
+id = "up_left_big"
+mesh_index = 17
+finish_mesh_index = -1
+position_update = Vector3i(-2, 0, -1)
+successors = Array[String](["left", "left_up_small", "left_down_small", "left_up_big", "left_down_big"])
+finish_successor = "left"
+checkpoint_rotation = Vector3(0, 0, 0)
+checkpoint_position = Vector3(-3, 0, 0)
+
+[node name="Track" type="Node3D"]
+script = ExtResource("1_c2ksm")
+track_parts = Array[ExtResource("2_dpqbh")]([SubResource("Resource_g4n4x"), SubResource("Resource_a15u1"), SubResource("Resource_amjd4"), SubResource("Resource_31crc"), SubResource("Resource_iw152"), SubResource("Resource_ojn18"), SubResource("Resource_7jl81"), SubResource("Resource_68gl5"), SubResource("Resource_qe60x"), SubResource("Resource_cxkfh"), SubResource("Resource_478gs"), SubResource("Resource_h3q1d"), SubResource("Resource_2by8y"), SubResource("Resource_62ck2"), SubResource("Resource_7cjun"), SubResource("Resource_o6rea"), SubResource("Resource_pfn55"), SubResource("Resource_mccpn"), SubResource("Resource_rfmy3"), SubResource("Resource_goklf"), SubResource("Resource_w17rb"), SubResource("Resource_kdyny"), SubResource("Resource_enqmx"), SubResource("Resource_lfopf"), SubResource("Resource_x25af"), SubResource("Resource_stb81"), SubResource("Resource_ewugw"), SubResource("Resource_n617r")])
+
+[node name="TrackGridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("3_n17gc")
+cell_size = Vector3(30, 5, 30)
+collision_layer = 2
+data = {
+"cells": PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0)
+}
+
+[node name="FinishGridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("3_n17gc")
+cell_size = Vector3(30, 5, 30)
+collision_layer = 6
