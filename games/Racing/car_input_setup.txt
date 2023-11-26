@@ -1,0 +1,18 @@
+Input Setup
+
+3D Raycasts
+- Cars
+- Static
+- (Checkpoint)
+
+Distance to next checkpoint
+Going towards next checkpoint
+
+next n pieces
+    one-hot encoding
+
+speed / speed_limit
+wheel_angle / max_angle
+
+orientation towards next checkpoint
+angle nose -> checkpoint.loc - car.loc -> sin, cos
