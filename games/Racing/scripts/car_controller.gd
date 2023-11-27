@@ -16,17 +16,22 @@ func get_obs() -> Dictionary:
 	
 	# EXTRAS
 	var next_n_pieces = _player.game.track.get_next_n_track_parts(_player, n_pieces)
-	var going_towards_next_checkpoint = _player.game.track.is_car_going_to_next_checkpoint(_player)
-	var speed = _player.get_speed() / _player.speed_limit
-	var wheel_angle = _player.steering / _player.steer
+	var going_towards_next_checkpoint = bool_to_value(_player.game.track.is_car_going_to_next_checkpoint(_player))
+	var is_going_forward = bool_to_value(_player.is_going_forward())
+	var speed = clamp_value((_player.get_speed() / _player.speed_limit) * is_going_forward)
+	var wheel_angle = clamp_value(_player.steering / _player.steer)
+	var nose_angle_to_next_checkpoint = clamp_value(
+		_player.game.track.get_car_nose_angle_to_next_checkpoint(_player) / PI
+	)
 	
 	var obs = (
 		sensor_obs + 
 		next_n_pieces +
 		[
-			int(going_towards_next_checkpoint), 
+			going_towards_next_checkpoint, 
 			speed, 
-			wheel_angle
+			wheel_angle,
+			nose_angle_to_next_checkpoint
 		]
 	)
 	
@@ -51,11 +56,17 @@ func set_action(action) -> void:
 	steer_action = clamp(action["steer_action"][0], -1.0, 1.0)
 	power_action = clamp(action["power_action"][0], -1.0, 1.0)
 
+func clamp_value(value: float):
+	return clamp(value, -1, 1)
+
+func bool_to_value(b: bool) -> float:
+	return 1.0 if b else -1.0
+
 """
 REWARD FUNCTION:
 	
 	DISTANCE_TRAVELED_FORWARD - 1
-	GOING_FORWARD - 0.1
+	GOING_FORWARD - 0.25
 	SPEED - 0.5
 
 """
@@ -66,7 +77,7 @@ func give_reward(reward_f: String, value: float):
 		"DISTANCE_TRAVELED_FORWARD": 
 			multiplier = 1
 		"GOING_FORWARD":
-			multiplier = 0.1
+			multiplier = 0.25
 		"SPEED":
 			multiplier = 0.5
 		_:

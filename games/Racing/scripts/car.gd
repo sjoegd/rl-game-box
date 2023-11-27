@@ -7,6 +7,7 @@ signal need_reset
 var game: Game
 
 @onready var center: Marker3D = $Center as Marker3D
+@onready var nose: Marker3D = $Nose as Marker3D
 @onready var camera: Camera3D = $CameraPivot/Camera as Camera3D
 @onready var camera_pivot = $CameraPivot
 @onready var controller: CarController = $AIController3D as CarController
@@ -76,6 +77,12 @@ func handle_camera(delta):
 
 func get_speed() -> float:
 	return (linear_velocity * Vector3(1, 0, 1)).length()
+
+func get_angle_nose_to_position(pos: Vector3) -> float:
+	var ignore_y = Vector3(1, 0, 1)
+	var center_to_nose = (nose.global_position - global_position) * ignore_y
+	var center_to_pos = (pos - global_position) * ignore_y
+	return center_to_nose.signed_angle_to(center_to_pos, Vector3(0, 1, 0))
 
 func is_going_forward() -> bool:
 	return linear_velocity.dot(transform.basis.z) > 0

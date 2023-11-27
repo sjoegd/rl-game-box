@@ -31,10 +31,10 @@ func handle_car_rewards(car: Car):
 	var distance = latest_distance - new_distance
 	car.controller.give_reward("DISTANCE_TRAVELED_FORWARD", pow(distance, 2))
 	# GOING FORWARD
-	var forward = track.is_car_going_to_next_checkpoint(car)
+	var forward = 1.0 if track.is_car_going_to_next_checkpoint(car) else -1.0
 	car.controller.give_reward("GOING_FORWARD", forward)
 	# SPEED
-	var speed = car.get_speed() / car.speed_limit
+	var speed = clamp(car.get_speed() / car.speed_limit, -1.0, 1.0)
 	car.controller.give_reward("SPEED", speed)
 
 func reset():
@@ -42,7 +42,7 @@ func reset():
 	track.reset()
 	var grid = create_random_starting_grid()
 	for i in range(len(cars)):
-		cars[i].reset(grid[i])
+		cars[i].reset(grid[clamp(i, 0, grid.size() - 1)])
 		car_latest_position[cars[i]] = cars[i].global_position
 
 func create_random_starting_grid():
