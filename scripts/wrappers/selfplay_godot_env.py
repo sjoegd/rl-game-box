@@ -13,7 +13,7 @@ class SelfPlayGodotEnv(gym.Env):
         speedup: int = 1,
         human_overwrite: bool = False,
         port=GodotEnv.DEFAULT_PORT,
-        action_repeat: int = 1
+        action_repeat: int = 4
     ):  
         self.env = StableBaselinesGodotEnv(
             env_path=env_path,

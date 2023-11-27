@@ -22,7 +22,7 @@ class SelfPlayGodotEnvAsync(VecEnv):
         speedup: int = 1,
         port=GodotEnv.DEFAULT_PORT,
         n_parallel: int = 1,
-        action_repeat: int = 1
+        action_repeat: int = 4
     ):  
         self.env = StableBaselinesGodotEnv(
             env_path=env_path,
