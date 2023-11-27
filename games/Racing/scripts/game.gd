@@ -9,19 +9,41 @@ var car_latest_position: Dictionary = {}
 var need_reset: bool = false
 
 func _ready():
-	for car in cars:
+	var grid = create_random_starting_grid()
+	for i in range(len(cars)):
+		var car = cars[i]
+		car.init(self)
 		car.finished.connect(_on_car_finish)
 		car.need_reset.connect(_on_car_need_reset)
-		car.init(self)
+		car.move_to_grid_position(grid[clamp(i, 0, grid.size() - 1)])
 		car_latest_position[car] = car.global_position
 
 func _process(_delta):
 	if need_reset:
 		reset()
-	for car in cars:
-		handle_car_rewards(car)
+	sort_car_positions()
+	for pos in range(len(cars)):
+		var car = cars[pos]
+		handle_car_rewards(car, pos)
 
-func handle_car_rewards(car: Car):
+func sort_car_positions():
+	cars.sort_custom(
+		func(a: Car, b: Car): 
+			var a_index = track.get_car_latest_track_index(a)
+			var b_index = track.get_car_latest_track_index(b)
+			
+			if a_index == b_index:
+				var a_distance = track.get_car_distance_to_next_checkpoint(a, a.global_position, false)
+				var b_distance = track.get_car_distance_to_next_checkpoint(b, b.global_position, false)
+				return a_distance < b_distance
+			
+			return a_index > b_index
+	)
+
+func handle_car_rewards(car: Car, pos: int):
+	# CARS BEHIND
+	var cars_behind = cars.size() - (pos + 1)
+	car.controller.give_reward("CARS_BEHIND", cars_behind)
 	# DISTANCE TRAVELED FORWARD
 	var latest_position = car_latest_position[car]
 	var new_position = car.global_position

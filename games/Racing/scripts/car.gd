@@ -32,14 +32,17 @@ func game_over():
 	controller.done = true
 	controller.needs_reset = true
 
-func reset(grid_position: Marker3D):
-	controller.reset()
+func move_to_grid_position(grid_position: Marker3D):
 	position = grid_position.position
 	rotation = grid_position.rotation
 	linear_velocity = Vector3.ZERO
 	angular_velocity = Vector3.ZERO
 	steering = 0
 	engine_force = 0
+
+func reset(grid_position: Marker3D):
+	controller.reset()
+	move_to_grid_position(grid_position)
 	reset_camera()
 
 func reset_camera():

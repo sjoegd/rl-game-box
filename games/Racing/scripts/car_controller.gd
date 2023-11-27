@@ -65,6 +65,7 @@ func bool_to_value(b: bool) -> float:
 """
 REWARD FUNCTION:
 	
+	CARS_BEHIND - 0.1
 	DISTANCE_TRAVELED_FORWARD - 1
 	GOING_FORWARD - 0.25
 	SPEED - 0.5
@@ -74,6 +75,8 @@ REWARD FUNCTION:
 func give_reward(reward_f: String, value: float):
 	var multiplier: float
 	match reward_f:
+		"CARS_BEHIND":
+			multiplier = 0.1
 		"DISTANCE_TRAVELED_FORWARD": 
 			multiplier = 1
 		"GOING_FORWARD":

@@ -1,9 +1,14 @@
 #!/bin/bash
 
-python scripts/sb3_train_single.py \
-    --env_path="games/Racing/builds/racing_single.x86_64" \
-    --n_parallel=4 \
+python scripts/sb3_train.py \
+    --is_async=True \
+    --env_path="games/Racing/builds/racing.x86_64" \
+    --save_parent_folder_path="models/Racing/Racing_0" \
+    --save_model_name="Racing_0" \
     --speedup=12 \
-    --action_repeat=4 \
-    --timesteps=5_000_000 \
-    --save_model_path="models/Racing/Racing_0"
+    --agents_per_env=6 \
+    --n_parallel=6 \
+    --action_repeat=8 \
+    --max_past_agents=25 \
+    --total_timesteps=5_000_000 \
+    --total_iterations=250 \

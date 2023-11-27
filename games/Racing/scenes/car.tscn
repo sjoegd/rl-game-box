@@ -447,7 +447,7 @@ shadow_mesh = SubResource("ArrayMesh_ukuqm")
 size = Vector3(2.89715, 1.28865, 6.20805)
 
 [node name="Car" type="VehicleBody3D"]
-collision_mask = 2
+collision_mask = 3
 center_of_mass_mode = 1
 gravity_scale = 4.5
 script = ExtResource("1_8axo5")
@@ -540,6 +540,7 @@ shape = SubResource("BoxShape3D_4ikd3")
 script = ExtResource("2_grpqv")
 
 [node name="Sensors" type="Node3D" parent="AIController3D"]
+visible = false
 
 [node name="StaticSensor" type="Node3D" parent="AIController3D/Sensors"]
 script = ExtResource("3_eh2hs")
@@ -711,10 +712,59 @@ collision_mask = 2
 target_position = Vector3(59.9537, 0, 2.35559)
 collision_mask = 2
 
+[node name="StaticSensorBack" type="Node3D" parent="AIController3D/Sensors"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("3_eh2hs")
+collision_mask = 2
+boolean_class_mask = 2
+n_rays_width = 10.0
+n_rays_height = 1.0
+ray_length = 60.0
+cone_width = 90.0
+cone_height = 20.0
+
+[node name="@RayCast3D@25226" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(-38.9669, 0, 45.6244)
+collision_mask = 2
+
+[node name="@RayCast3D@25227" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(-31.3499, 0, 51.1584)
+collision_mask = 2
+
+[node name="@RayCast3D@25228" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(-22.961, 0, 55.4328)
+collision_mask = 2
+
+[node name="@RayCast3D@25229" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(-14.0067, 0, 58.3422)
+collision_mask = 2
+
+[node name="@RayCast3D@25230" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(-4.70755, 0, 59.815)
+collision_mask = 2
+
+[node name="node_5 0" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(4.70755, 0, 59.815)
+collision_mask = 2
+
+[node name="node_6 0" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(14.0067, 0, 58.3422)
+collision_mask = 2
+
+[node name="node_7 0" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(22.961, 0, 55.4328)
+collision_mask = 2
+
+[node name="node_8 0" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(31.3499, 0, 51.1584)
+collision_mask = 2
+
+[node name="node_9 0" type="RayCast3D" parent="AIController3D/Sensors/StaticSensorBack"]
+target_position = Vector3(38.9669, 0, 45.6244)
+collision_mask = 2
+
 [node name="CarSensor" type="Node3D" parent="AIController3D/Sensors"]
 script = ExtResource("3_eh2hs")
-collision_mask = 0
-boolean_class_mask = 0
 n_rays_width = 40.0
 n_rays_height = 1.0
 ray_length = 60.0
@@ -723,163 +773,162 @@ cone_height = 20.0
 
 [node name="node_0 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-59.9537, 0, 2.35559)
-collision_mask = 0
 
 [node name="node_1 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-59.5841, 0, 7.05224)
-collision_mask = 0
 
 [node name="node_2 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-58.8471, 0, 11.7054)
-collision_mask = 0
 
 [node name="node_3 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-57.7473, 0, 16.2864)
-collision_mask = 0
 
 [node name="node_4 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-56.2915, 0, 20.767)
-collision_mask = 0
 
-[node name="@RayCast3D@39963" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
+[node name="@RayCast3D@26237" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-54.4886, 0, 25.1196)
-collision_mask = 0
 
-[node name="@RayCast3D@39964" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
+[node name="@RayCast3D@26238" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-52.3498, 0, 29.3173)
-collision_mask = 0
 
-[node name="@RayCast3D@39965" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
+[node name="@RayCast3D@26239" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-49.8882, 0, 33.3342)
-collision_mask = 0
 
-[node name="@RayCast3D@39966" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
+[node name="@RayCast3D@26240" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-47.119, 0, 37.1456)
-collision_mask = 0
 
-[node name="@RayCast3D@39967" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
+[node name="@RayCast3D@26241" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-44.0593, 0, 40.728)
-collision_mask = 0
 
 [node name="node_10 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-40.728, 0, 44.0593)
-collision_mask = 0
 
 [node name="node_11 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-37.1456, 0, 47.119)
-collision_mask = 0
 
 [node name="node_12 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-33.3342, 0, 49.8882)
-collision_mask = 0
 
 [node name="node_13 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-29.3173, 0, 52.3498)
-collision_mask = 0
 
 [node name="node_14 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-25.1196, 0, 54.4886)
-collision_mask = 0
 
 [node name="node_15 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-20.767, 0, 56.2915)
-collision_mask = 0
 
 [node name="node_16 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-16.2864, 0, 57.7473)
-collision_mask = 0
 
 [node name="node_17 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-11.7054, 0, 58.8471)
-collision_mask = 0
 
 [node name="node_18 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-7.05224, 0, 59.5841)
-collision_mask = 0
 
 [node name="node_19 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(-2.35559, 0, 59.9537)
-collision_mask = 0
 
 [node name="node_20 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(2.35559, 0, 59.9537)
-collision_mask = 0
 
 [node name="node_21 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(7.05224, 0, 59.5841)
-collision_mask = 0
 
 [node name="node_22 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(11.7054, 0, 58.8471)
-collision_mask = 0
 
 [node name="node_23 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(16.2864, 0, 57.7473)
-collision_mask = 0
 
 [node name="node_24 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(20.767, 0, 56.2915)
-collision_mask = 0
 
 [node name="node_25 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(25.1196, 0, 54.4886)
-collision_mask = 0
 
 [node name="node_26 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(29.3173, 0, 52.3498)
-collision_mask = 0
 
 [node name="node_27 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(33.3342, 0, 49.8882)
-collision_mask = 0
 
 [node name="node_28 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(37.1456, 0, 47.119)
-collision_mask = 0
 
 [node name="node_29 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(40.728, 0, 44.0593)
-collision_mask = 0
 
 [node name="node_30 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(44.0593, 0, 40.728)
-collision_mask = 0
 
 [node name="node_31 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(47.119, 0, 37.1456)
-collision_mask = 0
 
 [node name="node_32 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(49.8882, 0, 33.3342)
-collision_mask = 0
 
 [node name="node_33 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(52.3498, 0, 29.3173)
-collision_mask = 0
 
 [node name="node_34 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(54.4886, 0, 25.1196)
-collision_mask = 0
 
 [node name="node_35 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(56.2915, 0, 20.767)
-collision_mask = 0
 
 [node name="node_36 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(57.7473, 0, 16.2864)
-collision_mask = 0
 
 [node name="node_37 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(58.8471, 0, 11.7054)
-collision_mask = 0
 
 [node name="node_38 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(59.5841, 0, 7.05224)
-collision_mask = 0
 
 [node name="node_39 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensor"]
 target_position = Vector3(59.9537, 0, 2.35559)
-collision_mask = 0
+
+[node name="CarSensorBack" type="Node3D" parent="AIController3D/Sensors"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("3_eh2hs")
+n_rays_width = 10.0
+n_rays_height = 1.0
+ray_length = 60.0
+cone_width = 90.0
+cone_height = 20.0
+
+[node name="@RayCast3D@26448" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(-38.9669, 0, 45.6244)
+
+[node name="@RayCast3D@26449" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(-31.3499, 0, 51.1584)
+
+[node name="@RayCast3D@26450" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(-22.961, 0, 55.4328)
+
+[node name="@RayCast3D@26451" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(-14.0067, 0, 58.3422)
+
+[node name="@RayCast3D@26452" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(-4.70755, 0, 59.815)
+
+[node name="node_5 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(4.70755, 0, 59.815)
+
+[node name="node_6 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(14.0067, 0, 58.3422)
+
+[node name="node_7 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(22.961, 0, 55.4328)
+
+[node name="node_8 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(31.3499, 0, 51.1584)
+
+[node name="node_9 0" type="RayCast3D" parent="AIController3D/Sensors/CarSensorBack"]
+target_position = Vector3(38.9669, 0, 45.6244)
 
 [node name="FrontRightSensor" type="Node3D" parent="AIController3D/Sensors"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.01802, -0.374216, 1.94393)

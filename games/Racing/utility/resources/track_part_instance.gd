@@ -26,10 +26,15 @@ func create_checkpoint():
 		cb.call(car, index)
 	checkpoint.position = global_pos + part.checkpoint_position
 	checkpoint.rotation_degrees = part.checkpoint_rotation
-	checkpoint.car_detected.connect(on_checkpoint)
+	if should_connect_checkpoint():
+		checkpoint.car_detected.connect(on_checkpoint)
 	parent.add_child(checkpoint)
 
 func clear():
-	checkpoint.car_detected.disconnect(on_checkpoint)
+	if should_connect_checkpoint():
+		checkpoint.car_detected.disconnect(on_checkpoint)
 	parent.remove_child(checkpoint)
 	checkpoint.queue_free()
+
+func should_connect_checkpoint() -> bool:
+	return not (part.id.contains("start") or part.id.contains("finish"))
