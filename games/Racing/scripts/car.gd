@@ -3,20 +3,19 @@ class_name Car
 
 signal finished(car: Car)
 signal need_reset
+signal collision_with_static(car: Car)
 
 var game: Game
 
 @onready var center: Marker3D = $Center as Marker3D
 @onready var nose: Marker3D = $Nose as Marker3D
-@onready var camera: Camera3D = $CameraPivot/Camera as Camera3D
-@onready var camera_pivot = $CameraPivot
-@onready var controller: CarController = $AIController3D as CarController
-
-@onready var camera_lookat: Vector3 = global_position
+@onready var camera: CarCamera = $Camera as CarCamera
+@onready var controller: CarController = $Controller as CarController
 
 @export var steer: float = PI/4
 @export var power: int = 300
 @export var speed_limit: int = 100
+@export var color: String = "blue"
 
 var input_steer: float = 0
 var input_power: float = 0
@@ -26,7 +25,14 @@ func init(_game: Game):
 
 func _ready():
 	center_of_mass = center.position
+	set_color(color)
 	controller.init(self)
+	camera.init(self)
+
+func set_color(c: String):
+	var material = $Plane.mesh.get("surface_1/material").duplicate(true)
+	material.albedo_color = Color(c)
+	$Plane.set_surface_override_material(1, material)
 
 func game_over():
 	controller.done = true
@@ -43,26 +49,21 @@ func move_to_grid_position(grid_position: Marker3D):
 func reset(grid_position: Marker3D):
 	controller.reset()
 	move_to_grid_position(grid_position)
-	reset_camera()
-
-func reset_camera():
-	camera_pivot.global_position = global_position
-	camera_pivot.transform = transform
-	camera_lookat = global_position
-	camera.look_at(camera_lookat)
+	camera.reset()
 
 func _physics_process(delta):
 	if controller.needs_reset:
 		need_reset.emit()
 		return
 	handle_input(delta)
-	handle_camera(delta)
+	camera.update(delta)
 
 func _integrate_forces(state):
 	state.linear_velocity = state.linear_velocity.limit_length(speed_limit)
+	check_collisions(state)
 
 func handle_input(delta):
-	if controller.heuristic == "human":
+	if controller.heuristic == "human" and camera.is_current():
 		input_steer = Input.get_axis("ui_right", "ui_left")
 		input_power = Input.get_axis("ui_down", "ui_up")
 	else:
@@ -71,12 +72,11 @@ func handle_input(delta):
 	steering = move_toward(steering, input_steer * steer, delta * 2.5)
 	engine_force = input_power * power
 
-func handle_camera(delta):
-	camera_pivot.global_position = camera_pivot.global_position.lerp(global_position, delta*20.0)
-	camera_pivot.transform = camera_pivot.transform.interpolate_with(transform, delta*5.0)
-	if is_going_forward():
-		camera_lookat = camera_lookat.lerp(global_position + linear_velocity, delta*5.0)
-		camera.look_at(camera_lookat)
+func check_collisions(state: PhysicsDirectBodyState3D):
+	for i in range(state.get_contact_count()):
+		var collider = state.get_contact_collider_object(i)
+		if collider is GridMap:
+			collision_with_static.emit(self)
 
 func get_speed() -> float:
 	return (linear_velocity * Vector3(1, 0, 1)).length()

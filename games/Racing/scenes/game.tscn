@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dabtnropd8ejx" path="res://scenes/track.tscn" id="1_bglyu"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_ff754"]
 [ext_resource type="PackedScene" uid="uid://ccfb8mi3wr5r3" path="res://scenes/car.tscn" id="2_wx1gl"]
-[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="4_pm0rc"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="4_lj384"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_ff754")
@@ -41,24 +41,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 
 [node name="Car1" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+color = "#00FFFF"
 
 [node name="Car2" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+color = "#00FF00"
 
 [node name="Car3" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+color = "#800080"
 
 [node name="Car4" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+color = "#008080"
 
 [node name="Car5" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+color = "#FF00FF"
 
 [node name="Car6" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
+color = "red"
 
 [node name="Sync" type="Node" parent="."]
-script = ExtResource("4_pm0rc")
-action_repeat = 6
+script = ExtResource("4_lj384")
 speed_up = 12
-onnx_model_path = null

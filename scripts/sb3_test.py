@@ -66,7 +66,7 @@ if __name__ == "__main__":
         env.choose_models(opponent_paths)
     
     for _ in range(args.num_episodes):
-        if len(opponent_paths) > 0:
+        if not human_overwrite:
             env.choose_models(opponent_paths)
         done = False
         obs, _ = env.reset()

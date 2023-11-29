@@ -53,8 +53,8 @@ func get_action_space() -> Dictionary:
 	}
 	
 func set_action(action) -> void:
-	steer_action = clamp(action["steer_action"][0], -1.0, 1.0)
-	power_action = clamp(action["power_action"][0], -1.0, 1.0)
+	steer_action = clamp_value(action["steer_action"][0])
+	power_action = clamp_value(action["power_action"][0])
 
 func clamp_value(value: float):
 	return clamp(value, -1, 1)
@@ -69,6 +69,7 @@ REWARD FUNCTION:
 	DISTANCE_TRAVELED_FORWARD - 1
 	GOING_FORWARD - 0.25
 	SPEED - 0.5
+	WALL_COLLISION - -1
 
 """
 
@@ -83,6 +84,8 @@ func give_reward(reward_f: String, value: float):
 			multiplier = 0.25
 		"SPEED":
 			multiplier = 0.5
+		"WALL_COLLISION":
+			multiplier = -1
 		_:
 			multiplier = 0
 	reward += multiplier * value

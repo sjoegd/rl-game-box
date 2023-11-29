@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://buxykbkkm41jv"]
+
+[ext_resource type="Script" path="res://scripts/car_camera.gd" id="1_pdpbf"]
+
+[node name="CarCamera" type="Node3D"]
+top_level = true
+script = ExtResource("1_pdpbf")
+
+[node name="ThirdPerson" type="Camera3D" parent="."]
+transform = Transform3D(-1, -6.74149e-08, 1.42237e-07, -1.5765e-08, 0.941993, 0.335632, -1.56613e-07, 0.335632, -0.941993, 0, 2.49511, -4.42374)
+fov = 90.0
+
+[node name="Sky" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 14.8456, 0)

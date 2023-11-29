@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bn0wyn3kc71ay"]
+
+[ext_resource type="PackedScene" uid="uid://dcr8v28w22bud" path="res://scenes/arena.tscn" id="1_mx8xw"]
+[ext_resource type="PackedScene" uid="uid://khtpuqexxpcl" path="res://scenes/ball.tscn" id="2_dley8"]
+[ext_resource type="PackedScene" uid="uid://cf6anh4fg60jb" path="res://scenes/player.tscn" id="3_abv7u"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fyfy2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_4o0ff"]
+sky_material = SubResource("ProceduralSkyMaterial_fyfy2")
+
+[sub_resource type="Environment" id="Environment_7tdfu"]
+background_mode = 2
+sky = SubResource("Sky_4o0ff")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Game" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7tdfu")
+
+[node name="Arena" parent="." instance=ExtResource("1_mx8xw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Ball" parent="." instance=ExtResource("2_dley8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="Player1" parent="Players" instance=ExtResource("3_abv7u")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -30)
+
+[node name="Player2" parent="Players" instance=ExtResource("3_abv7u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30)
+color = "blue"
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.906308, 0.422618, 0, 0.422618, 0.906308, -1, 3.9616e-08, -1.84732e-08, 30, 60, 0)
