@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://khtpuqexxpcl"]
+[gd_scene load_steps=8 format=3 uid="uid://khtpuqexxpcl"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_pgoc4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s4u7a"]
-friction = 0.1
-bounce = 0.95
+bounce = 0.75
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdsbv"]
 resource_name = "color_2829873"
@@ -73,9 +74,11 @@ radius = 1.50035
 collision_layer = 2
 collision_mask = 6
 physics_material_override = SubResource("PhysicsMaterial_s4u7a")
-gravity_scale = 3.0
+gravity_scale = 2.0
+continuous_cd = true
 linear_damp = 0.25
-angular_damp = 0.25
+angular_damp = 0.1
+script = ExtResource("1_pgoc4")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_1ynn3")
