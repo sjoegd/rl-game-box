@@ -150,7 +150,7 @@ class EnvModelHandler:
     def get_model_action(self, i: int):
         model_action = self.env.action_space.sample()
         model_obs = self.latest_obs[i]
-        if self.model and model_obs:
+        if self.model is not None and model_obs is not None:
             model_action, _ = self.model.predict(model_obs, deterministic=True)
         return model_action
     
