@@ -14,8 +14,8 @@ config/name="Racing"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
-run/main_scene.test="res://scenes/test.tscn"
-run/main_scene.train="res://scenes/train.tscn"
+run/main_scene.test="res://scenes/sync_game.tscn"
+run/main_scene.train="res://scenes/sync_game.tscn"
 
 [display]
 

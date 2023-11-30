@@ -10,7 +10,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
 
 from godot_rl.core.godot_env import GodotEnv
-from wrappers.selfplay_godot_env_async import SelfPlayGodotEnvAsync
+from scripts.wrappers.old.selfplay_godot_env_async import SelfPlayGodotEnvAsync
 from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 
 """
@@ -81,12 +81,6 @@ if __name__ == "__main__":
     )
     
     parser.add_argument(
-        "--games_per_env",
-        default=1,
-        type=int
-    )
-
-    parser.add_argument(
         "--action_repeat",
         default=4,
         type=int
@@ -146,7 +140,6 @@ if __name__ == "__main__":
             port=base_port,
             agents_per_env=args.agents_per_env,
             n_parallel=args.n_parallel,
-            games_per_env=args.games_per_env,
             speedup=args.speedup,
             action_repeat=args.action_repeat,
             show_window=args.viz,

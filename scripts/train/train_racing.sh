@@ -8,8 +8,7 @@ python scripts/sb3_train.py \
     --speedup=8 \
     --agents_per_env=4 \
     --n_parallel=4 \
-    --games_per_env=4 \
     --action_repeat=8 \
     --max_past_agents=50 \
-    --total_timesteps=1_000_000 \
+    --total_timesteps=2_500_000 \
     --total_iterations=50 \
