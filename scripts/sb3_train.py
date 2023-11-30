@@ -10,6 +10,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
 
 from godot_rl.core.godot_env import GodotEnv
+from wrappers.self_new_async import NewSelfPlayGodotEnvAsync
 from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 from wrappers.selfplay_godot_env_async import SelfPlayGodotEnvAsync
 
@@ -79,6 +80,12 @@ if __name__ == "__main__":
         default=1,
         type=int,
     )
+    
+    parser.add_argument(
+        "--games_per_env",
+        default=1,
+        type=int
+    )
 
     parser.add_argument(
         "--action_repeat",
@@ -135,14 +142,24 @@ if __name__ == "__main__":
         os.mkdir(temp_path)
 
     if args.is_async:
-        venv = SelfPlayGodotEnvAsync(
+        # venv = SelfPlayGodotEnvAsync(
+        #     env_path=args.env_path,
+        #     show_window=args.viz,
+        #     speedup=args.speedup,
+        #     agents_per_env=args.agents_per_env,
+        #     action_repeat=args.action_repeat,
+        #     port=base_port,
+        #     n_parallel=args.n_parallel
+        # )
+        venv = NewSelfPlayGodotEnvAsync(
             env_path=args.env_path,
-            show_window=args.viz,
-            speedup=args.speedup,
-            agents_per_env=args.agents_per_env,
-            action_repeat=args.action_repeat,
             port=base_port,
-            n_parallel=args.n_parallel
+            agents_per_env=args.agents_per_env,
+            n_parallel=args.n_parallel,
+            games_per_env=args.games_per_env,
+            speedup=args.speedup,
+            action_repeat=args.action_repeat,
+            show_window=args.viz,
         )
     else:
         env_makers = [make_env(p) for p in range(args.n_parallel)]
