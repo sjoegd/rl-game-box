@@ -1,18 +1,17 @@
 Input Setup
 
-3D Raycasts
+Raycasts
 - Cars
 - Static
-- (Checkpoint)
 
-Distance to next checkpoint
-Going towards next checkpoint
+Going to next checkpoint
 
-next n pieces
-    one-hot encoding
+next n pieces (TODO: Improve)
+	one-hot encoding
 
 speed / speed_limit
-wheel_angle / max_angle
+wheel_angle -> sin, cos
 
-orientation towards next checkpoint
-angle nose -> checkpoint.loc - car.loc -> sin, cos
+rotation
+	- x, y, z angle -> sin, cos
+	

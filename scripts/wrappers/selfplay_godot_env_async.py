@@ -11,6 +11,8 @@ TODO:
         - Works with any agents_per_env (if game supports it of course)
         - Gives correct obs, rewards, actions
         - Actually faster than the sync selfplay godot env
+    - Add support for single model for all other agents per env
+    - Add support for multiple game instances per env
 """
 
 class SelfPlayGodotEnvAsync(VecEnv):

@@ -1,7 +1,7 @@
 extends AIController3D
 class_name CarController
 
-@export var n_pieces: int = 3
+@export var n_pieces: int = 0 # Removed till better
 
 @onready var sensors: Array = $Sensors.get_children()
 
@@ -9,8 +9,6 @@ var steer_action: float = 0
 var power_action: float = 0
 
 # TODO: Better obs
-# Update n_pieces to give information about how the piece is based on the cars transform
-# Nose angle -> sin, cos?
 func get_obs() -> Dictionary:
 	# SENSOR OBS
 	var sensor_obs = []
@@ -18,22 +16,28 @@ func get_obs() -> Dictionary:
 		sensor_obs += sensor.get_observation()
 	
 	# EXTRAS
-	var next_n_pieces = _player.game.track.get_next_n_track_parts(_player, n_pieces)
+	#var next_n_pieces = _player.game.track.get_next_n_track_parts(_player, n_pieces)
 	var going_towards_next_checkpoint = bool_to_value(_player.game.track.is_car_going_to_next_checkpoint(_player))
-	var is_going_forward = bool_to_value(_player.is_going_forward())
-	var speed = clamp_value((_player.get_speed() / _player.speed_limit) * is_going_forward)
+	var speed = clamp_value((_player.get_speed() / _player.speed_limit) * bool_to_value(_player.is_going_forward()))
 	var wheel_angle = clamp_value(_player.steering / _player.steer)
 	var nose_angle_to_next_checkpoint = _player.game.track.get_car_nose_angle_to_next_checkpoint(_player)
+	var player_rotation = _player.rotation
 	
 	var obs = (
 		sensor_obs + 
-		next_n_pieces +
+		#next_n_pieces +
 		[
 			going_towards_next_checkpoint, 
 			speed, 
 			wheel_angle,
 			sin(nose_angle_to_next_checkpoint),
-			cos(nose_angle_to_next_checkpoint)
+			cos(nose_angle_to_next_checkpoint),
+			sin(player_rotation.x),
+			cos(player_rotation.x),
+			sin(player_rotation.y),
+			cos(player_rotation.y),
+			sin(player_rotation.z),
+			cos(player_rotation.z)
 		]
 	)
 	

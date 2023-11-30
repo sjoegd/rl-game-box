@@ -19,21 +19,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 
 [node name="1" type="Marker3D" parent="StartingGrid"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 45, 0, 10)
-
-[node name="2" type="Marker3D" parent="StartingGrid"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 45, 0, 20)
-
-[node name="3" type="Marker3D" parent="StartingGrid"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 30, 0, 10)
 
-[node name="4" type="Marker3D" parent="StartingGrid"]
+[node name="2" type="Marker3D" parent="StartingGrid"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 30, 0, 20)
 
-[node name="5" type="Marker3D" parent="StartingGrid"]
+[node name="3" type="Marker3D" parent="StartingGrid"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15, 0, 10)
 
-[node name="6" type="Marker3D" parent="StartingGrid"]
+[node name="4" type="Marker3D" parent="StartingGrid"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15, 0, 20)
 
 [node name="Cars" type="Node3D" parent="."]
@@ -54,14 +48,6 @@ color = "#800080"
 [node name="Car4" parent="Cars" instance=ExtResource("2_wx1gl")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
 color = "#008080"
-
-[node name="Car5" parent="Cars" instance=ExtResource("2_wx1gl")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
-color = "#FF00FF"
-
-[node name="Car6" parent="Cars" instance=ExtResource("2_wx1gl")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15)
-color = "red"
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("4_lj384")
