@@ -1,7 +1,10 @@
 extends Resource
 class_name TrackPart
 
+static var encode_ids: Array[String] = ["straight", "left_small", "right_small", "left_big", "right_big"]
+
 @export var id: String
+@export var encode_id: String
 @export var mesh_index: int = 0
 @export var finish_mesh_index: int = -1
 @export var position_update: Vector3i = Vector3i.ZERO
@@ -13,14 +16,14 @@ class_name TrackPart
 func next_position(position: Vector3i):
 	return position + position_update
 
-func get_one_hot_encode(all_track_ids: Array):
-	var one_hot = []
-	for track_id in all_track_ids:
-		one_hot.append(1 if track_id == id else 0)
-	return one_hot
+func get_one_hot_encode() -> Array:
+	var one_hot_encode = []
+	for _encode_id in TrackPart.encode_ids:
+		one_hot_encode.append(float(_encode_id == encode_id))
+	return one_hot_encode
 
-static func create_empty_one_hot_encode(n: int):
+static func create_empty_one_hot_encode():
 	var empty = []
-	empty.resize(n)
+	empty.resize(TrackPart.encode_ids.size())
 	empty.fill(0)
 	return empty
