@@ -10,7 +10,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
 
 from godot_rl.core.godot_env import GodotEnv
-from scripts.wrappers.old.selfplay_godot_env_async import SelfPlayGodotEnvAsync
+from wrappers.old.selfplay_godot_env_async import SelfPlayGodotEnvAsync
 from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 
 """
