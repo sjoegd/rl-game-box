@@ -7,8 +7,8 @@ python scripts/sb3_train.py \
     --save_model_name="Racing_0" \
     --speedup=12 \
     --agents_per_env=6 \
-    --n_parallel=4 \
+    --n_parallel=8 \
     --action_repeat=8 \
-    --max_past_agents=25 \
+    --max_past_agents=50 \
     --total_timesteps=1_000_000 \
-    --total_iterations=100 \
+    --total_iterations=50 \

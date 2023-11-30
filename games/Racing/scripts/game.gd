@@ -63,9 +63,6 @@ func handle_car_rewards(car: Car, pos: int):
 	# GOING FORWARD
 	var forward = 1.0 if track.is_car_going_to_next_checkpoint(car) else -1.0
 	car.controller.give_reward("GOING_FORWARD", forward)
-	# SPEED
-	var speed = clamp(car.get_speed() / car.speed_limit, -1.0, 1.0)
-	car.controller.give_reward("SPEED", speed)
 	# WALL COLLISION
 	var collisions = car_static_collision_count[car]
 	car.controller.give_reward("WALL_COLLISION", collisions)

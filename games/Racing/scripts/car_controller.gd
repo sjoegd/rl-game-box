@@ -8,6 +8,9 @@ class_name CarController
 var steer_action: float = 0
 var power_action: float = 0
 
+# TODO: Better obs
+# Update n_pieces to give information about how the piece is based on the cars transform
+# Nose angle -> sin, cos?
 func get_obs() -> Dictionary:
 	# SENSOR OBS
 	var sensor_obs = []
@@ -20,9 +23,7 @@ func get_obs() -> Dictionary:
 	var is_going_forward = bool_to_value(_player.is_going_forward())
 	var speed = clamp_value((_player.get_speed() / _player.speed_limit) * is_going_forward)
 	var wheel_angle = clamp_value(_player.steering / _player.steer)
-	var nose_angle_to_next_checkpoint = clamp_value(
-		_player.game.track.get_car_nose_angle_to_next_checkpoint(_player) / PI
-	)
+	var nose_angle_to_next_checkpoint = _player.game.track.get_car_nose_angle_to_next_checkpoint(_player)
 	
 	var obs = (
 		sensor_obs + 
@@ -31,7 +32,8 @@ func get_obs() -> Dictionary:
 			going_towards_next_checkpoint, 
 			speed, 
 			wheel_angle,
-			nose_angle_to_next_checkpoint
+			sin(nose_angle_to_next_checkpoint),
+			cos(nose_angle_to_next_checkpoint)
 		]
 	)
 	
@@ -66,10 +68,9 @@ func bool_to_value(b: bool) -> float:
 REWARD FUNCTION:
 	
 	CARS_BEHIND - 0.1
-	DISTANCE_TRAVELED_FORWARD - 1
-	GOING_FORWARD - 0.25
-	SPEED - 0.5
-	WALL_COLLISION - -1
+	DISTANCE_TRAVELED_FORWARD - 2
+	GOING_FORWARD - 1
+	WALL_COLLISION - -5
 
 """
 
@@ -79,13 +80,11 @@ func give_reward(reward_f: String, value: float):
 		"CARS_BEHIND":
 			multiplier = 0.1
 		"DISTANCE_TRAVELED_FORWARD": 
-			multiplier = 1
+			multiplier = 2
 		"GOING_FORWARD":
-			multiplier = 0.25
-		"SPEED":
-			multiplier = 0.5
+			multiplier = 1
 		"WALL_COLLISION":
-			multiplier = -1
+			multiplier = -5
 		_:
 			multiplier = 0
 	reward += multiplier * value
