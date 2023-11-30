@@ -10,9 +10,8 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
 
 from godot_rl.core.godot_env import GodotEnv
-from wrappers.self_new_async import NewSelfPlayGodotEnvAsync
-from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 from wrappers.selfplay_godot_env_async import SelfPlayGodotEnvAsync
+from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 
 """
 TODO:
@@ -142,16 +141,7 @@ if __name__ == "__main__":
         os.mkdir(temp_path)
 
     if args.is_async:
-        # venv = SelfPlayGodotEnvAsync(
-        #     env_path=args.env_path,
-        #     show_window=args.viz,
-        #     speedup=args.speedup,
-        #     agents_per_env=args.agents_per_env,
-        #     action_repeat=args.action_repeat,
-        #     port=base_port,
-        #     n_parallel=args.n_parallel
-        # )
-        venv = NewSelfPlayGodotEnvAsync(
+        venv = SelfPlayGodotEnvAsync(
             env_path=args.env_path,
             port=base_port,
             agents_per_env=args.agents_per_env,
