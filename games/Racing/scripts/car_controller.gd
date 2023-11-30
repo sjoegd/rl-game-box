@@ -1,7 +1,7 @@
 extends AIController3D
 class_name CarController
 
-@export var n_pieces: int = 0 # Removed till better
+@export var n_pieces: int = 3
 
 @onready var sensors: Array = $Sensors.get_children()
 
@@ -16,16 +16,16 @@ func get_obs() -> Dictionary:
 		sensor_obs += sensor.get_observation()
 	
 	# EXTRAS
-	#var next_n_pieces = _player.game.track.get_next_n_track_parts(_player, n_pieces)
-	var going_towards_next_checkpoint = bool_to_value(_player.game.track.is_car_going_to_next_checkpoint(_player))
+	var next_n_pieces = _player.game.track.get_future_n_track_parts(_player, n_pieces)
+	var going_towards_next_checkpoint = bool_to_value(_player.game.track.is_car_going_to_future_checkpoint(_player))
 	var speed = clamp_value((_player.get_speed() / _player.speed_limit) * bool_to_value(_player.is_going_forward()))
 	var wheel_angle = clamp_value(_player.steering / _player.steer)
-	var nose_angle_to_next_checkpoint = _player.game.track.get_car_nose_angle_to_next_checkpoint(_player)
+	var nose_angle_to_next_checkpoint = _player.game.track.get_car_nose_angle_to_future_checkpoint(_player)
 	var player_rotation = _player.rotation
 	
 	var obs = (
 		sensor_obs + 
-		#next_n_pieces +
+		next_n_pieces +
 		[
 			going_towards_next_checkpoint, 
 			speed, 

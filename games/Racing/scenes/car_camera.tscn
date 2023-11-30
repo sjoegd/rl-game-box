@@ -11,4 +11,5 @@ transform = Transform3D(-1, -6.74149e-08, 1.42237e-07, -1.5765e-08, 0.941993, 0.
 fov = 90.0
 
 [node name="Sky" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 14.8456, 0)
+transform = Transform3D(-1, -8.74228e-08, 0, -4.37114e-08, 0.5, 0.866025, -7.57103e-08, 0.866025, -0.5, 0, 17.5, 0)
+fov = 90.0

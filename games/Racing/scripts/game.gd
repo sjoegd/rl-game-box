@@ -40,8 +40,8 @@ func sort_car_positions():
 			var b_index = track.get_car_latest_track_index(b)
 			
 			if a_index == b_index:
-				var a_distance = track.get_car_distance_to_next_checkpoint(a, a.global_position, false)
-				var b_distance = track.get_car_distance_to_next_checkpoint(b, b.global_position, false)
+				var a_distance = track.get_car_distance_to_future_checkpoint(a, a.global_position, false)
+				var b_distance = track.get_car_distance_to_future_checkpoint(b, b.global_position, false)
 				return a_distance < b_distance
 			
 			return a_index > b_index
@@ -56,12 +56,12 @@ func handle_car_rewards(car: Car, pos: int):
 	var latest_position = car_latest_position[car]
 	var new_position = car.global_position
 	car_latest_position[car] = new_position
-	var latest_distance = track.get_car_distance_to_next_checkpoint(car, latest_position)
-	var new_distance = track.get_car_distance_to_next_checkpoint(car, new_position)
+	var latest_distance = track.get_car_distance_to_future_checkpoint(car, latest_position)
+	var new_distance = track.get_car_distance_to_future_checkpoint(car, new_position)
 	var distance = latest_distance - new_distance
-	car.controller.give_reward("DISTANCE_TRAVELED_FORWARD", pow(distance, 2))
+	car.controller.give_reward("DISTANCE_TRAVELED_FORWARD", distance * abs(distance))
 	# GOING FORWARD
-	var forward = 1.0 if track.is_car_going_to_next_checkpoint(car) else -1.0
+	var forward = 1.0 if track.is_car_going_to_future_checkpoint(car) else -1.0
 	car.controller.give_reward("GOING_FORWARD", forward)
 	# WALL COLLISION
 	var collisions = car_static_collision_count[car]
@@ -71,8 +71,13 @@ func handle_car_rewards(car: Car, pos: int):
 func handle_input():
 	# CAMERA SWITCH
 	if Input.is_action_just_pressed("ui_accept"):
+		var current_mode = cars[car_camera_index].camera.get_mode()
 		car_camera_index = (car_camera_index + 1) % len(cars)
+		cars[car_camera_index].camera.set_mode(current_mode)
 		cars[car_camera_index].camera.make_current()
+	# MODE SWITCH
+	if Input.is_action_just_pressed("ui_focus_next"):
+		cars[car_camera_index].camera.next_mode()
 
 func reset():
 	need_reset = false
