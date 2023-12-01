@@ -1,6 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://dcr8v28w22bud"]
+[gd_scene load_steps=14 format=3 uid="uid://dcr8v28w22bud"]
 
 [ext_resource type="Script" path="res://scenes/arena.gd" id="1_ju8y5"]
+[ext_resource type="Texture2D" uid="uid://b1wpk8ek5ow85" path="res://assets/textures/asfault_4.jpg" id="2_3nek7"]
+[ext_resource type="Texture2D" uid="uid://c45pgfl2v62fu" path="res://assets/textures/concretia_6.jpg" id="3_hslec"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ue40y"]
 friction = 0.75
@@ -14,48 +16,34 @@ resource_name = "color_40919"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0, 0.811515, 0.9276, 1)
-
-[sub_resource type="Gradient" id="Gradient_7u0oq"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_t18up"]
-gradient = SubResource("Gradient_7u0oq")
-
-[sub_resource type="Gradient" id="Gradient_o1abu"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_jwsib"]
-gradient = SubResource("Gradient_o1abu")
-fill_to = Vector2(1, 1)
+albedo_texture = ExtResource("3_hslec")
+uv1_scale = Vector3(4, 4, 4)
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_adqmv"]
 resource_name = "color_2171169"
-cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
-metallic = 1.0
-metallic_specular = 0.4
-metallic_texture = SubResource("GradientTexture2D_t18up")
-roughness_texture = SubResource("GradientTexture2D_jwsib")
-roughness_texture_channel = 2
+albedo_color = Color(0.886275, 0.886275, 0.886275, 1)
+albedo_texture = ExtResource("2_3nek7")
+metallic_specular = 0.1
+uv1_scale = Vector3(0.75, 0.75, 0.75)
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvwqj"]
 resource_name = "color_15277357"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.961075, 0.371442, 0.457113, 1)
-
-[sub_resource type="Gradient" id="Gradient_ctufa"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_osesb"]
-gradient = SubResource("Gradient_ctufa")
-fill_to = Vector2(0.15812, 0.145299)
+albedo_texture = ExtResource("3_hslec")
+uv1_scale = Vector3(4, 4, 4)
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_el3vd"]
 resource_name = "color_16448250"
 cull_mode = 2
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.991331, 0.991331, 0.991331, 1)
-metallic = 1.0
-roughness_texture = SubResource("GradientTexture2D_osesb")
+albedo_texture = ExtResource("3_hslec")
+uv1_scale = Vector3(4, 4, 4)
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yw5ua"]
 resource_name = "color_-1031418394"
@@ -64,7 +52,6 @@ cull_mode = 2
 shading_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0, 0, 0, 0.752941)
-roughness = 0.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_eskqh"]
 _surfaces = [{

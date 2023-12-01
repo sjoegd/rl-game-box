@@ -1,15 +1,22 @@
 extends CharacterBody3D
 class_name Player
 
-const SPEED = 25
-const DASH_SPEED = 35
-const ROTATE_SPEED = PI*1.5
-const JUMP_VELOCITY = 50
-
 @export var mass = .375
 @export var color := "red"
 
+@onready var camera := $Camera as Camera3D
+
+const SPEED := 25.0
+const DASH_SPEED := 35.0
+const ROTATE_SPEED := PI*1.5
+const JUMP_VELOCITY := 50.0
+const MOUSE_SENS := 0.1
+const DASH_DURATION := 0.2
+const DASH_COOLDOWN := 0.5
+
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+var _game: Game
 
 var can_dash = true
 var movement_locked = false
@@ -20,22 +27,39 @@ var input_rotate := 0.0
 var input_jump := 0.0
 var input_dash := false
 
+func init(game: Game):
+	_game = game
+
 func _ready():
 	set_color(color)
 
 func set_color(c: String):
 	$RigidBody/Mesh.get_node(c.capitalize()).visible = true
 
+func reset(_transform: Transform3D):
+	transform = _transform
+	velocity = Vector3.ZERO
+	movement_locked = false
+	can_dash = true
+
 func _physics_process(delta):
 	handle_input()
 	handle_movement(delta)
 
 func handle_input():
-	input_straight = Input.get_axis("forward", "backward")
-	input_side = Input.get_axis("left", "right")*0.5
-	input_rotate = Input.get_axis("turn_right", "turn_left")
-	input_jump = Input.get_action_strength("jump")
-	input_dash = Input.is_action_just_pressed("dash") and can_dash
+	input_straight = 0
+	input_side = 0
+	input_jump = 0
+	input_dash = false
+	input_rotate = 0
+	if camera.current:
+		input_straight = Input.get_axis("forward", "backward")
+		input_side = Input.get_axis("left", "right")*0.5
+		input_jump = Input.get_action_strength("jump")
+		input_dash = Input.is_action_just_pressed("dash") and can_dash
+		if _game.can_get_mouse_input():
+			var mouse_x_movement := _game.get_mouse_x_movement()
+			input_rotate = -MOUSE_SENS * mouse_x_movement
 
 func handle_movement(delta):
 	
@@ -61,14 +85,14 @@ func handle_movement(delta):
 		rotate(Vector3(0, 1, 0), input_rotate * ROTATE_SPEED * delta)
 
 	# Dash
-	if input_dash:
+	if input_dash and is_on_floor():
 		can_dash = false
 		movement_locked = true
 		var dash_direction = Vector3(-sin(rotation.y), 0, -cos(rotation.y))
 		if velocity.x or velocity.z:
 			dash_direction = velocity * Vector3(1, 0, 1)
 		velocity = dash_direction.normalized()*DASH_SPEED
-		get_tree().create_timer(.2, true, true).connect("timeout", _on_dash_end)
+		get_tree().create_timer(DASH_DURATION, true, true).connect("timeout", _on_dash_end)
 	
 	# Rigid Body
 	$RigidBody.global_transform = global_transform
@@ -78,7 +102,7 @@ func handle_movement(delta):
 
 func _on_dash_end():
 	movement_locked = false
-	get_tree().create_timer(.5, true, true).connect("timeout", _on_dash_cooldown_end)
+	get_tree().create_timer(DASH_COOLDOWN, true, true).connect("timeout", _on_dash_cooldown_end)
 
 func _on_dash_cooldown_end():
 	can_dash = true

@@ -9,7 +9,7 @@ bounce = 0.75
 resource_name = "color_2829873"
 cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.447504, 0.461825, 0.47561, 1)
+albedo_color = Color(0.0941176, 0.101961, 0.105882, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkyel"]
 resource_name = "color_16448250.001"
@@ -75,6 +75,7 @@ collision_layer = 2
 collision_mask = 12
 mass = 2.5
 physics_material_override = SubResource("PhysicsMaterial_s4u7a")
+gravity_scale = 1.5
 continuous_cd = true
 linear_damp = 0.05
 script = ExtResource("1_pgoc4")
