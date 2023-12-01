@@ -1,15 +1,18 @@
 extends CharacterBody3D
 class_name Player
 
+signal needs_reset
+
 @export var mass = .375
 @export var color := "red"
 
 @onready var camera := $Camera as Camera3D
+@onready var controller := $Controller as PlayerController
 
 const SPEED := 25.0
 const DASH_SPEED := 35.0
 const ROTATE_SPEED := PI*1.5
-const JUMP_VELOCITY := 50.0
+const JUMP_VELOCITY := 45.0
 const MOUSE_SENS := 0.1
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 0.5
@@ -32,27 +35,36 @@ func init(game: Game):
 
 func _ready():
 	set_color(color)
+	controller.init(self)
 
 func set_color(c: String):
 	$RigidBody/Mesh.get_node(c.capitalize()).visible = true
+
+func game_over():
+	controller.done = true
+	controller.needs_reset = true
 
 func reset(_transform: Transform3D):
 	transform = _transform
 	velocity = Vector3.ZERO
 	movement_locked = false
 	can_dash = true
+	controller.reset()
 
 func _physics_process(delta):
+	if controller.needs_reset:
+		needs_reset.emit()
+		return
 	handle_input()
 	handle_movement(delta)
 
 func handle_input():
 	input_straight = 0
 	input_side = 0
+	input_rotate = 0
 	input_jump = 0
 	input_dash = false
-	input_rotate = 0
-	if camera.current:
+	if controller.heuristic == "human" and camera.current:
 		input_straight = Input.get_axis("forward", "backward")
 		input_side = Input.get_axis("left", "right")*0.5
 		input_jump = Input.get_action_strength("jump")
@@ -60,6 +72,12 @@ func handle_input():
 		if _game.can_get_mouse_input():
 			var mouse_x_movement := _game.get_mouse_x_movement()
 			input_rotate = -MOUSE_SENS * mouse_x_movement
+	else:
+		input_straight = controller.action_straight
+		input_side = controller.action_side
+		input_rotate = controller.action_rotate
+		input_jump = controller.action_jump
+		input_dash = bool(controller.action_dash) and can_dash
 
 func handle_movement(delta):
 	
@@ -106,3 +124,6 @@ func _on_dash_end():
 
 func _on_dash_cooldown_end():
 	can_dash = true
+
+func get_enemy_team():
+	return "red" if color == "blue" else "blue"

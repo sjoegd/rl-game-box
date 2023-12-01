@@ -14,10 +14,15 @@ config/name="Soccer"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+run/main_scene.sync="res://scenes/game_sync.tscn"
 
 [dotnet]
 
 project/assembly_name="Soccer"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_rl_agents/plugin.cfg")
 
 [input]
 

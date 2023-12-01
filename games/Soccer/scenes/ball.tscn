@@ -77,6 +77,8 @@ mass = 2.5
 physics_material_override = SubResource("PhysicsMaterial_s4u7a")
 gravity_scale = 1.5
 continuous_cd = true
+max_contacts_reported = 10
+contact_monitor = true
 linear_damp = 0.05
 script = ExtResource("1_pgoc4")
 
