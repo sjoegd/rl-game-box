@@ -30,18 +30,18 @@ class SelfPlayGodotEnvAsync(VecEnv):
         self.action_space = self.env.action_space
         self.n_parallel = n_parallel
         self.agents_per_env = agents_per_env - 1
-        self.env_models = [SelfPlayEnvModel(self, self.agents_per_env) for _ in range(self.n_parallel)]
+        self.env_model_handlers = [EnvModelHandler(self, self.agents_per_env) for _ in range(self.n_parallel)]
 
     def choose_models(self, model_paths: list[str]):
-        for env_model in self.env_models:
-            env_model.choose_models(model_paths)
+        for env_model_handler in self.env_model_handlers:
+            env_model_handler.choose_models(model_paths)
     
     def step(self, actions: np.ndarray):
         # Get and combine actions from all models
         total_model_actions = []
         for i in range(self.n_parallel):
             total_model_actions.append(actions[i])
-            total_model_actions += self.env_models[i].get_model_actions()
+            total_model_actions += self.env_model_handlers[i].get_model_actions()
         
         # Step the environment
         obs, rewards, dones, _ = self.env.step(np.array(total_model_actions))
@@ -75,7 +75,7 @@ class SelfPlayGodotEnvAsync(VecEnv):
         
         for i in range(self.n_parallel):
             for j in range(self.agents_per_env):
-                self.env_models[i].set_latest_model_obs(j, obs[(i * (self.agents_per_env + 1)) + (j + 1)])
+                self.env_model_handlers[i].set_latest_model_obs(j, obs[(i * (self.agents_per_env + 1)) + (j + 1)])
         
         return np.array(step_obs)
     
@@ -106,8 +106,7 @@ class SelfPlayGodotEnvAsync(VecEnv):
     def step_wait(self): 
         return self.results
 
-# TODO: Rename to something better
-class SelfPlayEnvModel:
+class EnvModelHandler:
     
     def __init__(self, env: SelfPlayGodotEnvAsync, agents_per_env: int):
         self.env = env

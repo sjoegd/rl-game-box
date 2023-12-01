@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Player
 
 const SPEED = 25
-const DASH_SPEED = 45
+const DASH_SPEED = 35
 const ROTATE_SPEED = PI*1.5
 const JUMP_VELOCITY = 50
 
@@ -32,7 +32,7 @@ func _physics_process(delta):
 
 func handle_input():
 	input_straight = Input.get_axis("forward", "backward")
-	input_side = Input.get_axis("left", "right")
+	input_side = Input.get_axis("left", "right")*0.5
 	input_rotate = Input.get_axis("turn_right", "turn_left")
 	input_jump = Input.get_action_strength("jump")
 	input_dash = Input.is_action_just_pressed("dash") and can_dash
@@ -64,8 +64,11 @@ func handle_movement(delta):
 	if input_dash:
 		can_dash = false
 		movement_locked = true
-		velocity = Vector3(-sin(rotation.y), 0, -cos(rotation.y)).normalized()*DASH_SPEED
-		get_tree().create_timer(.15, true, true).connect("timeout", _on_dash_end)
+		var dash_direction = Vector3(-sin(rotation.y), 0, -cos(rotation.y))
+		if velocity.x or velocity.z:
+			dash_direction = velocity * Vector3(1, 0, 1)
+		velocity = dash_direction.normalized()*DASH_SPEED
+		get_tree().create_timer(.2, true, true).connect("timeout", _on_dash_end)
 	
 	# Rigid Body
 	$RigidBody.global_transform = global_transform

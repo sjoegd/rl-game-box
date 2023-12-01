@@ -72,9 +72,11 @@ radius = 1.50035
 
 [node name="Ball" type="RigidBody3D"]
 collision_layer = 2
-collision_mask = 6
+collision_mask = 12
+mass = 2.5
 physics_material_override = SubResource("PhysicsMaterial_s4u7a")
 continuous_cd = true
+linear_damp = 0.05
 script = ExtResource("1_pgoc4")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]

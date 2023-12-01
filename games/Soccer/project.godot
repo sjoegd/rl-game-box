@@ -67,3 +67,6 @@ dash={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Ball"
 3d_physics/layer_3="Static"
+3d_physics/layer_4="PlayerRigid"
+3d_physics/layer_5="GoalRed"
+3d_physics/layer_6="GoalBlue"
