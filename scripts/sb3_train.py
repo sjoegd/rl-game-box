@@ -13,15 +13,6 @@ from godot_rl.core.godot_env import GodotEnv
 from wrappers.selfplay_godot_env_async import SelfPlayGodotEnvAsync
 from wrappers.selfplay_godot_env import SelfPlayGodotEnv
 
-"""
-TODO:
-    - Add support for better PPO hyperparameters
-    - Add support for arg overwrites when resuming training
-    - Training should also support single agent env (remove train script from godot-rl-agents)
-        - Maybe works automatically with selfplay env set to 1 agent
-            - Test this
-"""
-
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(allow_abbrev=False)

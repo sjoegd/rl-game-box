@@ -1,6 +1,9 @@
 extends Node3D
 class_name Game
 
+@export var random_ball_reset := false
+@export var random_player_reset := false
+
 @onready var arena := $Arena as Arena
 @onready var players := $Players.get_children()
 @onready var player_transforms: Array = players.map(func(p: Player): return p.transform)
@@ -19,6 +22,7 @@ var _ball_touches: Dictionary = {}
 func _ready():
 	Input.set_mouse_mode(mouse_modes[mouse_mode])
 	Input.warp_mouse(center_mouse_position)
+	arena.init(self)
 	for player in players:
 		player.init(self)
 		player.needs_reset.connect(_on_player_needs_reset)
@@ -28,7 +32,10 @@ func _ready():
 func reset():
 	needs_reset = false
 	for i in range(len(players)):
-		players[i].reset(player_transforms[i])
+		var _player_transform = player_transforms[i] as Transform3D
+		if random_player_reset:
+			_player_transform = create_random_player_transform(_player_transform)
+		players[i].reset(_player_transform)
 	arena.reset()
 
 func _physics_process(_delta):
@@ -76,6 +83,13 @@ func get_mouse_x_movement() -> float:
 	var new_mouse_position := get_viewport().get_mouse_position()
 	Input.warp_mouse(center_mouse_position)
 	return new_mouse_position.x - center_mouse_position.x
+
+func create_random_player_transform(old_transform: Transform3D) -> Transform3D:
+	var offset = arena.get_random_offset()
+	var _player_transform = Transform3D.IDENTITY
+	_player_transform.origin = Vector3(0, old_transform.origin.y, 0) + offset
+	_player_transform = _player_transform.rotated(Vector3(0, 1, 0), randf_range(-PI, PI))
+	return _player_transform
 
 func _on_arena_goal_scored(side):
 	_goals.append(side)
