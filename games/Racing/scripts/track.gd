@@ -131,14 +131,14 @@ func get_car_future_track_instance(car: Car, is_furthest: bool = true) -> TrackP
 
 func get_car_furthest_track_index(car: Car) -> int:
 	if not car_to_furthest_track_index.has(car):
-		car_to_furthest_track_index[car] = -1
-		return -1
+		car_to_furthest_track_index[car] = 0
+		return 0 
 	return car_to_furthest_track_index[car] as int
 
 func get_car_latest_track_index(car: Car) -> int:
 	if not car_to_latest_track_index.has(car):
-		car_to_latest_track_index[car] = -1
-		return -1
+		car_to_latest_track_index[car] = 0
+		return 0
 	return car_to_latest_track_index[car] as int
 
 func get_next_track_index(index: int) -> int:

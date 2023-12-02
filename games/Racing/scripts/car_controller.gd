@@ -8,7 +8,6 @@ class_name CarController
 var steer_action: float = 0
 var power_action: float = 0
 
-# TODO: Better obs
 func get_obs() -> Dictionary:
 	# SENSOR OBS
 	var sensor_obs = []
@@ -22,6 +21,7 @@ func get_obs() -> Dictionary:
 	var wheel_angle = clamp_value(_player.steering / _player.steer)
 	var nose_angle_to_next_checkpoint = _player.game.track.get_car_nose_angle_to_future_checkpoint(_player)
 	var player_rotation = _player.rotation
+	var player_velocity = _player.linear_velocity.normalized()
 	
 	var obs = (
 		sensor_obs + 
@@ -37,7 +37,10 @@ func get_obs() -> Dictionary:
 			sin(player_rotation.y),
 			cos(player_rotation.y),
 			sin(player_rotation.z),
-			cos(player_rotation.z)
+			cos(player_rotation.z),
+			player_velocity.x,
+			player_velocity.y,
+			player_velocity.z
 		]
 	)
 	
