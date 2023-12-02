@@ -13,7 +13,7 @@ const SPEED := 25.0
 const DASH_SPEED := 35.0
 const ROTATE_SPEED := PI*1.5
 const JUMP_VELOCITY := 45.0
-const MOUSE_SENS := 0.1
+const MOUSE_SENS := 0.05
 const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 0.5
 
@@ -117,6 +117,10 @@ func handle_movement(delta):
 	$RigidBody.linear_velocity = velocity
 	
 	move_and_slide()
+	
+	# Ensure player never goes under the ground
+	if position.y < 0:
+		position.y = 0
 
 func _on_dash_end():
 	movement_locked = false

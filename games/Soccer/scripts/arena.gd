@@ -4,24 +4,35 @@ class_name Arena
 signal goal_scored(side: String)
 signal ball_touch(player: Player)
 
+var _game: Game
+
 @onready var ball := $Ball as Ball
 @onready var ball_transform := ball.transform
 @onready var goals := $Goals
 
+@onready var straight_distance = $Markers/Straight.position.length()
+@onready var side_distance = $Markers/Side.position.length()
+@onready var goal_distance = $Goals/Red.position.length()
+
 var max_distance_ball_goal: float
 var max_distance_player_ball: float
+
+func init(game: Game):
+	_game = game
 
 func _ready():
 	calculate_max_distances()
 	
 func calculate_max_distances():
-	var side_distance = $Markers/Side.position.length()
-	var goal_distance = $Goals/Red.position.length()
 	max_distance_ball_goal = Vector2.ZERO.distance_to(Vector2(side_distance/2, 2*goal_distance))
 	max_distance_player_ball = Vector2.ZERO.distance_to(Vector2(side_distance, 2*goal_distance))
 
 func reset():
-	ball.reset(ball_transform)
+	var _ball_transform = ball_transform
+	if _game.random_ball_reset:
+		var offset = get_random_offset()
+		_ball_transform = _ball_transform.translated(offset)
+	ball.reset(_ball_transform)
 
 func _on_red_goal_entered(body):
 	if body is Ball:
@@ -46,6 +57,9 @@ func get_ball_speed():
 
 func get_goal(color: String):
 	return goals.get_node(color.capitalize())
+
+func get_random_offset() -> Vector3:
+	return Vector3(randf_range(-0.9, 0.9)*side_distance, 0.0, randf_range(-0.9, 0.9)*straight_distance)
 
 func _on_ball_touch(player):
 	ball_touch.emit(player)
