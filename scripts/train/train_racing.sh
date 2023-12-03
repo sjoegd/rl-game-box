@@ -2,10 +2,11 @@
 
 python scripts/sb3_train.py \
     --is_async=True \
+    --resume_training=True \
     --env_path="games/Racing/builds/racing_sync.x86_64" \
-    --save_parent_folder_path="models/Racing/Racing_0" \
-    --save_model_name="Racing_0" \
-    --speedup=8 \
+    --save_parent_folder_path="models/Racing/Racing_1" \
+    --save_model_name="Racing_1" \
+    --speedup=10 \
     --agents_per_env=4 \
     --n_parallel=4 \
     --action_repeat=8 \
