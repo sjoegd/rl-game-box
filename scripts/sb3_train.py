@@ -118,6 +118,7 @@ if __name__ == "__main__":
     if args.resume_training:
         json_args = json.load(open(json_path, "r"))
         args.__dict__.update(json_args)
+        args.__dict__["resume_training"] = True
         print("Resuming training with args: {}".format(json_args))
     
     if not os.path.exists(save_parent_path):
@@ -149,6 +150,7 @@ if __name__ == "__main__":
     if not args.resume_training:
         agent = PPO(policy="MlpPolicy", env=env, verbose=1)
     else:
+        print("LOADED MODEL")
         agent = PPO.load(save_path, env=env, verbose=1)
 
     try:

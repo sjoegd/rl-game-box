@@ -202,7 +202,7 @@ collision_mask = 2
 shape = SubResource("BoxShape3D_cmsp4")
 
 [node name="Ball" parent="." instance=ExtResource("3_r15qf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 
 [connection signal="body_entered" from="Goals/Red" to="." method="_on_red_goal_entered"]
 [connection signal="body_entered" from="Goals/Blue" to="." method="_on_blue_goal_entered"]
