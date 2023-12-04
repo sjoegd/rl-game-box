@@ -1,7 +1,7 @@
 extends Node3D
 class_name Game
 
-@export var player_overwrite_mode := false
+@export var human_overwrite_mode := false
 
 @onready var track: Track = $Track as Track
 @onready var cars: Array = $Cars.get_children()
@@ -24,7 +24,7 @@ func _ready():
 		car.move_to_grid_position(grid[clamp(i, 0, grid.size() - 1)])
 		car_latest_position[car] = car.global_position
 		car_static_collision_count[car] = 0
-	if player_overwrite_mode:
+	if human_overwrite_mode:
 		cars[car_camera_index].human_overwrite = true
 
 func _process(_delta):

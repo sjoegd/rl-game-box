@@ -15,6 +15,7 @@ run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 run/main_scene.sync="res://scenes/game_sync.tscn"
+run/main_scene.sync_play="res://scenes/game_sync_play.tscn"
 
 [dotnet]
 

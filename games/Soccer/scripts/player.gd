@@ -21,6 +21,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var _game: Game
 
+var human_overwrite := false
+
 var can_dash = true
 var movement_locked = false
 
@@ -64,7 +66,7 @@ func handle_input():
 	input_rotate = 0
 	input_jump = 0
 	input_dash = false
-	if controller.heuristic == "human" and camera.current:
+	if (controller.heuristic == "human" or human_overwrite) and camera.current:
 		input_straight = Input.get_axis("forward", "backward")
 		input_side = Input.get_axis("left", "right")*0.5
 		input_jump = Input.get_action_strength("jump")

@@ -1,6 +1,7 @@
 extends Node3D
 class_name Game
 
+@export var human_overwrite_mode := false
 @export var random_ball_reset := false
 @export var random_player_reset := false
 
@@ -28,6 +29,8 @@ func _ready():
 		player.needs_reset.connect(_on_player_needs_reset)
 		_ball_touches[player] = 0
 	players[camera_index].camera.make_current()
+	if human_overwrite_mode:
+		players[camera_index].human_overwrite = true
 
 func reset():
 	needs_reset = false
