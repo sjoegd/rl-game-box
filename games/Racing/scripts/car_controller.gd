@@ -77,8 +77,10 @@ REWARD FUNCTION:
 	CARS_BEHIND - 0.1
 	DISTANCE_TRAVELED_FORWARD - 2
 	GOING_FORWARD - 1
-	WALL_COLLISION - -5
-
+	WALL_COLLISION - -25
+	
+	TODO:
+		PLAYER_COLLISION
 """
 
 func give_reward(reward_f: String, value: float):
@@ -91,7 +93,7 @@ func give_reward(reward_f: String, value: float):
 		"GOING_FORWARD":
 			multiplier = 1
 		"WALL_COLLISION":
-			multiplier = -5
+			multiplier = -25
 		_:
 			multiplier = 0
 	reward += multiplier * value

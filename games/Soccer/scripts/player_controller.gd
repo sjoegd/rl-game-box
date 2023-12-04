@@ -33,7 +33,7 @@ func get_obs() -> Dictionary:
 	
 	if not goal_sensors_setup:
 		sensor_obs += create_empty_observation(goal_sensors_length)
-	
+		
 	var p = _player as Player
 	
 	# EXTRAS

@@ -11,3 +11,5 @@ random_player_reset = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_7071j")
+action_repeat = 4
+speed_up = 12
