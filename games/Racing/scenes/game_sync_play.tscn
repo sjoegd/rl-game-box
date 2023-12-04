@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc2uqycjc0ldr"]
+
+[ext_resource type="PackedScene" uid="uid://834o0w4b4axh" path="res://scenes/game.tscn" id="1_cnppl"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_wh5xm"]
+
+[node name="GameSyncPlay" type="Node3D"]
+
+[node name="Game" parent="." instance=ExtResource("1_cnppl")]
+player_overwrite_mode = true
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_wh5xm")

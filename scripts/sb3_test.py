@@ -50,7 +50,7 @@ if __name__ == "__main__":
     agent_path = model_paths[0]
     opponent_paths = model_paths[1:]
     
-    human_overwrite = (len(opponent_paths)==0)
+    random_play = (len(opponent_paths)==0)
     
     env = SelfPlayGodotEnv(
         env_path=args.env_path,
@@ -58,16 +58,14 @@ if __name__ == "__main__":
         agents_per_env=args.agents_per_env,
         action_repeat=args.action_repeat,
         show_window=True,
-        human_overwrite=human_overwrite
+        random_play=random_play
     )
     
     agent = PPO.load(agent_path)
-    if not human_overwrite:
+    if not random_play:
         env.choose_models(opponent_paths)
     
     for _ in range(args.num_episodes):
-        if not human_overwrite:
-            env.choose_models(opponent_paths)
         done = False
         obs, _ = env.reset()
         while not done:
