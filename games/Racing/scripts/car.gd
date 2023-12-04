@@ -7,6 +7,8 @@ signal collision_with_static(car: Car)
 
 var game: Game
 
+var human_overwrite := false
+
 @onready var center: Marker3D = $Center as Marker3D
 @onready var nose: Marker3D = $Nose as Marker3D
 @onready var camera: CarCamera = $Camera as CarCamera
@@ -63,7 +65,7 @@ func _integrate_forces(state):
 	check_collisions(state)
 
 func handle_input(delta):
-	if controller.heuristic == "human" and camera.is_current():
+	if (controller.heuristic == "human" or human_overwrite) and camera.is_current():
 		input_steer = Input.get_axis("ui_right", "ui_left")
 		input_power = Input.get_axis("ui_down", "ui_up")
 	else:

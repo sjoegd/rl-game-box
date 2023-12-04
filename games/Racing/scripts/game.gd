@@ -25,7 +25,7 @@ func _ready():
 		car_latest_position[car] = car.global_position
 		car_static_collision_count[car] = 0
 	if player_overwrite_mode:
-		cars[car_camera_index].controller.heuristic = "human"
+		cars[car_camera_index].human_overwrite = true
 
 func _process(_delta):
 	if need_reset:

@@ -50,7 +50,8 @@ if __name__ == "__main__":
     agent_path = model_paths[0]
     opponent_paths = model_paths[1:]
     
-    random_play = (len(opponent_paths)==0)
+    if len(opponent_paths) == 0:
+        opponent_paths = model_paths
     
     env = SelfPlayGodotEnv(
         env_path=args.env_path,
@@ -58,12 +59,10 @@ if __name__ == "__main__":
         agents_per_env=args.agents_per_env,
         action_repeat=args.action_repeat,
         show_window=True,
-        random_play=random_play
     )
     
     agent = PPO.load(agent_path)
-    if not random_play:
-        env.choose_models(opponent_paths)
+    env.choose_models(opponent_paths)
     
     for _ in range(args.num_episodes):
         done = False
