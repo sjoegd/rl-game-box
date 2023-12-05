@@ -7,6 +7,8 @@
 
 [node name="Game" parent="." instance=ExtResource("1_lk0j4")]
 human_overwrite_mode = true
+random_ball_reset = false
+random_player_reset = false
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_5vpla")

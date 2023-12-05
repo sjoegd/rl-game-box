@@ -22,8 +22,6 @@ glow_enabled = true
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_y14jp")
-random_ball_reset = null
-random_player_reset = null
 
 [node name="Light" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)

@@ -1,0 +1,1 @@
+{"is_async": true, "env_path": "games/Racing/builds/racing_sync.x86_64", "save_parent_folder_path": "models/Racing/Racing_2", "save_model_name": "Racing_2", "resume_training": true, "viz": false, "speedup": 10, "agents_per_env": 4, "n_parallel": 4, "action_repeat": 8, "max_past_agents": 50, "total_timesteps": 2500000, "total_iterations": 50}
