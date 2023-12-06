@@ -1,11 +1,14 @@
-import pathlib
-import argparse
+from argparse import ArgumentParser
+from pathlib import Path
+import numpy as np
 from stable_baselines3 import PPO
-from wrappers.selfplay_godot_env import SelfPlayGodotEnv
+
+from wrappers.selfplay_godot_env import SelfplayGodotEnv
+
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(allow_abbrev=False)
+    parser = ArgumentParser(allow_abbrev=False)
     
     parser.add_argument(
         "--env_path",
@@ -14,14 +17,14 @@ if __name__ == "__main__":
     )
     
     parser.add_argument(
-        "--speedup",
-        default=1,
-        type=int
+        "--model_paths",
+        default=None,
+        type=str,
     )
     
     parser.add_argument(
         "--agents_per_env",
-        default=2,
+        default=1,
         type=int
     )
     
@@ -32,43 +35,43 @@ if __name__ == "__main__":
     )
     
     parser.add_argument(
-        "--load_model_paths",
-        default=None,
-        type=str
-    )
-    
-    parser.add_argument(
-        "--num_episodes",
+        "--sessions",
         default=1,
         type=int
     )
     
     args, _ = parser.parse_known_args()
     
-    model_paths = args.load_model_paths.split(", ")
-    model_paths = [pathlib.Path(path) for path in model_paths]
-    agent_path = model_paths[0]
-    opponent_paths = model_paths[1:]
+    model_paths = [Path(p) for p in args.model_paths.split(", ")]
+    main_model_path = model_paths[0]
+    other_model_paths = model_paths[1:]
     
-    if len(opponent_paths) == 0:
-        opponent_paths = model_paths
+    if len(other_model_paths) == 0:
+        other_model_paths = model_paths
     
-    env = SelfPlayGodotEnv(
+    env = SelfplayGodotEnv(
         env_path=args.env_path,
-        speedup=args.speedup,
         agents_per_env=args.agents_per_env,
         action_repeat=args.action_repeat,
-        show_window=True,
+        show_window=True
     )
     
-    agent = PPO.load(agent_path)
-    env.choose_models(opponent_paths)
+    if len(other_model_paths) == args.agents_per_env - 1:
+        env.set_models(other_model_paths)
+    else:
+        env.set_models(np.random.choice(other_model_paths, args.agents_per_env - 1))
     
-    for _ in range(args.num_episodes):
-        done = False
-        obs, _ = env.reset()
-        while not done:
-            action, _ = agent.predict(obs, deterministic=True)
-            obs, _, done, _, _ = env.step(action)
+    main_model = PPO.load(main_model_path, env=env)
     
-    env.close()
+    try:
+    
+        for _ in range(args.sessions):
+            obs, _ = env.reset()
+            done = False
+            while not done:
+                action, _ = main_model.predict(obs, deterministic=True)
+                obs, _, done, _ = env.step(action)
+    
+    finally:
+        
+        env.close()

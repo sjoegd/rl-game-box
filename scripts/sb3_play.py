@@ -1,11 +1,13 @@
-import argparse
-import pathlib
+from argparse import ArgumentParser
+from pathlib import Path
+import numpy as np
 
-from wrappers.selfplay_godot_env import SelfPlayGodotEnv
+from wrappers.selfplay_godot_env import SelfplayGodotEnv
+
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(allow_abbrev=False)
+    parser = ArgumentParser(allow_abbrev=False)
     
     parser.add_argument(
         "--env_path",
@@ -14,8 +16,14 @@ if __name__ == "__main__":
     )
     
     parser.add_argument(
+        "--model_paths",
+        default=None,
+        type=str,
+    )
+    
+    parser.add_argument(
         "--agents_per_env",
-        default=2,
+        default=1,
         type=int
     )
     
@@ -26,36 +34,35 @@ if __name__ == "__main__":
     )
     
     parser.add_argument(
-        "--load_model_paths",
-        default=None,
-        type=str
-    )
-    
-    parser.add_argument(
-        "--num_episodes",
-        default=5,
+        "--sessions",
+        default=1,
         type=int
     )
     
     args, _ = parser.parse_known_args()
     
-    model_paths = args.load_model_paths.split(", ")
-    model_paths = [pathlib.Path(path) for path in model_paths]
+    model_paths = [Path(p) for p in args.model_paths.split(", ")]
     
-    env = SelfPlayGodotEnv(
+    env = SelfplayGodotEnv(
         env_path=args.env_path,
-        speedup=1,
         agents_per_env=args.agents_per_env,
         action_repeat=args.action_repeat,
         show_window=True
     )
     
-    env.choose_models(model_paths)
+    if len(model_paths) == args.agents_per_env - 1:
+        env.set_models(model_paths)
+    elif len(model_paths) > 0:
+        env.set_models(np.random.choice(model_paths, args.agents_per_env - 1))
     
-    for _ in range(args.num_episodes):
-        done = False
-        env.reset()
-        while not done:
-            _, _, done, _, _ = env.step(env.action_space.sample())
+    try:
     
-    env.close()
+        for _ in range(args.sessions):
+            env.reset()
+            done = False
+            while not done:
+                _, _, done, _ = env.step([np.zeros(shape=env.action_space.shape)])
+    
+    finally:
+    
+        env.close()

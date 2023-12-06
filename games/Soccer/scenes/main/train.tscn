@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://o7coclj2wykq"]
+
+[ext_resource type="PackedScene" uid="uid://bn0wyn3kc71ay" path="res://scenes/game.tscn" id="1_pbiwd"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_ph26e"]
+
+[node name="Train" type="Node3D"]
+
+[node name="Game1" parent="." instance=ExtResource("1_pbiwd")]
+random_ball_reset = true
+random_player_reset = true
+
+[node name="Game2" parent="." instance=ExtResource("1_pbiwd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
+random_ball_reset = true
+random_player_reset = true
+
+[node name="Game3" parent="." instance=ExtResource("1_pbiwd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 60, 0)
+random_ball_reset = true
+random_player_reset = true
+
+[node name="Game4" parent="." instance=ExtResource("1_pbiwd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 90, 0)
+random_ball_reset = true
+random_player_reset = true
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_ph26e")
+action_repeat = 4
+speed_up = 12

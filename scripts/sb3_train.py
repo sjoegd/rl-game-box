@@ -6,22 +6,13 @@ import json
 import numpy as np
 
 from stable_baselines3 import PPO
-from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
 
-from godot_rl.core.godot_env import GodotEnv
-from wrappers.selfplay_godot_env_async import SelfPlayGodotEnvAsync
-from wrappers.selfplay_godot_env import SelfPlayGodotEnv
+from wrappers.selfplay_godot_env import SelfplayGodotEnv
 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(allow_abbrev=False)
-
-    parser.add_argument(
-        "--is_async",
-        default=False,
-        type=bool
-    )
 
     parser.add_argument(
         "--env_path",
@@ -61,7 +52,13 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--agents_per_env",
-        default=2,
+        default=1,
+        type=int
+    )
+    
+    parser.add_argument(
+        "--games_per_env",
+        default=1,
         type=int
     )
 
@@ -95,21 +92,7 @@ if __name__ == "__main__":
         type=int
     )
 
-    args, _ = parser.parse_known_args()
-    base_port = GodotEnv.DEFAULT_PORT
-    
-    def make_env(p: int):
-        def make_env_p():
-            return SelfPlayGodotEnv(
-                env_path=args.env_path,
-                show_window=args.viz,
-                speedup=args.speedup,
-                agents_per_env=args.agents_per_env,
-                action_repeat=args.action_repeat,
-                port=base_port+p
-            )
-        return make_env_p
-
+    args, _ = parser.parse_known_args()    
     save_parent_path = pathlib.Path(args.save_parent_folder_path)
     save_path = pathlib.Path(save_parent_path, args.save_model_name)
     temp_path = pathlib.Path(save_parent_path, "temp")
@@ -126,19 +109,15 @@ if __name__ == "__main__":
     if not os.path.exists(temp_path):
         os.mkdir(temp_path)
 
-    if args.is_async:
-        venv = SelfPlayGodotEnvAsync(
-            env_path=args.env_path,
-            port=base_port,
-            agents_per_env=args.agents_per_env,
-            n_parallel=args.n_parallel,
-            speedup=args.speedup,
-            action_repeat=args.action_repeat,
-            show_window=args.viz,
-        )
-    else:
-        env_makers = [make_env(p) for p in range(args.n_parallel)]
-        venv = DummyVecEnv(env_makers)
+    venv = SelfplayGodotEnv(
+        env_path=args.env_path,
+        agents_per_env=args.agents_per_env,
+        games_per_env=args.games_per_env,
+        n_parallel=args.n_parallel,
+        show_window=args.viz,
+        speedup=args.speedup,
+        action_repeat=args.action_repeat
+    )
     env = VecMonitor(venv)
 
     past_agent_paths = []
@@ -148,12 +127,18 @@ if __name__ == "__main__":
     steps_per_iteration = total_timesteps // total_iterations
 
     if not args.resume_training:
-        agent = PPO(policy="MlpPolicy", env=env, verbose=1)
+        agent = PPO(
+            policy="MlpPolicy", 
+            env=env, 
+            verbose=1,
+            batch_size=1024,
+        )
     else:
         print("LOADED MODEL")
         agent = PPO.load(save_path, env=env, verbose=1)
 
     try:
+        
         for it in range(total_iterations):
             print("--------------------")
             print("Iteration: {}".format(it))
@@ -170,11 +155,10 @@ if __name__ == "__main__":
                 removed_past_agent_path = past_agent_paths.pop(np.random.randint(len(past_agent_paths)))
                 os.remove(removed_past_agent_path.with_suffix(".zip"))
             
-            if args.is_async:
-                venv.choose_models(past_agent_paths)
-            else:
-                venv.env_method("choose_models", past_agent_paths)
+            venv.set_models(np.random.choice(past_agent_paths, args.agents_per_env - 1, replace=True))
+
     finally:
+        
         json.dump(vars(args), open(json_path, "w"))
         shutil.rmtree(temp_path)
         agent.save(save_path)

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 python scripts/sb3_play.py \
-    --env_path="games/Racing/builds/racing_sync_play.exe" \
+    --env_path="games/Racing/builds/racing_play.exe" \
+    --model_paths="models/Racing/Racing_1/Racing_1" \
     --agents_per_env=4 \
     --action_repeat=8 \
-    --load_model_paths="models/Racing/Racing_1/Racing_1" \
-    --num_episodes=5 \
+    --sessions=5 \

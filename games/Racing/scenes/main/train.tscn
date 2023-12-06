@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://csjcs3hjof2ji"]
+
+[ext_resource type="PackedScene" uid="uid://834o0w4b4axh" path="res://scenes/game.tscn" id="1_uxm6q"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_38q60"]
+
+[node name="Train" type="Node3D"]
+
+[node name="Game1" parent="." instance=ExtResource("1_uxm6q")]
+
+[node name="Game2" parent="." instance=ExtResource("1_uxm6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
+
+[node name="Game3" parent="." instance=ExtResource("1_uxm6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 60, 0)
+
+[node name="Game4" parent="." instance=ExtResource("1_uxm6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 90, 0)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_38q60")
+speed_up = 8
