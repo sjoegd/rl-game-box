@@ -50,6 +50,7 @@ class SelfplayGodotEnv(VecEnv):
         
         all_actions = []
         
+        # TODO: For increased effiency get all actions for each model at once
         for game in range(self.num_envs):
             all_actions.append(step_actions[game])
             for agent in range(1, self.agents_per_env):
