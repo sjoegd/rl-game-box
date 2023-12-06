@@ -88,7 +88,7 @@ class SelfplayGodotEnv(VecEnv):
     def reset(self, seed=0):
         obs = self.env.reset()["obs"]
         self.previous_obs = obs
-        return self.parse_step_obs(obs), [{} for _ in range(self.num_envs)]
+        return self.parse_step_obs(obs)
     
     def close(self):
         self.env.close()
