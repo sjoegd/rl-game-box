@@ -52,11 +52,11 @@ func get_reward() -> float:
 func get_action_space() -> Dictionary:
 	return {
 		"steer_action": {
-			"size": 2,
+			"size": 1,
 			"action_type": "continuous"
 		},
 		"power_action": {
-			"size": 2,
+			"size": 1,
 			"action_type": "continuous"
 		}
 	}
