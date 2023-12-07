@@ -10,8 +10,8 @@ var action_rotate := 0.0
 var action_jump := 0
 var action_dash := 0
 
-func init(_player: Node3D):
-	super.init(_player)
+func init(player: Node3D):
+	super.init(player)
 	setup_goal_sensors()
 	
 func setup_goal_sensors():
@@ -68,15 +68,15 @@ func get_reward() -> float:
 func get_action_space() -> Dictionary:
 	return {
 		"action_straight": {
-			"size": 2,
+			"size": 1,
 			"action_type": "continuous"
 		},
 		"action_side": {
-			"size": 2,
+			"size": 1,
 			"action_type": "continuous"
 		},
 		"action_rotate": {
-			"size": 2,
+			"size": 1,
 			"action_type": "continuous"
 		},
 		"action_jump": {
@@ -110,7 +110,7 @@ func create_empty_observation(length: int):
 
 """
 REWARD FUNCTIONS:
-	GOAL_SCORED - 100.0
+	GOAL_SCORED - 500.0
 	BALL_TOUCH - 0.25
 	DISTANCE_PLAYER_BALL - 0.5
 	DISTANCE_BALL_ENEMY_GOAL - 2.0
@@ -120,7 +120,7 @@ REWARD FUNCTIONS:
 func give_reward(reward_f: String, value: float):
 	var multiplier
 	match(reward_f):
-		"GOAL_SCORED": multiplier = 100.0
+		"GOAL_SCORED": multiplier = 500.0
 		"BALL_TOUCH": multiplier = 0.25
 		"DISTANCE_PLAYER_BALL": multiplier = 0.5
 		"DISTANCE_BALL_ENEMY_GOAL": multiplier = 2.0

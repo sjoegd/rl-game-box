@@ -76,7 +76,7 @@ func handle_input():
 			input_rotate = -MOUSE_SENS * mouse_x_movement
 	else:
 		input_straight = controller.action_straight
-		input_side = controller.action_side
+		input_side = controller.action_side*0.5
 		input_rotate = controller.action_rotate
 		input_jump = controller.action_jump
 		input_dash = bool(controller.action_dash) and can_dash

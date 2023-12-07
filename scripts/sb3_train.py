@@ -131,14 +131,11 @@ if __name__ == "__main__":
             policy="MlpPolicy", 
             env=env, 
             verbose=1,
-            batch_size=512,
-            ent_coef=0.01,
-            gae_lambda=0.95,
-            clip_range=0.2,
-            learning_rate=1e-5,
-            n_epochs=32,
-            gamma=0.99,
-            max_grad_norm=0.5          
+            batch_size=256,
+            n_steps=512,
+            ent_coef=0.005,
+            learning_rate=0.0003,
+            n_epochs=16
         )
     else:
         print("LOADED MODEL")
