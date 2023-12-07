@@ -57,10 +57,7 @@ class SelfplayGodotEnv(VecEnv):
         
         for agent in range(self.agents_per_env):
             for game in range(self.num_envs):
-                if agent == 0:
-                    action = step_actions[game]
-                else:
-                    action = self.model_handler.get_action(agent-1, self.previous_obs[game * self.agents_per_env + agent])
+                action = step_actions[game] if agent == 0 else self.model_handler.get_action(agent-1, self.previous_obs[game * self.agents_per_env + agent])
                 all_actions[game * self.agents_per_env + agent] = action
         
         obs, rewards, dones, _ = self.env.step(np.array(all_actions))
