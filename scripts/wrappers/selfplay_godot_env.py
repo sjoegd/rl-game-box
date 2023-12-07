@@ -48,13 +48,20 @@ class SelfplayGodotEnv(VecEnv):
     
     def step(self, step_actions: np.ndarray):
         
-        all_actions = []
+        all_actions = [None]*self.num_envs*self.agents_per_env
         
-        # TODO: For increased effiency get all actions for each model at once
-        for game in range(self.num_envs):
-            all_actions.append(step_actions[game])
-            for agent in range(1, self.agents_per_env):
-                all_actions.append(self.model_handler.get_action(agent-1, self.previous_obs[game * self.agents_per_env + agent]))
+        #for game in range(self.num_envs):
+        #    all_actions.append(step_actions[game])
+        #    for agent in range(1, self.agents_per_env):
+        #        all_actions.append(self.model_handler.get_action(agent-1, self.previous_obs[game * self.agents_per_env + agent]))
+        
+        for agent in range(self.agents_per_env):
+            for game in range(self.num_envs):
+                if agent == 0:
+                    action = step_actions[game]
+                else:
+                    action = self.model_handler.get_action(agent-1, self.previous_obs[game * self.agents_per_env + agent])
+                all_actions[game * self.agents_per_env + agent] = action
         
         obs, rewards, dones, _ = self.env.step(np.array(all_actions))
         obs = obs["obs"]
