@@ -11,6 +11,7 @@ pip-delete-this-directory.txt
 .conda
 .env
 .venv
+**/temp
 
 # Godot
 .godot/
