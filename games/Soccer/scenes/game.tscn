@@ -1,51 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://bn0wyn3kc71ay"]
+[gd_scene load_steps=8 format=3 uid="uid://hcqly5vfob3c"]
 
-[ext_resource type="PackedScene" uid="uid://dcr8v28w22bud" path="res://scenes/arena.tscn" id="1_mx8xw"]
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_y14jp"]
-[ext_resource type="PackedScene" uid="uid://cf6anh4fg60jb" path="res://scenes/player.tscn" id="3_abv7u"]
+[ext_resource type="PackedScene" uid="uid://ctsu68atell2p" path="res://scenes/player.tscn" id="1_53a52"]
+[ext_resource type="PackedScene" uid="uid://b5kv8fym8ipo3" path="res://scenes/arena.tscn" id="1_fmkuj"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_nq8gh"]
+[ext_resource type="PackedScene" uid="uid://coji6h0y1fpv5" path="res://scenes/ball.tscn" id="2_tvyg2"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1t7es"]
-sky_horizon_color = Color(1, 1, 1, 1)
-ground_bottom_color = Color(0.2, 0.168627, 0.133333, 1)
-ground_horizon_color = Color(0.8, 0.792157, 0.783333, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wiexw"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_pl7ra"]
-sky_material = SubResource("ProceduralSkyMaterial_1t7es")
+[sub_resource type="Sky" id="Sky_b4k61"]
+sky_material = SubResource("ProceduralSkyMaterial_wiexw")
 
-[sub_resource type="Environment" id="Environment_kaj0u"]
+[sub_resource type="Environment" id="Environment_n0tf5"]
 background_mode = 2
-sky = SubResource("Sky_pl7ra")
-reflected_light_source = 2
+sky = SubResource("Sky_b4k61")
 tonemap_mode = 2
-ssao_enabled = true
 glow_enabled = true
 
 [node name="Game" type="Node3D"]
-script = ExtResource("1_y14jp")
+script = ExtResource("1_nq8gh")
 
 [node name="Light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-light_energy = 0.25
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
-sky_mode = 1
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_kaj0u")
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_n0tf5")
 
-[node name="Arena" parent="." instance=ExtResource("1_mx8xw")]
+[node name="Arena" parent="." instance=ExtResource("1_fmkuj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
-[node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.707107, 0.707107, 0, 0.707107, 0.707107, -1, 3.09086e-08, -3.09086e-08, 47.2433, 51.1945, 0)
+[node name="Ball" parent="." instance=ExtResource("2_tvyg2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 
 [node name="Players" type="Node3D" parent="."]
 
-[node name="Player1" parent="Players" instance=ExtResource("3_abv7u")]
-transform = Transform3D(-0.8, 0, -1.20797e-07, 0, 0.8, 0, 1.20797e-07, 0, -0.8, 0, 0, -30)
+[node name="Player1" parent="Players" instance=ExtResource("1_53a52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.5)
 color = "blue"
 
-[node name="Player2" parent="Players" instance=ExtResource("3_abv7u")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 30)
+[node name="Player2" parent="Players" instance=ExtResource("1_53a52")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -12.5)
 
-[connection signal="ball_touch" from="Arena" to="." method="_on_player_ball_touch"]
-[connection signal="goal_scored" from="Arena" to="." method="_on_arena_goal_scored"]
+[connection signal="ball_entered" from="Arena" to="." method="_on_goal_ball_entered"]

@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://ogg7i8lrbqr5"]
+[gd_scene load_steps=3 format=3 uid="uid://xfgyyqnoi2vc"]
 
-[ext_resource type="PackedScene" uid="uid://bn0wyn3kc71ay" path="res://scenes/game.tscn" id="1_lufqn"]
-[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_26sed"]
+[ext_resource type="PackedScene" uid="uid://hcqly5vfob3c" path="res://scenes/game.tscn" id="1_n52ie"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_qbtb2"]
 
 [node name="Test" type="Node3D"]
 
-[node name="Game" parent="." instance=ExtResource("1_lufqn")]
+[node name="Game" parent="." instance=ExtResource("1_n52ie")]
 
 [node name="Sync" type="Node" parent="."]
-script = ExtResource("2_26sed")
-action_repeat = 4
+script = ExtResource("2_qbtb2")
+action_repeat = 6

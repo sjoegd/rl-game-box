@@ -1,129 +1,171 @@
 extends AIController3D
 class_name PlayerController
 
-@export var goal_sensors_length := 32
-var goal_sensors_setup := false
-
 var action_straight := 0.0
 var action_side := 0.0
 var action_rotate := 0.0
-var action_jump := 0
-var action_dash := 0
+var action_jump := false
 
-func init(player: Node3D):
-	super.init(player)
-	setup_goal_sensors()
+"""
+OBSERVATIONS:
 	
-func setup_goal_sensors():
-	var my_color = _player.color
-	var enemy_color = _player.get_enemy_team()
-	var my_goal_sensor = $GoalSensors.get_node(my_color.capitalize())
-	var enemy_goal_sensor = $GoalSensors.get_node(enemy_color.capitalize())
-	$GoalSensors.remove_child(my_goal_sensor)
-	$GoalSensors.remove_child(enemy_goal_sensor)
-	$Sensors.add_child(my_goal_sensor)
-	$Sensors.add_child(enemy_goal_sensor)
-	goal_sensors_setup = true
+	IDEAS:
+		look at RL examples
+		invert obs for red side
+	
+	PLAYER:
+		position -> /width /height /length -> x, y, z
+		rotation.y -> sin, cos
+		velocity -> normalized -> x, y, z
+		on_floor -> float
+	BALL:
+		ball_position -> /width /height /length -> x, y, z
+		ball_position_diff -> /width /height /length -> x, y, z
+		distance_to_ball -> /max_distance
+		velocity_to_ball -> normalized -> x, y, z
+		speed_to_ball -> /speed -> clamp
+		ball_velocity -> normalized -> x, y, z
+		ball_speed -> /speed_limit
+	OTHER PLAYER:
+		other_player_position -> /width /height /length -> x, y, z
+		other_player_rotation -> sin, cos
+		other_player_velocity -> normalized -> x, y, z
+		other_player_on_floor -> float
+		other_player_position_diff -> /width /height /length -> x, y, z
+		other_player_velocity_diff -> normalized -> x, y, z
+	
+"""
 
 func get_obs() -> Dictionary:
-	# SENSOR OBS
-	var sensor_obs = []
-	for sensor in $Sensors.get_children():
-		sensor_obs += sensor.get_observation()
 	
-	if not goal_sensors_setup:
-		sensor_obs += create_empty_observation(goal_sensors_length)
-		
-	var p = _player as Player
+	var _p := _player as Player
 	
-	# EXTRAS
-	var movement_locked = float(p.movement_locked)
-	var is_on_floor = float(p.is_on_floor())
-	var can_dash = float(p.can_dash)
-	var player_velocity = p.velocity.normalized()
-	var player_rotation = p.rotation
-	var ball_velocity = p._game.arena.get_ball_velocity().normalized()
-	var ball_speed = p._game.arena.get_ball_speed()
-		
-	return {"obs":(
-		sensor_obs + [
-			movement_locked,
-			is_on_floor,
-			can_dash,
-			player_velocity.x,
-			player_velocity.y,
-			player_velocity.z,
-			sin(player_rotation.y),
-			cos(player_rotation.y),
-			ball_velocity.x,
-			ball_velocity.y,
-			ball_velocity.z,
-			ball_speed
-		]
-	)}
+	var _position = Utility.normalize_position(_p.global_position, _p._game.arena)
+	var _rotation = _p.rotation
+	var _velocity = _p.velocity.normalized()
+	var _on_floor = float(_p.is_on_floor())
+	
+	var ball := _p._game.ball
+	
+	var _ball_position = Utility.normalize_position(ball.global_position, _p._game.arena)
+	var _ball_position_diff = _ball_position - _position
+	var _distance_to_ball = Utility.calculate_distance_player_ball(_p, ball) / _p._game.max_distance_player_ball
+	var _velocity_to_ball = Vector3.ZERO
+	var _speed_to_ball = 0.0
+	var _ball_velocity = ball.linear_velocity.normalized()
+	var _ball_speed = ball.linear_velocity.length() / ball.speed_limit
+	
+	var _p_enemy = _p._game.get_enemy_player(_player)
+	
+	var _enemy_position = Utility.normalize_position(_p_enemy.global_position, _p._game.arena)
+	var _enemy_rotation = _p_enemy.rotation
+	var _enemy_velocity = _p_enemy.velocity.normalized()
+	var _enemy_on_floor = float(_p_enemy.is_on_floor())
+	var _enemy_position_diff = _enemy_position - _position
+	var _enemy_velocity_diff = _enemy_velocity - _velocity
+	
+	if _player.color == "red":
+		# INVERT
+		var invert_x_z = Vector3(-1, 1, -1)
+		_position *= invert_x_z
+		_velocity *= invert_x_z
+		_ball_position *= invert_x_z
+		_ball_position_diff *= invert_x_z
+		_velocity_to_ball *= invert_x_z
+		_ball_velocity *= invert_x_z
+		_enemy_position *= invert_x_z
+		_enemy_velocity *= invert_x_z
+		_enemy_position_diff *= invert_x_z
+		_enemy_velocity_diff *= invert_x_z
+	
+	var obs = [
+		_position.x,
+		_position.y,
+		_position.z,
+		_rotation.y,
+		_velocity.x,
+		_velocity.y,
+		_velocity.z,
+		_on_floor,
+		_ball_position.x,
+		_ball_position.y,
+		_ball_position.z,
+		_ball_position_diff.x,
+		_ball_position_diff.y,
+		_ball_position_diff.z,
+		_distance_to_ball,
+		_velocity_to_ball.x,
+		_velocity_to_ball.y,
+		_velocity_to_ball.z,
+		_speed_to_ball,
+		_ball_velocity.x,
+		_ball_velocity.y,
+		_ball_velocity.z,
+		_ball_speed,
+		_enemy_position.x,
+		_enemy_position.y,
+		_enemy_position.z,
+		_enemy_rotation.y,
+		_enemy_velocity.x,
+		_enemy_velocity.y,
+		_enemy_velocity.z,
+		_enemy_on_floor,
+		_enemy_position_diff.x,
+		_enemy_position_diff.y,
+		_enemy_position_diff.z,
+		_enemy_velocity_diff.x,
+		_enemy_velocity_diff.y,
+		_enemy_velocity_diff.z
+	].map(
+		func(ob): return clamp(float(ob), -1.0, 1.0)
+	)
+	
+	return {"obs": obs}
 
-func get_reward() -> float:	 
+func get_reward() -> float:	
 	return reward
 	
 func get_action_space() -> Dictionary:
 	return {
-		"action_straight": {
-			"size": 1,
-			"action_type": "continuous"
-		},
-		"action_side": {
-			"size": 1,
-			"action_type": "continuous"
-		},
-		"action_rotate": {
-			"size": 1,
-			"action_type": "continuous"
-		},
-		"action_jump": {
+		"direction" : {
 			"size": 2,
-			"action_type": "discrete"
+			"action_type": "continuous"
 		},
-		"action_dash": {
-			"size": 2,
+		"rotate" : {
+			"size": 1,
+			"action_type": "continuous"
+		},
+		"jump": {
+			"size": 1,
 			"action_type": "discrete"
 		}
 	}
 	
 func set_action(action) -> void:
-	action_straight = clamp_continuous_action(action["action_straight"][0])
-	action_side = clamp_continuous_action(action["action_side"][0])
-	action_rotate = clamp_continuous_action(action["action_rotate"][0])
-	action_jump = clamp_discrete_action(action["action_jump"])
-	action_dash = clamp_discrete_action(action["action_dash"])
-	
-func clamp_continuous_action(action: float):
+	action_straight = clamp_action(action["direction"][0])
+	action_side = clamp_action(action["direction"][1])
+	action_rotate = clamp_action(action["rotate"][0])
+	action_jump = bool(action["jump"])
+
+func clamp_action(action: float):
 	return clamp(action, -1.0, 1.0)
-
-func clamp_discrete_action(action: int):
-	return clamp(action, 0, 1)
-
-func create_empty_observation(length: int):
-	var empty_obs = []
-	for i in range(length):
-		empty_obs.append(0)
-	return empty_obs
-
+	
 """
 REWARD FUNCTIONS:
-	GOAL_SCORED - 500.0
-	BALL_TOUCH - 0.25
-	DISTANCE_PLAYER_BALL - 0.5
-	DISTANCE_BALL_ENEMY_GOAL - 2.0
-	BALL_SPEED - 0.25
+	
+	GOAL - 1.0
+	DISTANCE_BALL - 0.05
+	DISTANCE_BALL_GOAL - 0.1
+	TOUCH_BALL - 0.025
+	
 """
 
-func give_reward(reward_f: String, value: float):
-	var multiplier
-	match(reward_f):
-		"GOAL_SCORED": multiplier = 500.0
-		"BALL_TOUCH": multiplier = 0.25
-		"DISTANCE_PLAYER_BALL": multiplier = 0.5
-		"DISTANCE_BALL_ENEMY_GOAL": multiplier = 2.0
-		"BALL_SPEED": multiplier = 0.25
+func give_reward(reward_function: String, value: float):
+	var multiplier: float
+	match reward_function:
+		"GOAL": multiplier = 1.0
+		"DISTANCE_BALL": multiplier = 0.05
+		"DISTANCE_BALL_GOAL": multiplier = 0.1
+		"TOUCH_BALL": multiplier = 0.025
 		_: multiplier = 0.0
 	reward += multiplier * value
