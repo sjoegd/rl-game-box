@@ -6,28 +6,52 @@
 [node name="Train" type="Node3D"]
 
 [node name="Game1" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 45)
 
 [node name="Game2" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 15, 45)
 
 [node name="Game3" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 30, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 30, 45)
 
 [node name="Game4" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 45, 45)
 
 [node name="Game5" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 45)
 
 [node name="Game6" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 15, 45)
 
 [node name="Game7" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 30, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 30, 45)
 
 [node name="Game8" parent="." instance=ExtResource("1_4cxrl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 45, 45)
+
+[node name="Game9" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -45)
+
+[node name="Game10" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 15, -45)
+
+[node name="Game11" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 30, -45)
+
+[node name="Game12" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 45, -45)
+
+[node name="Game13" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -45)
+
+[node name="Game14" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 15, -45)
+
+[node name="Game15" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 30, -45)
+
+[node name="Game16" parent="." instance=ExtResource("1_4cxrl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 45, -45)
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_r4boj")

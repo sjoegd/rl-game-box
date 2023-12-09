@@ -1,7 +1,7 @@
 extends Node3D
 class_name Game
 
-@export var human_overwrite_mode := false
+@export var human_override_mode := false
 
 @onready var players := $Players.get_children()
 @onready var ball := $Ball as Ball
@@ -14,18 +14,21 @@ class_name Game
 @onready var max_distance_ball_goal = Utility.calculate_max_distance_ball_goal(arena)
 
 var goals: Array[String] = []
+var ball_touches := {}
 
 var needs_reset := false
 
 func _ready():
 	for player in players:
 		player.init(self)
-		player.human_overwrite = human_overwrite_mode
+		player.human_override = human_override_mode
 		player.needs_reset.connect(_on_player_needs_reset)
+		ball_touches[player.name] = 0
 
 func _physics_process(_delta):
 	for player in players:
 		give_rewards(player)
+		ball_touches[player.name] = 0
 	if needs_reset:
 		reset()
 	goals.clear()
@@ -44,14 +47,16 @@ func give_rewards(player: Player):
 	player.controller.give_reward("DISTANCE_BALL", distance_ball)
 	
 	# DISTANCE_BALL_GOAL
-	var distance_ball_goal = 1 - (
+	var distance_ball_goal = (
 		Utility.calculate_distance_ball_goal(ball, arena, Utility.get_enemy_color(player.color)) /
 		max_distance_ball_goal
 	)
-	player.controller.give_reward("DISTANCE_BALL_GOAL", distance_ball_goal)
+	var distance_ball_goal_reward = 2*exp(-5*distance_ball_goal)
+	player.controller.give_reward("DISTANCE_BALL_GOAL", distance_ball_goal_reward)
 	
 	# TOUCH_BALL
-	pass
+	var player_ball_touches = ball_touches[player.name]
+	player.controller.give_reward("TOUCH_BALL", player_ball_touches)
 
 func game_over():
 	for player in players:
@@ -61,6 +66,7 @@ func reset():
 	needs_reset = false
 	goals.clear()
 	for i in range(len(players)):
+		ball_touches[players[i].name] = 0
 		players[i].reset(player_transforms[i])
 	ball.reset(ball_transform)
 
@@ -74,3 +80,6 @@ func _on_player_needs_reset():
 func _on_goal_ball_entered(goal: String):
 	goals.append(goal)
 	game_over()
+
+func _on_ball_touch_player(player):
+	ball_touches[player.name] += 1

@@ -1,32 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://hcqly5vfob3c"]
+[gd_scene load_steps=5 format=3 uid="uid://hcqly5vfob3c"]
 
 [ext_resource type="PackedScene" uid="uid://ctsu68atell2p" path="res://scenes/player.tscn" id="1_53a52"]
 [ext_resource type="PackedScene" uid="uid://b5kv8fym8ipo3" path="res://scenes/arena.tscn" id="1_fmkuj"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_nq8gh"]
 [ext_resource type="PackedScene" uid="uid://coji6h0y1fpv5" path="res://scenes/ball.tscn" id="2_tvyg2"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wiexw"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_b4k61"]
-sky_material = SubResource("ProceduralSkyMaterial_wiexw")
-
-[sub_resource type="Environment" id="Environment_n0tf5"]
-background_mode = 2
-sky = SubResource("Sky_b4k61")
-tonemap_mode = 2
-glow_enabled = true
-
 [node name="Game" type="Node3D"]
 script = ExtResource("1_nq8gh")
-
-[node name="Light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
-
-[node name="Environment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_n0tf5")
 
 [node name="Arena" parent="." instance=ExtResource("1_fmkuj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -44,3 +24,4 @@ color = "blue"
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -12.5)
 
 [connection signal="ball_entered" from="Arena" to="." method="_on_goal_ball_entered"]
+[connection signal="touch_player" from="Ball" to="." method="_on_ball_touch_player"]

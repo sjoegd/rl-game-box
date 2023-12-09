@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://ctsu68atell2p"]
+[gd_scene load_steps=19 format=3 uid="uid://ctsu68atell2p"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_eso2y"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="2_qg5b6"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sensors/sensors_3d/RaycastSensor3D.gd" id="3_3j4uv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kprmu"]
 size = Vector3(2, 2, 2.25)
@@ -239,3 +240,465 @@ fov = 90.0
 
 [node name="Controller" type="Node3D" parent="."]
 script = ExtResource("2_qg5b6")
+
+[node name="Sensors" type="Node3D" parent="Controller"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.5, 0)
+visible = false
+
+[node name="Player" type="Node3D" parent="Controller/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("3_3j4uv")
+n_rays_width = 10.0
+n_rays_height = 1.0
+ray_length = 50.0
+cone_width = 90.0
+cone_height = 15.0
+
+[node name="@RayCast3D@37902" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(-32.4724, 0, 38.0203)
+
+[node name="@RayCast3D@37903" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(-26.1249, 0, 42.632)
+
+[node name="@RayCast3D@37904" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(-19.1342, 0, 46.194)
+
+[node name="@RayCast3D@37905" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(-11.6723, 0, 48.6185)
+
+[node name="@RayCast3D@37906" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(-3.92295, 0, 49.8459)
+
+[node name="@RayCast3D@37907" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(3.92295, 0, 49.8459)
+
+[node name="@RayCast3D@37908" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(11.6723, 0, 48.6185)
+
+[node name="@RayCast3D@37909" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(19.1342, 0, 46.194)
+
+[node name="@RayCast3D@37910" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(26.1249, 0, 42.632)
+
+[node name="@RayCast3D@37911" type="RayCast3D" parent="Controller/Sensors/Player"]
+target_position = Vector3(32.4724, 0, 38.0203)
+
+[node name="Static" type="Node3D" parent="Controller/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("3_3j4uv")
+collision_mask = 8
+boolean_class_mask = 8
+n_rays_width = 10.0
+n_rays_height = 1.0
+ray_length = 50.0
+cone_width = 90.0
+cone_height = 15.0
+
+[node name="@RayCast3D@39430" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(-32.4724, 0, 38.0203)
+collision_mask = 8
+
+[node name="@RayCast3D@39431" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(-26.1249, 0, 42.632)
+collision_mask = 8
+
+[node name="@RayCast3D@39432" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(-19.1342, 0, 46.194)
+collision_mask = 8
+
+[node name="@RayCast3D@39433" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(-11.6723, 0, 48.6185)
+collision_mask = 8
+
+[node name="@RayCast3D@39434" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(-3.92295, 0, 49.8459)
+collision_mask = 8
+
+[node name="@RayCast3D@39435" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(3.92295, 0, 49.8459)
+collision_mask = 8
+
+[node name="@RayCast3D@39436" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(11.6723, 0, 48.6185)
+collision_mask = 8
+
+[node name="@RayCast3D@39437" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(19.1342, 0, 46.194)
+collision_mask = 8
+
+[node name="@RayCast3D@39438" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(26.1249, 0, 42.632)
+collision_mask = 8
+
+[node name="@RayCast3D@39439" type="RayCast3D" parent="Controller/Sensors/Static"]
+target_position = Vector3(32.4724, 0, 38.0203)
+collision_mask = 8
+
+[node name="Ball" type="Node3D" parent="Controller/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("3_3j4uv")
+collision_mask = 4
+boolean_class_mask = 4
+n_rays_width = 10.0
+n_rays_height = 1.0
+ray_length = 50.0
+cone_width = 90.0
+cone_height = 15.0
+
+[node name="@RayCast3D@40240" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(-32.4724, 0, 38.0203)
+collision_mask = 4
+
+[node name="@RayCast3D@40241" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(-26.1249, 0, 42.632)
+collision_mask = 4
+
+[node name="@RayCast3D@40242" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(-19.1342, 0, 46.194)
+collision_mask = 4
+
+[node name="@RayCast3D@40243" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(-11.6723, 0, 48.6185)
+collision_mask = 4
+
+[node name="@RayCast3D@40244" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(-3.92295, 0, 49.8459)
+collision_mask = 4
+
+[node name="@RayCast3D@40245" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(3.92295, 0, 49.8459)
+collision_mask = 4
+
+[node name="@RayCast3D@40246" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(11.6723, 0, 48.6185)
+collision_mask = 4
+
+[node name="@RayCast3D@40247" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(19.1342, 0, 46.194)
+collision_mask = 4
+
+[node name="@RayCast3D@40248" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(26.1249, 0, 42.632)
+collision_mask = 4
+
+[node name="@RayCast3D@40249" type="RayCast3D" parent="Controller/Sensors/Ball"]
+target_position = Vector3(32.4724, 0, 38.0203)
+collision_mask = 4
+
+[node name="BallHigh" type="Node3D" parent="Controller/Sensors"]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_3j4uv")
+collision_mask = 4
+boolean_class_mask = 4
+n_rays_width = 10.0
+n_rays_height = 1.0
+ray_length = 50.0
+cone_width = 90.0
+cone_height = 15.0
+
+[node name="_RayCast3D_40240" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(-32.4724, 0, 38.0203)
+collision_mask = 4
+
+[node name="_RayCast3D_40241" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(-26.1249, 0, 42.632)
+collision_mask = 4
+
+[node name="_RayCast3D_40242" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(-19.1342, 0, 46.194)
+collision_mask = 4
+
+[node name="_RayCast3D_40243" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(-11.6723, 0, 48.6185)
+collision_mask = 4
+
+[node name="_RayCast3D_40244" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(-3.92295, 0, 49.8459)
+collision_mask = 4
+
+[node name="_RayCast3D_40245" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(3.92295, 0, 49.8459)
+collision_mask = 4
+
+[node name="_RayCast3D_40246" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(11.6723, 0, 48.6185)
+collision_mask = 4
+
+[node name="_RayCast3D_40247" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(19.1342, 0, 46.194)
+collision_mask = 4
+
+[node name="_RayCast3D_40248" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(26.1249, 0, 42.632)
+collision_mask = 4
+
+[node name="_RayCast3D_40249" type="RayCast3D" parent="Controller/Sensors/BallHigh"]
+target_position = Vector3(32.4724, 0, 38.0203)
+collision_mask = 4
+
+[node name="Red" type="Node3D" parent="Controller/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("3_3j4uv")
+collision_mask = 16
+boolean_class_mask = 16
+n_rays_width = 20.0
+n_rays_height = 1.0
+ray_length = 50.0
+cone_width = 360.0
+cone_height = 15.0
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43146" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-7.82172, 0, -49.3844)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43147" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-22.6995, 0, -44.5503)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43148" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-35.3553, 0, -35.3553)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43149" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-44.5503, 0, -22.6995)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43150" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-49.3844, 0, -7.82172)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43151" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-49.3844, 0, 7.82172)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43152" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-44.5503, 0, 22.6995)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43153" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-35.3553, 0, 35.3553)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43154" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-22.6995, 0, 44.5503)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43155" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(-7.82172, 0, 49.3844)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_10 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(7.82172, 0, 49.3844)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_11 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(22.6995, 0, 44.5503)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_12 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(35.3553, 0, 35.3553)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_13 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(44.5503, 0, 22.6995)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_14 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(49.3844, 0, 7.82172)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_15 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(49.3844, 0, -7.82172)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_16 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(44.5503, 0, -22.6995)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_17 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(35.3553, 0, -35.3553)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_18 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(22.6995, 0, -44.5503)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_19 0" type="RayCast3D" parent="Controller/Sensors/Red"]
+target_position = Vector3(7.82172, 0, -49.3844)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Blue" type="Node3D" parent="Controller/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("3_3j4uv")
+collision_mask = 32
+boolean_class_mask = 32
+n_rays_width = 20.0
+n_rays_height = 1.0
+ray_length = 50.0
+cone_width = 360.0
+cone_height = 15.0
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43969" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-7.82172, 0, -49.3844)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43970" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-22.6995, 0, -44.5503)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43971" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-35.3553, 0, -35.3553)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43972" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-44.5503, 0, -22.6995)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43973" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-49.3844, 0, -7.82172)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43974" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-49.3844, 0, 7.82172)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43975" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-44.5503, 0, 22.6995)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43976" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-35.3553, 0, 35.3553)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43977" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-22.6995, 0, 44.5503)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@43978" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(-7.82172, 0, 49.3844)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_10 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(7.82172, 0, 49.3844)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_11 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(22.6995, 0, 44.5503)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_12 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(35.3553, 0, 35.3553)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_13 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(44.5503, 0, 22.6995)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_14 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(49.3844, 0, 7.82172)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_15 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(49.3844, 0, -7.82172)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_16 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(44.5503, 0, -22.6995)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_17 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(35.3553, 0, -35.3553)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_18 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(22.6995, 0, -44.5503)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_19 0" type="RayCast3D" parent="Controller/Sensors/Blue"]
+target_position = Vector3(7.82172, 0, -49.3844)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false

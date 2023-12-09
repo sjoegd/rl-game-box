@@ -6,7 +6,7 @@ python scripts/sb3_train.py \
     --save_model_name="Soccer_0" \
     --speedup=12 \
     --agents_per_env=2 \
-    --games_per_env=8 \
+    --games_per_env=16 \
     --n_parallel=4 \
     --action_repeat=6 \
     --max_past_agents=50 \
