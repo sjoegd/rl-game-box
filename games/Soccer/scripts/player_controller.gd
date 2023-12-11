@@ -1,10 +1,12 @@
 extends AIController3D
 class_name PlayerController
 
-var action_straight := 0.0
-var action_side := 0.0
+var action_forward := 0
+var action_backward := 0
+var action_right := 0
+var action_left := 0
+var action_jump := 0
 var action_rotate := 0.0
-var action_jump := false
 
 func init(player: Node3D):
 	super.init(player)
@@ -51,7 +53,6 @@ OBSERVATIONS:
 """
 
 func get_obs() -> Dictionary:
-	
 	var sensors = $Sensors.get_children()
 	var sensor_obs = []
 	for sensor in sensors:
@@ -124,25 +125,39 @@ func get_reward() -> float:
 	
 func get_action_space() -> Dictionary:
 	return {
-		"direction" : {
-			"size": 2,
-			"action_type": "continuous"
-		},
-		"rotate" : {
+		"forward": {
 			"size": 1,
-			"action_type": "continuous"
+			"action_type": "discrete"
+		},
+		"backward": {
+			"size": 1,
+			"action_type": "discrete"
+		},
+		"right": {
+			"size": 1,
+			"action_type": "discrete"
+		},
+		"left": {
+			"size": 1,
+			"action_type": "discrete"
 		},
 		"jump": {
 			"size": 1,
 			"action_type": "discrete"
+		},
+		"rotate" : {
+			"size": 1,
+			"action_type": "continuous"
 		}
 	}
 	
 func set_action(action) -> void:
-	action_straight = clamp_action(action["direction"][0])
-	action_side = clamp_action(action["direction"][1])
+	action_forward = action["forward"]
+	action_backward = action["backward"]
+	action_right = action["right"]
+	action_left = action["left"]
+	action_jump = action["jump"]
 	action_rotate = clamp_action(action["rotate"][0])
-	action_jump = bool(action["jump"])
 
 func clamp_action(action: float):
 	return clamp(action, -1.0, 1.0)

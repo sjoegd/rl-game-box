@@ -13,4 +13,3 @@ human_override_mode = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_x1r8i")
-action_repeat = 6

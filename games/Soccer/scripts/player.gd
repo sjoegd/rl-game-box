@@ -92,7 +92,7 @@ func handle_input():
 		input_straight = Input.get_axis("forward", "backward")
 		input_side = Input.get_axis("left", "right")*0.75
 	else:
-		input_jump = controller.action_jump
+		input_jump = bool(controller.action_jump)
 		input_rotate = controller.action_rotate
-		input_straight = controller.action_straight
-		input_side = controller.action_side
+		input_straight = controller.action_forward - controller.action_backward
+		input_side = (controller.action_left - controller.action_right)*0.75

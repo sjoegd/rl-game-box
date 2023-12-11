@@ -12,4 +12,3 @@
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_qbtb2")
-action_repeat = 6
