@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://caulu0lj7d5rp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h6qph"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_steus"]
+sky_material = SubResource("ProceduralSkyMaterial_h6qph")
+
+[sub_resource type="Environment" id="Environment_lfvkp"]
+background_mode = 2
+sky = SubResource("Sky_steus")
+tonemap_mode = 2
+ssao_enabled = true
+
+[node name="Environment" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lfvkp")
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+shadow_enabled = true

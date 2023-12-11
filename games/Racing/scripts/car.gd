@@ -2,7 +2,7 @@ extends VehicleBody3D
 class_name Car
 
 signal finished(car: Car)
-signal need_reset
+signal needs_reset
 signal collision_with_static(car: Car)
 
 var game: Game
@@ -55,7 +55,7 @@ func reset(grid_position: Marker3D):
 
 func _physics_process(delta):
 	if controller.needs_reset:
-		need_reset.emit()
+		needs_reset.emit()
 		return
 	handle_input(delta)
 	camera.update(delta)

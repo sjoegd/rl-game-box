@@ -1,31 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://834o0w4b4axh"]
+[gd_scene load_steps=4 format=3 uid="uid://834o0w4b4axh"]
 
 [ext_resource type="PackedScene" uid="uid://dabtnropd8ejx" path="res://scenes/track.tscn" id="1_bglyu"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_ff754"]
 [ext_resource type="PackedScene" uid="uid://ccfb8mi3wr5r3" path="res://scenes/car.tscn" id="2_wx1gl"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8jr3y"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_steus"]
-sky_material = SubResource("ProceduralSkyMaterial_8jr3y")
-
-[sub_resource type="Environment" id="Environment_s8dkp"]
-background_mode = 2
-sky = SubResource("Sky_steus")
-tonemap_mode = 2
-ssao_enabled = true
-
 [node name="Game" type="Node3D"]
 script = ExtResource("1_ff754")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_s8dkp")
-
-[node name="Light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
-shadow_enabled = true
 
 [node name="Track" parent="." instance=ExtResource("1_bglyu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)

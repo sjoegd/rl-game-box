@@ -25,9 +25,10 @@ func _ready():
 	clear_track()
 	generate_track()
 
-func reset():
-	clear_track()
-	generate_track()
+func reset(rebuild_track: bool = false):
+	if rebuild_track:
+		clear_track()
+		generate_track()
 	car_to_latest_track_index.clear()
 	car_to_furthest_track_index.clear()
 

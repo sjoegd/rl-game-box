@@ -2,6 +2,7 @@ extends Node3D
 class_name Game
 
 @export var human_overwrite_mode := false
+@export var rebuild_track_mode := false
 
 @onready var track: Track = $Track as Track
 @onready var cars: Array = $Cars.get_children()
@@ -9,7 +10,7 @@ class_name Game
 
 var car_latest_position: Dictionary = {}
 var car_static_collision_count: Dictionary = {}
-var need_reset: bool = false
+var needs_reset: bool = false
 
 var car_camera_index: int = 0
 
@@ -18,7 +19,7 @@ func _ready():
 	for i in range(len(cars)):
 		var car = cars[i]
 		car.init(self)
-		car.need_reset.connect(_on_car_need_reset)
+		car.needs_reset.connect(_on_car_need_reset)
 		car.finished.connect(_on_car_finish)
 		car.collision_with_static.connect(_on_car_collision_with_static)
 		car.move_to_grid_position(grid[clamp(i, 0, grid.size() - 1)])
@@ -28,7 +29,7 @@ func _ready():
 		cars[car_camera_index].human_overwrite = true
 
 func _process(_delta):
-	if need_reset:
+	if needs_reset:
 		return reset()
 	handle_input()
 	var cars_sorted = sort_car_positions()
@@ -84,8 +85,8 @@ func handle_input():
 		cars[car_camera_index].camera.next_mode()
 
 func reset():
-	need_reset = false
-	track.reset()
+	needs_reset = false
+	track.reset(rebuild_track_mode)
 	var grid = create_random_starting_grid()
 	for i in range(len(cars)):
 		cars[i].reset(grid[clamp(i, 0, grid.size() - 1)])
@@ -97,7 +98,7 @@ func create_random_starting_grid():
 	return grid
 
 func _on_car_need_reset():
-	need_reset = true
+	needs_reset = true
 
 func _on_car_finish(car: Car):
 	car.game_over()
