@@ -31,4 +31,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 45, 0)
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_r4boj")
-speed_up = 12
+speed_up = 8

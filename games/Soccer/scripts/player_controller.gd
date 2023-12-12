@@ -22,36 +22,6 @@ func setup_sensors():
 		$Sensors.move_child(red, blue_index)
 		$Sensors.move_child(blue, red_index)
 
-"""
-OBSERVATIONS:
-	
-	SENSORS:
-		PLAYER -> 10
-		STATIC -> 10
-		BALL -> 10
-		BALL_HIGH -> 10
-		RED (GOAL) -> 20
-		BLUE (GOAL) -> 20
-	
-	PLAYER:
-		position -> /width /height /length -> x, y, z
-		rotation.y -> sin, cos
-		velocity -> normalized -> x, y, z
-		on_floor -> float
-	
-	BALL:
-		ball_position -> /width /height /length -> x, y, z
-		ball_velocity -> normalized -> x, y, z
-		ball_speed -> /speed_limit
-	
-	ENEMY:
-		enemy_position -> /width /height /length -> x, y, z
-		enemy_rotation -> sin, cos
-		enemy_velocity -> normalized -> x, y, z
-		enemy_on_floor -> float
-	
-"""
-
 func get_obs() -> Dictionary:
 	var sensors = $Sensors.get_children()
 	var sensor_obs = []
