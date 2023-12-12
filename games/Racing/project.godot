@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Racing"
 run/main_scene="res://scenes/game.tscn"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 run/main_scene.play="res://scenes/main/play.tscn"
 run/main_scene.test="res://scenes/main/test.tscn"
@@ -36,3 +36,8 @@ enabled=PackedStringArray("res://addons/godot_rl_agents/plugin.cfg")
 3d_physics/layer_1="Vehicle"
 3d_physics/layer_2="Static"
 3d_physics/layer_3="Finish"
+
+[physics]
+
+3d/physics_engine="JoltPhysics3D"
+jolt_3d/collisions/areas_detect_static_bodies=true

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/track.gd" id="1_c2ksm"]
 [ext_resource type="Script" path="res://utility/resources/track_part.gd" id="2_dpqbh"]
-[ext_resource type="MeshLibrary" uid="uid://b80kvnjlx6sn1" path="res://utility/mesh_libraries/race_kit_meshlib.tres" id="3_n17gc"]
+[ext_resource type="MeshLibrary" uid="uid://7txdnexavj8q" path="res://utility/mesh_libraries/race_kit_meshlib.tres" id="3_n17gc"]
 
 [sub_resource type="Resource" id="Resource_g4n4x"]
 script = ExtResource("2_dpqbh")

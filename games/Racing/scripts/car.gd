@@ -32,9 +32,9 @@ func _ready():
 	camera.init(self)
 
 func set_color(c: String):
-	var material = $Plane.mesh.get("surface_1/material").duplicate(true)
+	var material = $Mesh.mesh.get("surface_1/material").duplicate(true)
 	material.albedo_color = Color(c)
-	$Plane.set_surface_override_material(1, material)
+	$Mesh.set_surface_override_material(1, material)
 
 func game_over():
 	controller.done = true

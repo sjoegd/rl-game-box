@@ -75,9 +75,9 @@ func bool_to_value(b: bool) -> float:
 REWARD FUNCTION:
 	
 	CARS_BEHIND - 0.1
-	DISTANCE_TRAVELED_FORWARD - 2
-	GOING_FORWARD - 1
-	WALL_COLLISION - -25
+	DISTANCE_TRAVELED_FORWARD - 1
+	GOING_FORWARD - .25
+	WALL_COLLISION - -2.5
 	
 	TODO:
 		PLAYER_COLLISION
@@ -89,11 +89,11 @@ func give_reward(reward_f: String, value: float):
 		"CARS_BEHIND":
 			multiplier = 0.1
 		"DISTANCE_TRAVELED_FORWARD": 
-			multiplier = 2
-		"GOING_FORWARD":
 			multiplier = 1
+		"GOING_FORWARD":
+			multiplier = .25
 		"WALL_COLLISION":
-			multiplier = -25
+			multiplier = -2.5
 		_:
 			multiplier = 0
 	reward += multiplier * value

@@ -6,28 +6,12 @@
 [node name="Train" type="Node3D"]
 
 [node name="Game1" parent="." instance=ExtResource("1_uxm6q")]
+rebuild_track_mode = true
 
 [node name="Game2" parent="." instance=ExtResource("1_uxm6q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
-
-[node name="Game3" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 60, 0)
-
-[node name="Game4" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 90, 0)
-
-[node name="Game5" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 120, 0)
-
-[node name="Game6" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, 0)
-
-[node name="Game7" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 180, 0)
-
-[node name="Game8" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 210, 0)
+rebuild_track_mode = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_38q60")
-speed_up = 12
+speed_up = 8
