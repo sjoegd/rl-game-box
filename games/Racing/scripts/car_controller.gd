@@ -5,8 +5,10 @@ class_name CarController
 
 @onready var sensors: Array = $Sensors.get_children()
 
-var steer_action: float = 0
-var power_action: float = 0
+var forward_action := 0
+var backward_action := 0
+var right_action := 0
+var left_action := 0
 
 func get_obs() -> Dictionary:
 	# SENSOR OBS
@@ -51,19 +53,29 @@ func get_reward() -> float:
 	
 func get_action_space() -> Dictionary:
 	return {
-		"steer_action": {
+		"forward": {
 			"size": 1,
-			"action_type": "continuous"
+			"action_type": "discrete"
 		},
-		"power_action": {
+		"backward": {
 			"size": 1,
-			"action_type": "continuous"
+			"action_type": "discrete"
+		},
+		"right": {
+			"size": 1,
+			"action_type": "discrete"
+		},
+		"left": {
+			"size": 1,
+			"action_type": "discrete"
 		}
 	}
 	
 func set_action(action) -> void:
-	steer_action = clamp_value(action["steer_action"][0])
-	power_action = clamp_value(action["power_action"][0])
+	forward_action = action["forward"]
+	backward_action = action["backward"]
+	right_action = action["right"]
+	left_action = action["left"]
 
 func clamp_value(value: float):
 	return clamp(value, -1, 1)

@@ -69,8 +69,8 @@ func handle_input(delta):
 		input_steer = Input.get_axis("ui_right", "ui_left")
 		input_power = Input.get_axis("ui_down", "ui_up")
 	else:
-		input_steer = controller.steer_action
-		input_power = controller.power_action
+		input_steer = controller.right_action - controller.left_action
+		input_power = controller.backward_action - controller.forward_action
 	steering = move_toward(steering, input_steer * steer, delta * 2.5)
 	engine_force = input_power * power
 
