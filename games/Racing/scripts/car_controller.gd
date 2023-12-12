@@ -70,7 +70,7 @@ func get_action_space() -> Dictionary:
 			"action_type": "discrete"
 		}
 	}
-	
+
 func set_action(action) -> void:
 	forward_action = action["forward"]
 	backward_action = action["backward"]
@@ -92,7 +92,7 @@ REWARD FUNCTION:
 	WALL_COLLISION - -2.5
 	
 	TODO:
-		PLAYER_COLLISION
+		PLAYER_COLLISION?
 """
 
 func give_reward(reward_f: String, value: float):
