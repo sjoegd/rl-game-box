@@ -9,9 +9,9 @@
 rebuild_track_mode = true
 
 [node name="Game2" parent="." instance=ExtResource("1_uxm6q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 rebuild_track_mode = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_38q60")
-speed_up = 8
+speed_up = 5

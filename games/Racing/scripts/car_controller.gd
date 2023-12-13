@@ -54,19 +54,19 @@ func get_reward() -> float:
 func get_action_space() -> Dictionary:
 	return {
 		"forward": {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"backward": {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"right": {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"left": {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		}
 	}
