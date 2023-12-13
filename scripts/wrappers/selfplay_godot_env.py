@@ -5,6 +5,9 @@ from godot_rl.wrappers.stable_baselines_wrapper import StableBaselinesGodotEnv
 from stable_baselines3.common.vec_env.base_vec_env import VecEnv
 from godot_rl.core.godot_env import GodotEnv
 
+# TODO:
+# - Add support for RecurrentPPO
+
 """
 A custom wrapper around the GodotEnv that allows
 agents to play against other models with multiple parallel envs and

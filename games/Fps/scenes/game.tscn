@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0vwyhbv0md7q"]
+[gd_scene load_steps=8 format=3 uid="uid://c0vwyhbv0md7q"]
 
 [ext_resource type="PackedScene" uid="uid://cs0kqn3yv2wlf" path="res://scenes/player.tscn" id="1_468ha"]
 
@@ -15,6 +15,18 @@ sky = SubResource("Sky_ukjm0")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e8p1j"]
+metallic_specular = 1.0
+
+[sub_resource type="PrismMesh" id="PrismMesh_3kugu"]
+left_to_right = 1.0
+size = Vector3(5, 2, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w0e1p"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0, 0, 1)
+metallic_specular = 0.0
+
 [node name="Game" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -24,8 +36,28 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m85rk")
 
-[node name="Player" parent="." instance=ExtResource("1_468ha")]
+[node name="Level" type="Node3D" parent="."]
 
-[node name="Ground" type="CSGBox3D" parent="."]
+[node name="Ground" type="CSGBox3D" parent="Level"]
+layers = 4
 use_collision = true
+collision_layer = 4
+collision_mask = 3
 size = Vector3(50, 0.25, 50)
+material = SubResource("StandardMaterial3D_e8p1j")
+
+[node name="Ramp" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 9)
+layers = 4
+use_collision = true
+collision_layer = 4
+collision_mask = 3
+mesh = SubResource("PrismMesh_3kugu")
+material = SubResource("StandardMaterial3D_w0e1p")
+
+[node name="Bullets" type="Node3D" parent="."]
+
+[node name="Player1" parent="." instance=ExtResource("1_468ha")]
+
+[node name="Player2" parent="." instance=ExtResource("1_468ha")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -10.374)

@@ -10,6 +10,9 @@ from stable_baselines3.common.vec_env.vec_monitor import VecMonitor
 
 from wrappers.selfplay_godot_env import SelfplayGodotEnv
 
+# TODO:
+# - Add support for RecurrentPPO
+
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(allow_abbrev=False)
