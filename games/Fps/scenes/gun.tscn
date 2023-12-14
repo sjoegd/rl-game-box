@@ -1,4 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cn8bmo16kot3i"]
+[gd_scene load_steps=13 format=3 uid="uid://cn8bmo16kot3i"]
+
+[ext_resource type="Script" path="res://scripts/gun.gd" id="1_tprs5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtrs0"]
 resource_name = "Grey"
@@ -163,6 +165,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_c65jy")
 
+[sub_resource type="Animation" id="Animation_2qdjo"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_gcgjf"]
 resource_name = "shoot"
 length = 0.1
@@ -177,11 +182,8 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.01, 0.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(1.09784, -0.619487, -0.603976), Vector3(1.098, -0.619, -0.55), Vector3(1.09784, -0.619487, -0.603976)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.15), Vector3(0, 0, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_2qdjo"]
-length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qiyjf"]
 _data = {
@@ -190,6 +192,7 @@ _data = {
 }
 
 [node name="Gun" type="Node3D"]
+script = ExtResource("1_tprs5")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-06, -100, -4.37114e-06, 0, -4.37114e-06, 100, -100, 4.37114e-06, 1.91069e-13, 0, 0, 0)
@@ -208,6 +211,6 @@ libraries = {
 "": SubResource("AnimationLibrary_qiyjf")
 }
 
-[node name="BarrelRayCast" type="RayCast3D" parent="."]
+[node name="GunBarrelRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.306674, -0.899975)
 target_position = Vector3(0, 0, -0.5)

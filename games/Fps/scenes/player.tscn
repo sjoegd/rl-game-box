@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://cs0kqn3yv2wlf"]
+[gd_scene load_steps=18 format=3 uid="uid://cs0kqn3yv2wlf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_sl55k"]
 [ext_resource type="PackedScene" uid="uid://cn8bmo16kot3i" path="res://scenes/gun.tscn" id="2_j13ii"]
+[ext_resource type="Texture2D" uid="uid://bs1rfkobpvmg2" path="res://assets/crosshair.png" id="3_o0qg8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ysjju"]
 size = Vector3(2, 2, 2.25)
@@ -235,8 +236,36 @@ mesh = SubResource("ArrayMesh_nl7d0")
 skeleton = NodePath("")
 
 [node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30012, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.171, -1)
 fov = 90.0
 
-[node name="Gun" parent="Camera" instance=ExtResource("2_j13ii")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.06378, -0.549728, -0.621666)
+[node name="Hand" type="Node3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03219, -0.639, -0.890684)
+
+[node name="Gun" parent="Camera/Hand" instance=ExtResource("2_j13ii")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, -0.0949354)
+
+[node name="VisionRay" type="RayCast3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+target_position = Vector3(0, 0, -75)
+collision_mask = 5
+
+[node name="VisionMarker" type="Marker3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -77)
+
+[node name="Crosshair" type="TextureRect" parent="Camera"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_o0qg8")

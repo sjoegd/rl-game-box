@@ -1,0 +1,30 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://7hcytpvvwf37"]
+
+[sub_resource type="Gradient" id="Gradient_edvd6"]
+offsets = PackedFloat32Array(0.0265487, 0.424779, 1)
+colors = PackedColorArray(0.817521, 0.817521, 0.817521, 1, 0.678944, 0.678944, 0.678944, 1, 0.877616, 0.877616, 0.877616, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yvg6f"]
+gradient = SubResource("Gradient_edvd6")
+
+[sub_resource type="Gradient" id="Gradient_rwbvx"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.176991, 0.982301)
+colors = PackedColorArray(0.381703, 0.381703, 0.381703, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5r473"]
+gradient = SubResource("Gradient_rwbvx")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.491525, 0.502825)
+fill_to = Vector2(1, 1)
+
+[resource]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.490196, 0.831373, 0.290196, 1)
+albedo_texture = SubResource("GradientTexture1D_yvg6f")
+metallic_specular = 0.0
+heightmap_texture = SubResource("GradientTexture2D_5r473")
+heightmap_flip_texture = true
+uv1_triplanar_sharpness = 0.267942
