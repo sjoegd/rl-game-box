@@ -64,7 +64,7 @@ func handle_car_rewards(car: Car, pos: int):
 	var latest_distance = track.get_car_distance_to_future_checkpoint(car, latest_position)
 	var new_distance = track.get_car_distance_to_future_checkpoint(car, new_position)
 	var distance = latest_distance - new_distance
-	car.controller.give_reward("DISTANCE_TRAVELED_FORWARD", distance * abs(distance))
+	car.controller.give_reward("DISTANCE_TRAVELED_FORWARD", distance)
 	# GOING FORWARD
 	var forward = 1.0 if track.is_car_going_to_future_checkpoint(car) else -1.0
 	car.controller.give_reward("GOING_FORWARD", forward)

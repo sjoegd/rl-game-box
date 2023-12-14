@@ -2,9 +2,9 @@
 
 python scripts/sb3_train.py \
     --env_path="games/Racing/builds/racing_train.x86_64" \
-    --save_parent_folder_path="models/Racing/Racing_0" \
-    --save_model_name="Racing_0" \
-    --speedup=5 \
+    --save_parent_folder_path="models/Racing/Racing_2" \
+    --save_model_name="Racing_2" \
+    --speedup=4 \
     --agents_per_env=4 \
     --games_per_env=2 \
     --n_parallel=4 \
