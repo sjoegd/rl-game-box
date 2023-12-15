@@ -126,9 +126,9 @@ func is_car_going_to_future_checkpoint(car: Car, is_furthest: bool = false) -> b
 	var future_track_instance = get_car_future_track_instance(car, is_furthest)
 	return car.is_going_to_position(future_track_instance.global_pos)
 
-func get_car_distance_to_future_checkpoint(car: Car, pos: Vector3, is_furthest: bool = true) -> float:
+func get_car_distance_to_future_checkpoint(car: Car, pos: Vector3, is_furthest: bool = true, add: int = 1) -> float:
 	var ignore_y = Vector3(1, 0, 1)
-	var future_track_instance = get_car_future_track_instance(car, is_furthest)
+	var future_track_instance = get_car_future_track_instance(car, is_furthest, add)
 	return (pos * ignore_y).distance_to(future_track_instance.checkpoint.global_position*ignore_y)
 
 func get_car_nose_angle_to_future_checkpoint(car: Car, is_furthest: bool = false) -> float:
@@ -136,9 +136,9 @@ func get_car_nose_angle_to_future_checkpoint(car: Car, is_furthest: bool = false
 	var angle = car.get_angle_nose_to_position(future_track_instance.checkpoint.global_position)
 	return angle
 
-func get_car_future_track_instance(car: Car, is_furthest: bool = true) -> TrackPartInstance:
+func get_car_future_track_instance(car: Car, is_furthest: bool = true, add: int = 1) -> TrackPartInstance:
 	var index = get_car_furthest_track_index(car) if is_furthest else get_car_latest_track_index(car)
-	index = get_next_track_index(index)
+	index = get_next_track_index(index, add)
 	return track_part_instances[index]
 
 func get_car_furthest_track_index(car: Car) -> int:
@@ -153,8 +153,8 @@ func get_car_latest_track_index(car: Car) -> int:
 		return 0
 	return car_to_latest_track_index[car] as int
 
-func get_next_track_index(index: int) -> int:
-	return clamp(index + 1, 0, track_part_instances.size() - 1)
+func get_next_track_index(index: int, add: int = 1) -> int:
+	return clamp(index + add, 0, track_part_instances.size() - 1)
 
 func get_future_n_track_parts(car: Car, n: int) -> Array:
 	var future_track_parts = []
