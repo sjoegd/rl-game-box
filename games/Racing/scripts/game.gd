@@ -72,6 +72,9 @@ func handle_car_rewards(car: Car, pos: int):
 	var collisions = car_static_collision_count[car]
 	car.controller.give_reward("WALL_COLLISION", collisions)
 	car_static_collision_count[car] = 0
+	# SPEED
+	var speed = car.get_speed() / car.speed_limit
+	car.controller.give_reward("SPEED", speed)
 
 func handle_input():
 	# CAMERA SWITCH

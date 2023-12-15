@@ -16,9 +16,6 @@ var car_to_latest_track_index: Dictionary = {}
 var car_to_furthest_track_index: Dictionary = {}
 var track_part_instances: Array[TrackPartInstance] = []
 
-# TODO: Improve generation algorithm
-# BUGFIX: Add filler parts for big corners so they can be seen by algorithm
-
 func _ready():
 	for part in track_parts:
 		id_to_track_part[part.id] = part
@@ -99,11 +96,25 @@ func is_chunk_empty_for_part(pos: Vector3i, part: TrackPart, chunk_size: int) ->
 	return true
 
 func is_position_update_empty(pos: Vector3i, update: Vector3i):
-	var updated_pos = pos + update	
-	for x in range(pos.x, updated_pos.x + 1):
-		for z in range(pos.z, updated_pos.z + 1):
+	var updated_pos = pos + update
+	
+	if update.x > 0:
+		updated_pos.x += 1
+	if update.z > 0:
+		updated_pos.z += 1
+	if update.x < 0:
+		updated_pos.x -= 1
+	if update.z < 0:
+		updated_pos.z -= 1
+	
+	var x_range = range(pos.x, updated_pos.x) if pos.x < updated_pos.x else range(updated_pos.x, pos.x)
+	var z_range = range(pos.z, updated_pos.z) if pos.z < updated_pos.z else range(updated_pos.z, pos.z)
+	
+	for x in x_range:
+		for z in z_range:
 			if track_grid_map.get_cell_item(Vector3i(x, pos.y, z)) != track_grid_map.INVALID_CELL_ITEM:
 				return false
+	
 	return true
 
 func _on_checkpoint(car: Car, index: int):
