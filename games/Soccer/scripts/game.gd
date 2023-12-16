@@ -19,9 +19,9 @@ var ball_touches := {}
 var needs_reset := false
 
 func _ready():
+	players[0].human_override = human_override_mode
 	for player in players:
 		player.init(self)
-		player.human_override = human_override_mode
 		player.needs_reset.connect(_on_player_needs_reset)
 		ball_touches[player.name] = 0
 
@@ -29,23 +29,21 @@ func _physics_process(_delta):
 	for player in players:
 		give_rewards(player)
 		ball_touches[player.name] = 0
+	goals.clear()
 	if needs_reset:
 		reset()
-	goals.clear()
 
 func give_rewards(player: Player):
 	# GOAL
 	for goal in goals:
 		var goal_reward = -1 if goal == player.color else 1
 		player.controller.give_reward("GOAL", goal_reward)
-	
 	# DISTANCE_BALL
 	var distance_ball = 1 - (
 		Utility.calculate_distance_player_ball(player, ball) /
 		max_distance_player_ball
 	)
 	player.controller.give_reward("DISTANCE_BALL", distance_ball)
-	
 	# DISTANCE_BALL_GOAL
 	var distance_ball_goal = (
 		Utility.calculate_distance_ball_goal(ball, arena, Utility.get_enemy_color(player.color)) /
@@ -53,7 +51,6 @@ func give_rewards(player: Player):
 	)
 	var distance_ball_goal_reward = 2*exp(-5*distance_ball_goal)
 	player.controller.give_reward("DISTANCE_BALL_GOAL", distance_ball_goal_reward)
-	
 	# TOUCH_BALL
 	var player_ball_touches = ball_touches[player.name]
 	player.controller.give_reward("TOUCH_BALL", player_ball_touches)

@@ -48,7 +48,6 @@ func reset(_transform: Transform3D):
 	body.linear_velocity = velocity
 	body.angular_velocity = Vector3.ZERO
 	controller.reset()
-	controller.done = false
 
 func _physics_process(delta: float):
 	
