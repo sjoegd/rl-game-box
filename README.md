@@ -8,7 +8,7 @@ A collection of reinforcement learning games created using godot and godot-rl-ag
 
 ### Racing
 
-<video src="media/racing_4_playing.mp4" width=180></video>
+https://github.com/sjoegd/rl-game-box/assets/58368316/3fc0efb2-83a4-4993-9ab6-ea62ab879674
 
 ## Attributions
 
