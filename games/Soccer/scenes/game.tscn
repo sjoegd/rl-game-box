@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://b72f02khguius"]
+
+[ext_resource type="PackedScene" uid="uid://c7w0xb8yuufif" path="res://scenes/field.tscn" id="1_kd3s5"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_rmcoi"]
+[ext_resource type="PackedScene" uid="uid://dvtkdnu7nw4uf" path="res://scenes/player.tscn" id="2_ay2if"]
+[ext_resource type="PackedScene" uid="uid://ckunahc8ixpf7" path="res://scenes/ball.tscn" id="3_o2pud"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_57gj2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_jwees"]
+sky_material = SubResource("ProceduralSkyMaterial_57gj2")
+
+[sub_resource type="Environment" id="Environment_feug4"]
+background_mode = 2
+sky = SubResource("Sky_jwees")
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_rmcoi")
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_feug4")
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.493844, 0.0782173, 0, 0.156434, 0.987688, -0.5, 0.855363, -0.135476, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.75
+
+[node name="Field" parent="." instance=ExtResource("1_kd3s5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Ball" parent="." instance=ExtResource("3_o2pud")]
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="Left(RED)" type="Node3D" parent="Players"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+
+[node name="Player1" parent="Players/Left(RED)" instance=ExtResource("2_ay2if")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+color = "red"
+
+[node name="Player2" parent="Players/Left(RED)" instance=ExtResource("2_ay2if")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+color = "red"
+
+[node name="Right(BLUE)" type="Node3D" parent="Players"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="Player3" parent="Players/Right(BLUE)" instance=ExtResource("2_ay2if")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10, 0, 0)
+
+[node name="Player4" parent="Players/Right(BLUE)" instance=ExtResource("2_ay2if")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10, 0, 0)
+
+[connection signal="goal_scored" from="Field" to="." method="_on_goal_scored"]
