@@ -20,11 +20,11 @@ func _reset():
 		player.reset()
 
 func _physics_process(_delta):
-	if needs_reset:
-		return _reset()
 	for player in _get_every_player():
 		_handle_player_rewards(player)
 	goals_scored.clear()
+	if needs_reset:
+		_reset()
 
 func _handle_player_rewards(player: Player):
 	var enemy_color = _get_enemy_team_color(player.color)
@@ -37,10 +37,10 @@ func _handle_player_rewards(player: Player):
 	# Ball Touch
 	pass
 	# Ball Distance Goal
-	var ball_distance_reward = field.get_distance_to_goal(enemy_color, ball_position)
+	var ball_distance_reward = 1 - field.get_distance_to_goal(enemy_color, ball_position)
 	player.controller.give_reward("ball_distance_goal", ball_distance_reward)
 	# Player Distance Ball
-	var player_distance_reward = field.get_distance_to_ball(player_position, ball_position)
+	var player_distance_reward = 1 - field.get_distance_to_ball(player_position, ball_position)
 	player.controller.give_reward("player_distance_ball", player_distance_reward)
 	
 func _on_player_needs_reset():
