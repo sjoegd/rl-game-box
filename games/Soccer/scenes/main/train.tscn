@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnph8j5pmtd0a"]
+
+[ext_resource type="PackedScene" uid="uid://b72f02khguius" path="res://scenes/game.tscn" id="1_1hogx"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_5vw86"]
+
+[node name="Train" type="Node3D"]
+
+[node name="Game1" parent="." instance=ExtResource("1_1hogx")]
+
+[node name="Game2" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+
+[node name="Game3" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 200, 0)
+
+[node name="Game4" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 300, 0)
+
+[node name="Game5" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 0, 0)
+
+[node name="Game6" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 100, 0)
+
+[node name="Game7" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 200, 0)
+
+[node name="Game8" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 300, 0)
+
+[node name="Game9" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, 0, 0)
+
+[node name="Game10" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, 100, 0)
+
+[node name="Game11" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, 200, 0)
+
+[node name="Game12" parent="." instance=ExtResource("1_1hogx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, 300, 0)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_5vw86")

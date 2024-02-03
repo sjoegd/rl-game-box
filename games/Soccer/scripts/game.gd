@@ -3,22 +3,53 @@ class_name Game
 
 @onready var field := $Field
 @onready var ball := $Ball
-@onready var red_team := $"Players/Left(RED)".get_children()
-@onready var blue_team := $"Players/Right(BLUE)".get_children()
+@onready var red_team := $"Players/Red".get_children()
+@onready var blue_team := $"Players/Blue".get_children()
+
+var needs_reset := false
+var goals_scored = []
+
+func _ready():
+	for player in _get_every_player():
+		player.needs_reset.connect(_on_player_needs_reset)
 
 func _reset():
+	needs_reset = false
 	ball.reset()
-	for team in [red_team, blue_team]:
-		for player in team:
-			player.reset()
+	for player in _get_every_player():
+		player.reset()
 
-func _on_goal_scored(side: String):
-	var team_color = _side_to_team_color(side)
-	print(team_color)
-	_reset()
+func _physics_process(_delta):
+	if needs_reset:
+		return _reset()
+	for player in _get_every_player():
+		_handle_player_rewards(player)
+	goals_scored.clear()
+
+func _handle_player_rewards(player: Player):
+	var enemy_color = _get_enemy_team_color(player.color)
+	var ball_position = ball.global_position
+	var player_position = player.global_position
+	# Goal Scored
+	for goal in goals_scored:
+		var goal_reward = -1 if goal == player.color else 1
+		player.controller.give_reward("goal_scored", goal_reward)
+	# Ball Touch
+	pass
+	# Ball Distance Goal
+	var ball_distance_reward = field.get_distance_to_goal(enemy_color, ball_position)
+	player.controller.give_reward("ball_distance_goal", ball_distance_reward)
+	# Player Distance Ball
+	var player_distance_reward = field.get_distance_to_ball(player_position, ball_position)
+	player.controller.give_reward("player_distance_ball", player_distance_reward)
 	
-func _side_to_team_color(side: String):
-	return "red" if side == "left" else "blue"
+func _on_player_needs_reset():
+	needs_reset = true
+
+func _on_goal_scored(team_color: String):
+	goals_scored.append(team_color)
+	for player in _get_every_player():
+		player.game_over()
 
 func _get_enemy_team_color(team_color: String):
 	return "blue" if team_color == "red" else "red"
@@ -35,3 +66,10 @@ func _get_team_and_enemy(team_color: String):
 		_team_color_to_team(team_color), 
 		_team_color_to_team(enemy_team_color)
 	]
+
+func _get_every_player():
+	var players = []
+	for team in [red_team, blue_team]:
+		for player in team:
+			players.append(player)
+	return players

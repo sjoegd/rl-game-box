@@ -14,6 +14,9 @@ config/name="Soccer"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+run/main_scene.play="res://scenes/main/play.tscn"
+run/main_scene.test="res://scenes/main/test.tscn"
+run/main_scene.train="res://scenes/main/train.tscn"
 
 [dotnet]
 
@@ -77,8 +80,12 @@ fast_rotate={
 3d_physics/layer_2="player_collider"
 3d_physics/layer_3="ball"
 3d_physics/layer_4="static"
-3d_physics/layer_5="left_goal"
-3d_physics/layer_6="right_goal"
+3d_physics/layer_5="red_goal"
+3d_physics/layer_6="blue_goal"
+3d_physics/layer_7="red_player_1"
+3d_physics/layer_8="red_player_2"
+3d_physics/layer_9="blue_player_1"
+3d_physics/layer_10="blue_player_2"
 
 [physics]
 

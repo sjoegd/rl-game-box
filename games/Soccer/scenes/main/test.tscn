@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cir20i5ajdshm"]
+
+[ext_resource type="PackedScene" uid="uid://b72f02khguius" path="res://scenes/game.tscn" id="1_8yn4w"]
+[ext_resource type="PackedScene" uid="uid://bk8shhw7ymfmp" path="res://scenes/environment.tscn" id="1_rmxp6"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_74rb1"]
+
+[node name="Test" type="Node3D"]
+
+[node name="Environment" parent="." instance=ExtResource("1_rmxp6")]
+
+[node name="Game" parent="." instance=ExtResource("1_8yn4w")]
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_74rb1")
