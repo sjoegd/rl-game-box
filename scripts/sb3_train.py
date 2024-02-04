@@ -139,7 +139,7 @@ if __name__ == "__main__":
             ent_coef=0.005,
             learning_rate=0.0003,
             n_epochs=16,
-            device="cpu"
+            device="cuda"
         )
     else:
         print("LOADED MODEL")
