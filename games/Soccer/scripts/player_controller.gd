@@ -5,7 +5,8 @@ var action_left := 0.0
 var action_right := 0.0
 var action_up := 0.0
 var action_down := 0.0
-var action_rotate := 0.0
+var action_rotate_left := 0.0
+var action_rotate_right := 0.0
 var action_dash := 0.0
 
 func init(player: Node3D):
@@ -64,9 +65,13 @@ func get_action_space() -> Dictionary:
 			"size": 1,
 			"action_type": "discrete"
 		},
-		"rotate" : {
+		"rotate_left" : {
 			"size": 1,
-			"action_type": "continuous"
+			"action_type": "discrete"
+		},
+		"rotate_right" : {
+			"size": 1,
+			"action_type": "discrete"
 		},
 		"dash" : {
 			"size": 1,
@@ -79,7 +84,8 @@ func set_action(action) -> void:
 	action_right = action["right"]
 	action_up = action["up"]
 	action_down = action["down"]
-	action_rotate = action["rotate"][0]
+	action_rotate_left = action["rotate_left"]
+	action_rotate_right = action["rotate_right"]
 	action_dash = action["dash"]
 
 func give_reward(type: String, value: float):

@@ -7,13 +7,10 @@ class_name Game
 @onready var blue_team := $"Players/Blue".get_children()
 
 var needs_reset := false
-var goals_scored = []
-var player_ball_collisions = {}
 
 func _ready():
 	for player in _get_every_player():
 		player.needs_reset.connect(_on_player_needs_reset)
-		player_ball_collisions[player] = 0
 
 func _reset():
 	needs_reset = false
@@ -23,23 +20,14 @@ func _reset():
 
 func _physics_process(_delta):
 	for player in _get_every_player():
-		_handle_player_rewards(player)
-		player_ball_collisions[player] = 0
-	goals_scored.clear()
+		_handle_extra_player_rewards(player)
 	if needs_reset:
 		_reset()
 
-func _handle_player_rewards(player: Player):
+func _handle_extra_player_rewards(player: Player):
 	var enemy_color = _get_enemy_team_color(player.color)
 	var ball_position = ball.global_position
 	var player_position = player.global_position
-	# Goal Scored
-	for goal in goals_scored:
-		var goal_reward = -1 if goal == player.color else 1
-		player.controller.give_reward("goal_scored", goal_reward)
-	# Ball Touch
-	var ball_touches = player_ball_collisions[player]
-	player.controller.give_reward("ball_touch", ball_touches)
 	# Ball Distance Goal
 	var ball_distance_reward = 1 - field.get_distance_to_goal(enemy_color, ball_position)
 	player.controller.give_reward("ball_distance_goal", (2 * ball_distance_reward) - 1)
@@ -51,8 +39,9 @@ func _on_player_needs_reset():
 	needs_reset = true
 
 func _on_goal_scored(team_color: String):
-	goals_scored.append(team_color)
 	for player in _get_every_player():
+		var goal_reward = -1 if team_color == player.color else 1
+		player.controller.give_reward("goal_scored", goal_reward)
 		player.game_over()
 
 func _get_enemy_team_color(team_color: String):
@@ -72,11 +61,7 @@ func _get_team_and_enemy(team_color: String):
 	]
 
 func _get_every_player():
-	var players = []
-	for team in [red_team, blue_team]:
-		for player in team:
-			players.append(player)
-	return players
+	return (red_team + blue_team)
 
 func _on_ball_player_collision(player: Player):
-	player_ball_collisions[player] += 1
+	player.controller.give_reward("ball_touch", 1)

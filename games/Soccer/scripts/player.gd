@@ -110,7 +110,7 @@ func _handle_input():
 		input_right = controller.action_right
 		input_up = controller.action_up
 		input_down = controller.action_down
-		input_rotate = controller.action_rotate
+		input_rotate = controller.action_rotate_left - controller.action_rotate_right
 		input_dash = controller.action_dash
 
 func _start_dash():
