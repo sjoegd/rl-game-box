@@ -50,31 +50,31 @@ func get_reward() -> float:
 func get_action_space() -> Dictionary:
 	return {
 		"left" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"right" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"up" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"down" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"rotate_left" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"rotate_right" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		},
 		"dash" : {
-			"size": 1,
+			"size": 2,
 			"action_type": "discrete"
 		}
 	}
