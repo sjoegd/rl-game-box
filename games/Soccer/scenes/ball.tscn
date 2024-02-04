@@ -78,6 +78,7 @@ collision_mask = 58
 physics_material_override = SubResource("PhysicsMaterial_myjhq")
 continuous_cd = true
 max_contacts_reported = 4
+contact_monitor = true
 angular_damp = 0.1
 script = ExtResource("1_pkv5y")
 

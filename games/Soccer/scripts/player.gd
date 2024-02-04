@@ -6,10 +6,10 @@ signal needs_reset
 @export var mass := 2.0
 @export var speed := 15.0
 @export var jump_speed := 7.5
-@export var rotate_speed := PI
+@export var rotate_speed := 2*PI
 @export var fast_rotate_multiplier := 1.5
-@export var dash_speed := 30.0
-@export var dash_period := 0.15 #s
+@export var dash_speed := 50.0
+@export var dash_period := 0.075 #s
 @export var dash_cooldown := 1 #s
 @export var color := "lightblue"
 @export var number := 1
@@ -17,6 +17,7 @@ signal needs_reset
 @onready var controller = $PlayerController
 @onready var rigid_collider = $RigidCollider
 @onready var camera_holder = $CameraHolder
+@onready var camera = $CameraHolder/Camera3D
 @onready var mesh := $RigidCollider/Mesh
 @onready var base_transform = transform
 
@@ -58,7 +59,7 @@ func _physics_process(delta):
 	if controller.needs_reset:
 		needs_reset.emit()
 		return
-
+	
 	_zero_input()
 	_handle_input()
 	
@@ -97,7 +98,7 @@ func _zero_input():
 	input_dash = 0.0
 
 func _handle_input():
-	if controller.heuristic == "human":
+	if controller.heuristic == "human" and camera.current:
 		input_left = float(Input.is_action_pressed("left"))
 		input_right = float(Input.is_action_pressed("right"))
 		input_up = float(Input.is_action_pressed("up"))

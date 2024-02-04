@@ -44,3 +44,4 @@ color = "blue"
 number = 2
 
 [connection signal="goal_scored" from="Field" to="." method="_on_goal_scored"]
+[connection signal="player_collision" from="Ball" to="." method="_on_ball_player_collision"]

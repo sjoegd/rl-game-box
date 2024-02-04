@@ -8,10 +8,12 @@ class_name Game
 
 var needs_reset := false
 var goals_scored = []
+var player_ball_collisions = {}
 
 func _ready():
 	for player in _get_every_player():
 		player.needs_reset.connect(_on_player_needs_reset)
+		player_ball_collisions[player] = 0
 
 func _reset():
 	needs_reset = false
@@ -22,6 +24,7 @@ func _reset():
 func _physics_process(_delta):
 	for player in _get_every_player():
 		_handle_player_rewards(player)
+		player_ball_collisions[player] = 0
 	goals_scored.clear()
 	if needs_reset:
 		_reset()
@@ -35,10 +38,11 @@ func _handle_player_rewards(player: Player):
 		var goal_reward = -1 if goal == player.color else 1
 		player.controller.give_reward("goal_scored", goal_reward)
 	# Ball Touch
-	pass
+	var ball_touches = player_ball_collisions[player]
+	player.controller.give_reward("ball_touch", ball_touches)
 	# Ball Distance Goal
 	var ball_distance_reward = 1 - field.get_distance_to_goal(enemy_color, ball_position)
-	player.controller.give_reward("ball_distance_goal", ball_distance_reward)
+	player.controller.give_reward("ball_distance_goal", (2 * ball_distance_reward) - 1)
 	# Player Distance Ball
 	var player_distance_reward = 1 - field.get_distance_to_ball(player_position, ball_position)
 	player.controller.give_reward("player_distance_ball", player_distance_reward)
@@ -73,3 +77,6 @@ func _get_every_player():
 		for player in team:
 			players.append(player)
 	return players
+
+func _on_ball_player_collision(player: Player):
+	player_ball_collisions[player] += 1

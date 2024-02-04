@@ -22,6 +22,11 @@ func get_obs() -> Dictionary:
 	for sensor in _get_sensors():
 		sensor_obs += sensor.get_observation()
 	
+	var player_velocity = _player.velocity.normalized()
+	
+	if _player.color == "blue":
+		player_velocity *= Vector3(-1, 1, -1)
+	
 	obs += sensor_obs
 	obs += [
 		float(_player.can_dash),
@@ -31,7 +36,9 @@ func get_obs() -> Dictionary:
 		float(_player.input_up),
 		float(_player.input_down),
 		float(_player.input_rotate),
-		float(_player.input_dash)
+		float(_player.input_dash),
+		player_velocity.x,
+		player_velocity.z
 	]
 	
 	return {"obs":obs}
@@ -79,9 +86,9 @@ func give_reward(type: String, value: float):
 	var multiplier := 0.0
 	match type:
 		"goal_scored":          multiplier = 1000.0
-		"ball_touched":         multiplier = 0.125
+		"ball_touch":           multiplier = 0.1
 		"ball_distance_goal":   multiplier = 0.5
-		"player_distance_ball": multiplier = 0.125
+		"player_distance_ball": multiplier = 0.05
 	reward += multiplier * value
 
 func _swap_color_sensors():
