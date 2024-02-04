@@ -138,7 +138,8 @@ if __name__ == "__main__":
             n_steps=512,
             ent_coef=0.005,
             learning_rate=0.0003,
-            n_epochs=16
+            n_epochs=16,
+            device="cpu"
         )
     else:
         print("LOADED MODEL")
