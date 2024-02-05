@@ -256,459 +256,408 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 
 visible = false
 
 [node name="RedPlayer" type="Node3D" parent="PlayerController/Sensors"]
+visible = false
 script = ExtResource("4_4yruc")
 collision_mask = 192
 boolean_class_mask = 192
-n_rays_width = 13.0
+n_rays_width = 15.0
 n_rays_height = 1.0
 ray_length = 80.0
 cone_width = 270.0
 
-[node name="@RayCast3D@20272" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(-65.8387, 0, -45.4452)
+[node name="@RayCast3D@21974" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
+target_position = Vector3(-64.7214, 0, -47.0228)
 collision_mask = 192
 
 [node name="node_1 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(-77.6753, 0, -19.1453)
+target_position = Vector3(-76.0845, 0, -24.7214)
 collision_mask = 192
 
 [node name="node_2 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(-79.4167, 0, 9.64293)
+target_position = Vector3(-80, 0, 4.89843e-15)
 collision_mask = 192
 
 [node name="node_3 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(-70.8365, 0, 37.1779)
+target_position = Vector3(-76.0845, 0, 24.7214)
 collision_mask = 192
 
 [node name="node_4 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(-53.0498, 0, 59.8809)
+target_position = Vector3(-64.7214, 0, 47.0228)
 collision_mask = 192
 
 [node name="node_5 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(-28.3684, 0, 74.8013)
+target_position = Vector3(-47.0228, 0, 64.7214)
 collision_mask = 192
 
 [node name="node_6 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(0, 0, 80)
+target_position = Vector3(-24.7214, 0, 76.0845)
 collision_mask = 192
 
 [node name="node_7 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(28.3684, 0, 74.8013)
+target_position = Vector3(0, 0, 80)
 collision_mask = 192
 
 [node name="node_8 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(53.0498, 0, 59.8809)
+target_position = Vector3(24.7214, 0, 76.0845)
 collision_mask = 192
 
 [node name="node_9 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(70.8365, 0, 37.1779)
+target_position = Vector3(47.0228, 0, 64.7214)
 collision_mask = 192
 
 [node name="node_10 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(79.4167, 0, 9.64293)
+target_position = Vector3(64.7214, 0, 47.0228)
 collision_mask = 192
 
 [node name="node_11 0" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(77.6753, 0, -19.1453)
+target_position = Vector3(76.0845, 0, 24.7214)
 collision_mask = 192
 
-[node name="@RayCast3D@20273" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
-target_position = Vector3(65.8387, 0, -45.4452)
+[node name="@RayCast3D@21975" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
+target_position = Vector3(80, 0, 4.89843e-15)
+collision_mask = 192
+
+[node name="@RayCast3D@21976" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
+target_position = Vector3(76.0845, 0, -24.7214)
+collision_mask = 192
+
+[node name="@RayCast3D@21977" type="RayCast3D" parent="PlayerController/Sensors/RedPlayer"]
+target_position = Vector3(64.7214, 0, -47.0228)
 collision_mask = 192
 
 [node name="BluePlayer" type="Node3D" parent="PlayerController/Sensors"]
+visible = false
 script = ExtResource("4_4yruc")
 collision_mask = 768
 boolean_class_mask = 768
-n_rays_width = 13.0
+n_rays_width = 15.0
 n_rays_height = 1.0
 ray_length = 80.0
 cone_width = 270.0
 
-[node name="@RayCast3D@20274" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(-65.8387, 0, -45.4452)
+[node name="@RayCast3D@21978" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
+target_position = Vector3(-64.7214, 0, -47.0228)
 collision_mask = 768
 
 [node name="node_1 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(-77.6753, 0, -19.1453)
+target_position = Vector3(-76.0845, 0, -24.7214)
 collision_mask = 768
 
 [node name="node_2 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(-79.4167, 0, 9.64293)
+target_position = Vector3(-80, 0, 4.89843e-15)
 collision_mask = 768
 
 [node name="node_3 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(-70.8365, 0, 37.1779)
+target_position = Vector3(-76.0845, 0, 24.7214)
 collision_mask = 768
 
 [node name="node_4 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(-53.0498, 0, 59.8809)
+target_position = Vector3(-64.7214, 0, 47.0228)
 collision_mask = 768
 
 [node name="node_5 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(-28.3684, 0, 74.8013)
+target_position = Vector3(-47.0228, 0, 64.7214)
 collision_mask = 768
 
 [node name="node_6 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(0, 0, 80)
+target_position = Vector3(-24.7214, 0, 76.0845)
 collision_mask = 768
 
 [node name="node_7 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(28.3684, 0, 74.8013)
+target_position = Vector3(0, 0, 80)
 collision_mask = 768
 
 [node name="node_8 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(53.0498, 0, 59.8809)
+target_position = Vector3(24.7214, 0, 76.0845)
 collision_mask = 768
 
 [node name="node_9 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(70.8365, 0, 37.1779)
+target_position = Vector3(47.0228, 0, 64.7214)
 collision_mask = 768
 
 [node name="node_10 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(79.4167, 0, 9.64293)
+target_position = Vector3(64.7214, 0, 47.0228)
 collision_mask = 768
 
 [node name="node_11 0" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(77.6753, 0, -19.1453)
+target_position = Vector3(76.0845, 0, 24.7214)
 collision_mask = 768
 
-[node name="@RayCast3D@20275" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
-target_position = Vector3(65.8387, 0, -45.4452)
+[node name="@RayCast3D@21979" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
+target_position = Vector3(80, 0, 4.89843e-15)
+collision_mask = 768
+
+[node name="@RayCast3D@21980" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
+target_position = Vector3(76.0845, 0, -24.7214)
+collision_mask = 768
+
+[node name="@RayCast3D@21981" type="RayCast3D" parent="PlayerController/Sensors/BluePlayer"]
+target_position = Vector3(64.7214, 0, -47.0228)
 collision_mask = 768
 
 [node name="Static" type="Node3D" parent="PlayerController/Sensors"]
+visible = false
 script = ExtResource("4_4yruc")
 collision_mask = 8
 boolean_class_mask = 8
-n_rays_width = 13.0
+n_rays_width = 15.0
 n_rays_height = 1.0
 ray_length = 80.0
 cone_width = 270.0
 
-[node name="@RayCast3D@20276" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(-65.8387, 0, -45.4452)
+[node name="node_0 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-64.7214, 0, -47.0228)
 collision_mask = 8
 
-[node name="node_1 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(-77.6753, 0, -19.1453)
+[node name="@RayCast3D@20905" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-76.0845, 0, -24.7214)
 collision_mask = 8
 
-[node name="node_2 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(-79.4167, 0, 9.64293)
+[node name="@RayCast3D@20906" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-80, 0, 4.89843e-15)
 collision_mask = 8
 
-[node name="node_3 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(-70.8365, 0, 37.1779)
+[node name="@RayCast3D@20907" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-76.0845, 0, 24.7214)
 collision_mask = 8
 
-[node name="node_4 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(-53.0498, 0, 59.8809)
+[node name="@RayCast3D@20908" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-64.7214, 0, 47.0228)
 collision_mask = 8
 
-[node name="node_5 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(-28.3684, 0, 74.8013)
+[node name="@RayCast3D@20909" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-47.0228, 0, 64.7214)
 collision_mask = 8
 
-[node name="node_6 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+[node name="@RayCast3D@20910" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(-24.7214, 0, 76.0845)
+collision_mask = 8
+
+[node name="@RayCast3D@20911" type="RayCast3D" parent="PlayerController/Sensors/Static"]
 target_position = Vector3(0, 0, 80)
 collision_mask = 8
 
-[node name="node_7 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(28.3684, 0, 74.8013)
+[node name="@RayCast3D@20912" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(24.7214, 0, 76.0845)
 collision_mask = 8
 
-[node name="node_8 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(53.0498, 0, 59.8809)
+[node name="@RayCast3D@20913" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(47.0228, 0, 64.7214)
 collision_mask = 8
 
-[node name="node_9 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(70.8365, 0, 37.1779)
+[node name="@RayCast3D@20914" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(64.7214, 0, 47.0228)
 collision_mask = 8
 
-[node name="node_10 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(79.4167, 0, 9.64293)
+[node name="@RayCast3D@20915" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(76.0845, 0, 24.7214)
 collision_mask = 8
 
-[node name="node_11 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(77.6753, 0, -19.1453)
+[node name="node_12 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(80, 0, 4.89843e-15)
 collision_mask = 8
 
-[node name="@RayCast3D@20277" type="RayCast3D" parent="PlayerController/Sensors/Static"]
-target_position = Vector3(65.8387, 0, -45.4452)
+[node name="node_13 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(76.0845, 0, -24.7214)
+collision_mask = 8
+
+[node name="node_14 0" type="RayCast3D" parent="PlayerController/Sensors/Static"]
+target_position = Vector3(64.7214, 0, -47.0228)
 collision_mask = 8
 
 [node name="Ball" type="Node3D" parent="PlayerController/Sensors"]
+visible = false
 script = ExtResource("4_4yruc")
 collision_mask = 4
 boolean_class_mask = 4
-n_rays_width = 13.0
-n_rays_height = 5.0
+n_rays_width = 15.0
+n_rays_height = 3.0
 ray_length = 80.0
 cone_width = 270.0
-cone_height = 135.0
+cone_height = 90.0
 
-[node name="node_0 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-38.699, -64.7214, -26.712)
+[node name="@RayCast3D@21527" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-56.0503, -40, -40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30318" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-58.6627, -36.3192, -40.492)
+[node name="node_0 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-64.7214, 0, -47.0228)
 collision_mask = 4
 
-[node name="@RayCast3D@30319" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-65.8387, 0, -45.4452)
+[node name="node_0 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-56.0503, 40, -40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30320" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-58.6627, 36.3192, -40.492)
+[node name="node_1 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-65.8911, -40, -21.4093)
 collision_mask = 4
 
-[node name="node_0 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-38.699, 64.7214, -26.712)
+[node name="node_1 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-76.0845, 0, -24.7214)
 collision_mask = 4
 
-[node name="@RayCast3D@30321" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-45.6564, -64.7214, -11.2533)
+[node name="node_1 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-65.8911, 40, -21.4093)
 collision_mask = 4
 
-[node name="@RayCast3D@30322" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-69.2092, -36.3192, -17.0585)
+[node name="node_2 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-69.282, -40, 4.24216e-15)
 collision_mask = 4
 
-[node name="@RayCast3D@30323" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-77.6753, 0, -19.1453)
+[node name="node_2 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-80, 0, 4.89843e-15)
 collision_mask = 4
 
-[node name="@RayCast3D@30324" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-69.2092, 36.3192, -17.0585)
+[node name="node_2 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-69.282, 40, 4.24216e-15)
 collision_mask = 4
 
-[node name="node_1 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-45.6564, 64.7214, -11.2533)
+[node name="node_3 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-65.8911, -40, 21.4093)
 collision_mask = 4
 
-[node name="@RayCast3D@30325" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-46.68, -64.7214, 5.66797)
+[node name="node_3 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-76.0845, 0, 24.7214)
 collision_mask = 4
 
-[node name="@RayCast3D@30326" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-70.7608, -36.3192, 8.59192)
+[node name="node_3 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-65.8911, 40, 21.4093)
 collision_mask = 4
 
-[node name="@RayCast3D@30327" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-79.4167, 0, 9.64293)
+[node name="node_4 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-56.0503, -40, 40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30328" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-70.7608, 36.3192, 8.59192)
+[node name="node_4 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-64.7214, 0, 47.0228)
 collision_mask = 4
 
-[node name="node_2 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-46.68, 64.7214, 5.66797)
+[node name="node_4 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-56.0503, 40, 40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30329" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-41.6366, -64.7214, 21.8526)
+[node name="node_5 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-40.723, -40, 56.0503)
 collision_mask = 4
 
-[node name="@RayCast3D@30330" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-63.1158, -36.3192, 33.1257)
+[node name="node_5 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-47.0228, 0, 64.7214)
 collision_mask = 4
 
-[node name="@RayCast3D@30331" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-70.8365, 0, 37.1779)
+[node name="node_5 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-40.723, 40, 56.0503)
 collision_mask = 4
 
-[node name="@RayCast3D@30332" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-63.1158, 36.3192, 33.1257)
+[node name="node_6 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-21.4093, -40, 65.8911)
 collision_mask = 4
 
-[node name="node_3 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-41.6366, 64.7214, 21.8526)
+[node name="node_6 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-24.7214, 0, 76.0845)
 collision_mask = 4
 
-[node name="@RayCast3D@30333" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-31.1819, -64.7214, 35.1971)
+[node name="node_6 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(-21.4093, 40, 65.8911)
 collision_mask = 4
 
-[node name="@RayCast3D@30334" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-47.2677, -36.3192, 53.3542)
+[node name="node_7 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(0, -40, 69.282)
 collision_mask = 4
 
-[node name="@RayCast3D@30335" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-53.0498, 0, 59.8809)
-collision_mask = 4
-
-[node name="@RayCast3D@30336" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-47.2677, 36.3192, 53.3542)
-collision_mask = 4
-
-[node name="node_4 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-31.1819, 64.7214, 35.1971)
-collision_mask = 4
-
-[node name="@RayCast3D@30337" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-16.6745, -64.7214, 43.9671)
-collision_mask = 4
-
-[node name="@RayCast3D@30338" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-25.2764, -36.3192, 66.6484)
-collision_mask = 4
-
-[node name="@RayCast3D@30339" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-28.3684, 0, 74.8013)
-collision_mask = 4
-
-[node name="@RayCast3D@30340" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-25.2764, 36.3192, 66.6484)
-collision_mask = 4
-
-[node name="node_5 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(-16.6745, 64.7214, 43.9671)
-collision_mask = 4
-
-[node name="@RayCast3D@30341" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(0, -64.7214, 47.0228)
-collision_mask = 4
-
-[node name="@RayCast3D@30342" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(0, -36.3192, 71.2805)
-collision_mask = 4
-
-[node name="@RayCast3D@30343" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+[node name="node_7 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
 target_position = Vector3(0, 0, 80)
 collision_mask = 4
 
-[node name="@RayCast3D@30344" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(0, 36.3192, 71.2805)
+[node name="node_7 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(0, 40, 69.282)
 collision_mask = 4
 
-[node name="node_6 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(0, 64.7214, 47.0228)
+[node name="node_8 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(21.4093, -40, 65.8911)
 collision_mask = 4
 
-[node name="@RayCast3D@30345" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(16.6745, -64.7214, 43.9671)
+[node name="node_8 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(24.7214, 0, 76.0845)
 collision_mask = 4
 
-[node name="@RayCast3D@30346" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(25.2764, -36.3192, 66.6484)
+[node name="node_8 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(21.4093, 40, 65.8911)
 collision_mask = 4
 
-[node name="@RayCast3D@30347" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(28.3684, 0, 74.8013)
+[node name="node_9 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(40.723, -40, 56.0503)
 collision_mask = 4
 
-[node name="@RayCast3D@30348" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(25.2764, 36.3192, 66.6484)
+[node name="node_9 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(47.0228, 0, 64.7214)
 collision_mask = 4
 
-[node name="node_7 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(16.6745, 64.7214, 43.9671)
+[node name="node_9 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(40.723, 40, 56.0503)
 collision_mask = 4
 
-[node name="@RayCast3D@30349" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(31.1819, -64.7214, 35.1971)
+[node name="node_10 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(56.0503, -40, 40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30350" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(47.2677, -36.3192, 53.3542)
+[node name="node_10 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(64.7214, 0, 47.0228)
 collision_mask = 4
 
-[node name="@RayCast3D@30351" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(53.0498, 0, 59.8809)
+[node name="node_10 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(56.0503, 40, 40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30352" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(47.2677, 36.3192, 53.3542)
+[node name="node_11 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(65.8911, -40, 21.4093)
 collision_mask = 4
 
-[node name="node_8 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(31.1819, 64.7214, 35.1971)
+[node name="node_11 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(76.0845, 0, 24.7214)
 collision_mask = 4
 
-[node name="@RayCast3D@30353" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(41.6366, -64.7214, 21.8526)
+[node name="node_11 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(65.8911, 40, 21.4093)
 collision_mask = 4
 
-[node name="@RayCast3D@30354" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(63.1158, -36.3192, 33.1257)
+[node name="@RayCast3D@21528" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(69.282, -40, 4.24216e-15)
 collision_mask = 4
 
-[node name="@RayCast3D@30355" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(70.8365, 0, 37.1779)
+[node name="node_12 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(80, 0, 4.89843e-15)
 collision_mask = 4
 
-[node name="@RayCast3D@30356" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(63.1158, 36.3192, 33.1257)
+[node name="node_12 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(69.282, 40, 4.24216e-15)
 collision_mask = 4
 
-[node name="node_9 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(41.6366, 64.7214, 21.8526)
+[node name="node_13 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(65.8911, -40, -21.4093)
 collision_mask = 4
 
-[node name="@RayCast3D@30357" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(46.68, -64.7214, 5.66797)
+[node name="node_13 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(76.0845, 0, -24.7214)
 collision_mask = 4
 
-[node name="@RayCast3D@30358" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(70.7608, -36.3192, 8.59192)
+[node name="node_13 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(65.8911, 40, -21.4093)
 collision_mask = 4
 
-[node name="@RayCast3D@30359" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(79.4167, 0, 9.64293)
+[node name="node_14 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(56.0503, -40, -40.723)
 collision_mask = 4
 
-[node name="@RayCast3D@30360" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(70.7608, 36.3192, 8.59192)
+[node name="node_14 1" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(64.7214, 0, -47.0228)
 collision_mask = 4
 
-[node name="node_10 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(46.68, 64.7214, 5.66797)
-collision_mask = 4
-
-[node name="@RayCast3D@30361" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(45.6564, -64.7214, -11.2533)
-collision_mask = 4
-
-[node name="@RayCast3D@30362" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(69.2092, -36.3192, -17.0585)
-collision_mask = 4
-
-[node name="@RayCast3D@30363" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(77.6753, 0, -19.1453)
-collision_mask = 4
-
-[node name="@RayCast3D@30364" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(69.2092, 36.3192, -17.0585)
-collision_mask = 4
-
-[node name="node_11 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(45.6564, 64.7214, -11.2533)
-collision_mask = 4
-
-[node name="node_12 0" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(38.699, -64.7214, -26.712)
-collision_mask = 4
-
-[node name="@RayCast3D@30365" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(58.6627, -36.3192, -40.492)
-collision_mask = 4
-
-[node name="@RayCast3D@30366" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(65.8387, 0, -45.4452)
-collision_mask = 4
-
-[node name="@RayCast3D@30367" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(58.6627, 36.3192, -40.492)
-collision_mask = 4
-
-[node name="node_12 4" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
-target_position = Vector3(38.699, 64.7214, -26.712)
+[node name="node_14 2" type="RayCast3D" parent="PlayerController/Sensors/Ball"]
+target_position = Vector3(56.0503, 40, -40.723)
 collision_mask = 4
 
 [node name="RedGoal" type="Node3D" parent="PlayerController/Sensors"]
+visible = false
 script = ExtResource("4_4yruc")
 collision_mask = 16
 boolean_class_mask = 16
@@ -810,6 +759,7 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="BlueGoal" type="Node3D" parent="PlayerController/Sensors"]
+visible = false
 script = ExtResource("4_4yruc")
 collision_mask = 32
 boolean_class_mask = 32

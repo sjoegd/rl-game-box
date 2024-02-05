@@ -91,10 +91,10 @@ func set_action(action) -> void:
 func give_reward(type: String, value: float):
 	var multiplier := 0.0
 	match type:
-		"goal_scored":          multiplier = 1000.0
-		"ball_touch":           multiplier = 0.1
-		"ball_distance_goal":   multiplier = 0.5
-		"player_distance_ball": multiplier = 0.05
+		"goal_scored":          multiplier = 1.0
+		"ball_touch":           multiplier = 0.000125
+		"ball_distance_goal":   multiplier = 0.0005
+		"player_distance_ball": multiplier = 0.000125
 	reward += multiplier * value
 
 func _swap_color_sensors():
