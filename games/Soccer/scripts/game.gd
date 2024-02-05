@@ -13,7 +13,6 @@ func _ready():
 		player.needs_reset.connect(_on_player_needs_reset)
 
 func _reset():
-	print("reset")
 	needs_reset = false
 	ball.reset()
 	for player in _get_every_player():
@@ -40,7 +39,6 @@ func _on_player_needs_reset():
 	needs_reset = true
 
 func _on_goal_scored(team_color: String):
-	print(team_color + " scored!")
 	for player in _get_every_player():
 		var goal_reward = -1 if team_color == player.color else 1
 		player.controller.give_reward("goal_scored", goal_reward)
