@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ball.gd" id="1_pkv5y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_myjhq"]
-bounce = 0.75
+bounce = 0.8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7snf"]
 resource_name = "color_2829873"
@@ -75,6 +75,7 @@ radius = 1.0
 [node name="Ball" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 58
+mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_myjhq")
 continuous_cd = true
 max_contacts_reported = 4
@@ -89,3 +90,5 @@ mesh = SubResource("ArrayMesh_i5kmq")
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("SphereShape3D_lfrdf")
+
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

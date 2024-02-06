@@ -9,6 +9,7 @@
 [node name="Environment" parent="." instance=ExtResource("1_b21hd")]
 
 [node name="Game" parent="." instance=ExtResource("1_3uolo")]
+human_override = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_4n74k")

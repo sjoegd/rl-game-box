@@ -3,10 +3,12 @@ class_name Ball
 
 signal player_collision(player: Player)
 
-@export var linear_speed_limit := 30.0
+@export var linear_speed_limit := 35.0
 @export var angular_speed_limit := PI*3
 
 @onready var base_transform := transform
+
+var player_collision_started := {}
 
 func reset():
 	transform = base_transform
@@ -23,3 +25,23 @@ func _check_player_collisions(state: PhysicsDirectBodyState3D):
 		var collider = state.get_contact_collider_object(c).get_parent()
 		if collider is Player:
 			player_collision.emit(collider)
+			_handle_player_collision(state, c, collider)
+	
+func _handle_player_collision(state: PhysicsDirectBodyState3D, contact_id: int, player: Player):
+	if not player.is_sprinting or not _is_starting_player_collision(player):
+		return
+	var impulse = state.get_contact_impulse(contact_id)
+	apply_central_impulse(impulse*2)
+
+func _on_body_exited(body):
+	var player = body.get_parent()
+	if player is Player:
+		player_collision_started[player] = false
+
+func _is_starting_player_collision(player: Player):
+	if not player_collision_started.has(player):
+		player_collision_started[player] = false
+	if not player_collision_started[player]:
+		player_collision_started[player] = true
+		return true
+	return false

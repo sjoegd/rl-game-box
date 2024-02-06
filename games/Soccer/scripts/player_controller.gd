@@ -7,7 +7,7 @@ var action_up := 0.0
 var action_down := 0.0
 var action_rotate_left := 0.0
 var action_rotate_right := 0.0
-var action_dash := 0.0
+var action_sprint := 0.0
 
 func init(player: Node3D):
 	super.init(player)
@@ -30,14 +30,13 @@ func get_obs() -> Dictionary:
 	
 	obs += sensor_obs
 	obs += [
-		float(_player.can_dash),
-		float(_player.is_dashing),
+		float(_player.is_sprinting),
 		float(_player.input_left),
 		float(_player.input_right),
 		float(_player.input_up),
 		float(_player.input_down),
 		float(_player.input_rotate),
-		float(_player.input_dash),
+		float(_player.input_sprint),
 		player_velocity.x,
 		player_velocity.z
 	]
@@ -73,7 +72,7 @@ func get_action_space() -> Dictionary:
 			"size": 2,
 			"action_type": "discrete"
 		},
-		"dash" : {
+		"sprint" : {
 			"size": 2,
 			"action_type": "discrete"
 		}
@@ -86,7 +85,7 @@ func set_action(action) -> void:
 	action_down = action["down"]
 	action_rotate_left = action["rotate_left"]
 	action_rotate_right = action["rotate_right"]
-	action_dash = action["dash"]
+	action_sprint = action["sprint"]
 
 func give_reward(type: String, value: float):
 	var multiplier := 0.0
@@ -95,6 +94,7 @@ func give_reward(type: String, value: float):
 		"ball_touch":           multiplier = 0.000125
 		"ball_distance_goal":   multiplier = 0.0005
 		"player_distance_ball": multiplier = 0.000125
+		"time_step":            multiplier = -0.000125
 	reward += multiplier * value
 
 func _swap_color_sensors():
