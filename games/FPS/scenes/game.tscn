@@ -1,65 +1,115 @@
-[gd_scene load_steps=8 format=3 uid="uid://cerc017j7q7i6"]
+[gd_scene load_steps=5 format=3 uid="uid://cerc017j7q7i6"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7u5b5"]
-[ext_resource type="Texture2D" uid="uid://rmlm8arh4e5" path="res://assets/partly_cloudy_puresky_2k.hdr" id="1_tbhxs"]
 [ext_resource type="Material" uid="uid://b0rrwrnnknp4e" path="res://assets/static_material.tres" id="2_oyvfj"]
 [ext_resource type="PackedScene" uid="uid://bgbet7ucb7avh" path="res://scenes/player.tscn" id="3_tpqca"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jhsc8"]
-panorama = ExtResource("1_tbhxs")
-
-[sub_resource type="Sky" id="Sky_fflt7"]
-sky_material = SubResource("PanoramaSkyMaterial_jhsc8")
-
-[sub_resource type="Environment" id="Environment_24ut7"]
-background_mode = 2
-sky = SubResource("Sky_fflt7")
-tonemap_mode = 2
-glow_enabled = true
+[sub_resource type="PrismMesh" id="PrismMesh_4sn6t"]
+material = ExtResource("2_oyvfj")
+left_to_right = 1.0
+size = Vector3(2, 2, 2)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_7u5b5")
-
-[node name="Env" type="Node3D" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
-environment = SubResource("Environment_24ut7")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
 
 [node name="Stage" type="Node3D" parent="."]
 
 [node name="Floor" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
+collision_layer = 2
+collision_mask = 9
 size = Vector3(40, 1, 40)
 material = ExtResource("2_oyvfj")
 
 [node name="Wall" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -19.5)
 use_collision = true
+collision_layer = 4
+collision_mask = 9
 size = Vector3(40, 5, 1)
 material = ExtResource("2_oyvfj")
 
 [node name="Wall2" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 19.5)
 use_collision = true
+collision_layer = 4
+collision_mask = 9
 size = Vector3(40, 5, 1)
 material = ExtResource("2_oyvfj")
 
 [node name="Wall3" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 19.5, 2.5, 0)
 use_collision = true
+collision_layer = 4
+collision_mask = 9
 size = Vector3(40, 5, 1)
 material = ExtResource("2_oyvfj")
 
 [node name="Wall4" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19.5, 2.5, 0)
 use_collision = true
+collision_layer = 4
+collision_mask = 9
 size = Vector3(40, 5, 1)
 material = ExtResource("2_oyvfj")
+
+[node name="Ramp" type="CSGMesh3D" parent="Stage"]
+transform = Transform3D(-0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 9, 1, -6)
+use_collision = true
+collision_layer = 4
+collision_mask = 9
+mesh = SubResource("PrismMesh_4sn6t")
+material = ExtResource("2_oyvfj")
+
+[node name="Ramp2" type="CSGMesh3D" parent="Stage"]
+transform = Transform3D(-0.173648, 0, 0.984808, 0, 1, 0, -0.984808, 0, -0.173648, 9, 1, 6)
+use_collision = true
+collision_layer = 4
+collision_mask = 9
+mesh = SubResource("PrismMesh_4sn6t")
+material = ExtResource("2_oyvfj")
+
+[node name="Ramp3" type="CSGMesh3D" parent="Stage"]
+transform = Transform3D(0.173648, 0, 0.984808, 0, 1, 0, -0.984808, 0, 0.173648, -9, 1, 6)
+use_collision = true
+collision_layer = 4
+collision_mask = 9
+mesh = SubResource("PrismMesh_4sn6t")
+material = ExtResource("2_oyvfj")
+
+[node name="Ramp4" type="CSGMesh3D" parent="Stage"]
+transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, -9, 1, -6)
+use_collision = true
+collision_layer = 4
+collision_mask = 9
+mesh = SubResource("PrismMesh_4sn6t")
+material = ExtResource("2_oyvfj")
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Width" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+
+[node name="Length" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="Height" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="Spawn1" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-0.62814, 0, 0.778101, 0, 1, 0, -0.778101, 0, -0.62814, 10.225, 0, -8.22792)
+
+[node name="Spawn2" type="Marker3D" parent="Spawns"]
+transform = Transform3D(0.32885, 0, 0.944382, 0, 1, 0, -0.944382, 0, 0.32885, 10.225, 0, 7.67926)
+
+[node name="Spawn3" type="Marker3D" parent="Spawns"]
+transform = Transform3D(0.964957, 0, 0.262408, 0, 1, 0, -0.262408, 0, 0.964957, -10.2705, 0, 7.67926)
+
+[node name="Spawn4" type="Marker3D" parent="Spawns"]
+transform = Transform3D(-0.218364, 0, -0.975867, 0, 1, 0, 0.975867, 0, -0.218364, -10.2705, 0, -7.81549)
 
 [node name="Players" type="Node3D" parent="."]
 
@@ -67,7 +117,12 @@ material = ExtResource("2_oyvfj")
 color = "red"
 
 [node name="Player2" parent="Players" instance=ExtResource("3_tpqca")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 color = "blue"
+
+[node name="Player3" parent="Players" instance=ExtResource("3_tpqca")]
+color = "green"
+
+[node name="Player4" parent="Players" instance=ExtResource("3_tpqca")]
+color = "yellow"
 
 [node name="Bullets" type="Node3D" parent="."]

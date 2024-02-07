@@ -1,21 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://bgbet7ucb7avh"]
+[gd_scene load_steps=18 format=3 uid="uid://bgbet7ucb7avh"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_r3rsu"]
 [ext_resource type="Script" path="res://scripts/gun.gd" id="2_k2q88"]
+[ext_resource type="Texture2D" uid="uid://vdino4eahcvb" path="res://assets/crosshair.png" id="3_6quk5"]
+[ext_resource type="Script" path="res://scripts/player_controller.gd" id="4_qvdsm"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sensors/sensors_3d/RaycastSensor3D.gd" id="5_p7lir"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0x6pe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8su8u"]
+albedo_color = Color(0.360784, 1, 1, 1)
+metallic_specular = 0.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rarma"]
-material = SubResource("StandardMaterial3D_0x6pe")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbygl"]
-albedo_color = Color(0, 0, 1, 1)
+material = SubResource("StandardMaterial3D_8su8u")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lx74j"]
 
 [sub_resource type="Animation" id="Animation_jrdjg"]
 resource_name = "shoot"
-length = 0.25
+length = 0.1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -37,10 +39,10 @@ tracks/1/path = NodePath("Head/Camera/Gun:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 0.267943),
 "update": 0,
-"values": [Vector3(0.67212, -0.535036, -0.757525), Vector3(0.672, -0.535, -0.7), Vector3(0.67212, -0.535036, -0.757525)]
+"values": [Vector3(0.67212, -0.535036, -0.757525), Vector3(0.672, -0.535, -0.7)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nex5y"]
@@ -176,12 +178,12 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_woh73")
 
 [node name="Player" type="CharacterBody3D"]
+collision_mask = 7
 script = ExtResource("1_r3rsu")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_rarma")
-surface_material_override/0 = SubResource("StandardMaterial3D_qbygl")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -190,6 +192,7 @@ shape = SubResource("CapsuleShape3D_lx74j")
 [node name="Head" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0.25)
 target_position = Vector3(0, 0, -30)
+collision_mask = 7
 
 [node name="Camera" type="Camera3D" parent="Head"]
 fov = 90.0
@@ -205,17 +208,864 @@ libraries = {
 }
 
 [node name="Handel" type="MeshInstance3D" parent="Head/Camera/Gun"]
-transform = Transform3D(-9.93198, -162.664, -4.34953e-06, 0, -7.14561e-06, 100, -99.5056, 16.2361, 4.34141e-07, 0, 0, 0)
+transform = Transform3D(-4.37114e-06, -163.472, -4.37114e-06, 0, -7.1456e-06, 100, -100, 7.1456e-06, 1.91069e-13, 0, 0, 0)
 mesh = SubResource("ArrayMesh_fsjyc")
 skeleton = NodePath("")
 
 [node name="Mag" type="MeshInstance3D" parent="Head/Camera/Gun"]
-transform = Transform3D(-1.45203, -35.4116, -6.35889e-07, 0, -1.55558e-06, 14.6197, -14.5474, 3.53455, 6.34702e-08, 0, 0, 0)
+transform = Transform3D(-6.39047e-07, -35.5876, -6.39047e-07, 0, -1.55558e-06, 14.6197, -14.6197, 1.55558e-06, 2.79336e-14, 0, 0, 0)
 mesh = SubResource("ArrayMesh_2h152")
 skeleton = NodePath("")
 
 [node name="FirePoint" type="Marker3D" parent="Head/Camera/Gun"]
-transform = Transform3D(0.999997, 4.47035e-08, -5.21541e-08, -4.47035e-08, 0.999999, -1.66533e-15, 1.71363e-07, 3.06422e-14, 0.999998, -0.29786, 0.268354, -2.94317)
+transform = Transform3D(0.999997, 4.47035e-08, -5.21541e-08, -4.47035e-08, 0.999999, -1.66533e-15, 1.71363e-07, 3.06422e-14, 0.999998, -0.00377786, 0.268354, -2.51679)
 
 [node name="AimEndPoint" type="Marker3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+
+[node name="Crosshair" type="TextureRect" parent="Head/Camera"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_6quk5")
+
+[node name="PlayerController" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6, -0.25)
+script = ExtResource("4_qvdsm")
+
+[node name="Sensors" type="Node3D" parent="Head/PlayerController"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.6, -0.574677)
+
+[node name="Player" type="Node3D" parent="Head/PlayerController/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+visible = false
+script = ExtResource("5_p7lir")
+n_rays_width = 15.0
+ray_length = 60.0
+cone_width = 135.0
+
+[node name="@RayCast3D@22407" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-48.4516, -25.3571, 24.6873)
+
+[node name="@RayCast3D@22408" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-51.6388, -15.5291, 26.3113)
+
+[node name="@RayCast3D@22409" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-53.257, -5.22934, 27.1358)
+
+[node name="@RayCast3D@22410" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-53.257, 5.22934, 27.1358)
+
+[node name="@RayCast3D@22411" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-51.6388, 15.5291, 26.3113)
+
+[node name="@RayCast3D@22412" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-48.4516, 25.3571, 24.6873)
+
+[node name="@RayCast3D@22413" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-43.9931, -25.3571, 31.9629)
+
+[node name="@RayCast3D@22414" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-46.887, -15.5291, 34.0654)
+
+[node name="@RayCast3D@22415" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-48.3563, -5.22934, 35.1329)
+
+[node name="@RayCast3D@22416" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-48.3563, 5.22934, 35.1329)
+
+[node name="@RayCast3D@22417" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-46.887, 15.5291, 34.0654)
+
+[node name="@RayCast3D@22418" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-43.9931, 25.3571, 31.9629)
+
+[node name="@RayCast3D@22419" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-38.4514, -25.3571, 38.4514)
+
+[node name="@RayCast3D@22420" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-40.9808, -15.5291, 40.9808)
+
+[node name="@RayCast3D@22421" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-42.265, -5.22934, 42.265)
+
+[node name="@RayCast3D@22422" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-42.265, 5.22934, 42.265)
+
+[node name="@RayCast3D@22423" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-40.9808, 15.5291, 40.9808)
+
+[node name="@RayCast3D@22424" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-38.4514, 25.3571, 38.4514)
+
+[node name="@RayCast3D@22425" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-31.9629, -25.3571, 43.9931)
+
+[node name="@RayCast3D@22426" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-34.0654, -15.5291, 46.887)
+
+[node name="@RayCast3D@22427" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-35.1329, -5.22934, 48.3563)
+
+[node name="@RayCast3D@22428" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-35.1329, 5.22934, 48.3563)
+
+[node name="@RayCast3D@22429" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-34.0654, 15.5291, 46.887)
+
+[node name="@RayCast3D@22430" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-31.9629, 25.3571, 43.9931)
+
+[node name="@RayCast3D@22431" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-24.6873, -25.3571, 48.4516)
+
+[node name="@RayCast3D@22432" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-26.3113, -15.5291, 51.6388)
+
+[node name="@RayCast3D@22433" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-27.1358, -5.22934, 53.257)
+
+[node name="@RayCast3D@22434" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-27.1358, 5.22934, 53.257)
+
+[node name="@RayCast3D@22435" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-26.3113, 15.5291, 51.6388)
+
+[node name="@RayCast3D@22436" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-24.6873, 25.3571, 48.4516)
+
+[node name="@RayCast3D@22437" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-16.8039, -25.3571, 51.717)
+
+[node name="@RayCast3D@22438" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-17.9093, -15.5291, 55.119)
+
+[node name="@RayCast3D@22439" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-18.4705, -5.22934, 56.8462)
+
+[node name="@RayCast3D@22440" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-18.4705, 5.22934, 56.8462)
+
+[node name="@RayCast3D@22441" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-17.9093, 15.5291, 55.119)
+
+[node name="@RayCast3D@22442" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-16.8039, 25.3571, 51.717)
+
+[node name="@RayCast3D@22443" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-8.50667, -25.3571, 53.709)
+
+[node name="@RayCast3D@22444" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-9.06625, -15.5291, 57.242)
+
+[node name="@RayCast3D@22445" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-9.35035, -5.22934, 59.0358)
+
+[node name="@RayCast3D@22446" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-9.35035, 5.22934, 59.0358)
+
+[node name="@RayCast3D@22447" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-9.06625, 15.5291, 57.242)
+
+[node name="@RayCast3D@22448" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(-8.50667, 25.3571, 53.709)
+
+[node name="@RayCast3D@22449" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(0, -25.3571, 54.3785)
+
+[node name="@RayCast3D@22450" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(0, -15.5291, 57.9556)
+
+[node name="@RayCast3D@22451" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(0, -5.22934, 59.7717)
+
+[node name="@RayCast3D@22452" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(0, 5.22934, 59.7717)
+
+[node name="@RayCast3D@22453" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(0, 15.5291, 57.9556)
+
+[node name="@RayCast3D@22454" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(0, 25.3571, 54.3785)
+
+[node name="@RayCast3D@22455" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(8.50667, -25.3571, 53.709)
+
+[node name="@RayCast3D@22456" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(9.06625, -15.5291, 57.242)
+
+[node name="@RayCast3D@22457" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(9.35035, -5.22934, 59.0358)
+
+[node name="@RayCast3D@22458" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(9.35035, 5.22934, 59.0358)
+
+[node name="@RayCast3D@22459" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(9.06625, 15.5291, 57.242)
+
+[node name="@RayCast3D@22460" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(8.50667, 25.3571, 53.709)
+
+[node name="@RayCast3D@22461" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(16.8039, -25.3571, 51.717)
+
+[node name="@RayCast3D@22462" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(17.9093, -15.5291, 55.119)
+
+[node name="@RayCast3D@22463" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(18.4705, -5.22934, 56.8462)
+
+[node name="@RayCast3D@22464" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(18.4705, 5.22934, 56.8462)
+
+[node name="@RayCast3D@22465" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(17.9093, 15.5291, 55.119)
+
+[node name="@RayCast3D@22466" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(16.8039, 25.3571, 51.717)
+
+[node name="@RayCast3D@22467" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(24.6873, -25.3571, 48.4516)
+
+[node name="@RayCast3D@22468" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(26.3113, -15.5291, 51.6388)
+
+[node name="@RayCast3D@22469" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(27.1358, -5.22934, 53.257)
+
+[node name="@RayCast3D@22470" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(27.1358, 5.22934, 53.257)
+
+[node name="@RayCast3D@22471" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(26.3113, 15.5291, 51.6388)
+
+[node name="@RayCast3D@22472" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(24.6873, 25.3571, 48.4516)
+
+[node name="@RayCast3D@22473" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(31.9629, -25.3571, 43.9931)
+
+[node name="@RayCast3D@22474" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(34.0654, -15.5291, 46.887)
+
+[node name="@RayCast3D@22475" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(35.1329, -5.22934, 48.3563)
+
+[node name="@RayCast3D@22476" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(35.1329, 5.22934, 48.3563)
+
+[node name="@RayCast3D@22477" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(34.0654, 15.5291, 46.887)
+
+[node name="@RayCast3D@22478" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(31.9629, 25.3571, 43.9931)
+
+[node name="@RayCast3D@22479" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(38.4514, -25.3571, 38.4514)
+
+[node name="@RayCast3D@22480" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(40.9808, -15.5291, 40.9808)
+
+[node name="@RayCast3D@22481" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(42.265, -5.22934, 42.265)
+
+[node name="@RayCast3D@22482" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(42.265, 5.22934, 42.265)
+
+[node name="@RayCast3D@22483" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(40.9808, 15.5291, 40.9808)
+
+[node name="@RayCast3D@22484" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(38.4514, 25.3571, 38.4514)
+
+[node name="@RayCast3D@22485" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(43.9931, -25.3571, 31.9629)
+
+[node name="@RayCast3D@22486" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(46.887, -15.5291, 34.0654)
+
+[node name="@RayCast3D@22487" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(48.3563, -5.22934, 35.1329)
+
+[node name="@RayCast3D@22488" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(48.3563, 5.22934, 35.1329)
+
+[node name="@RayCast3D@22489" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(46.887, 15.5291, 34.0654)
+
+[node name="@RayCast3D@22490" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(43.9931, 25.3571, 31.9629)
+
+[node name="@RayCast3D@22491" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(48.4516, -25.3571, 24.6873)
+
+[node name="@RayCast3D@22492" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(51.6388, -15.5291, 26.3113)
+
+[node name="@RayCast3D@22493" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(53.257, -5.22934, 27.1358)
+
+[node name="@RayCast3D@22494" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(53.257, 5.22934, 27.1358)
+
+[node name="@RayCast3D@22495" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(51.6388, 15.5291, 26.3113)
+
+[node name="@RayCast3D@22496" type="RayCast3D" parent="Head/PlayerController/Sensors/Player"]
+target_position = Vector3(48.4516, 25.3571, 24.6873)
+
+[node name="Static" type="Node3D" parent="Head/PlayerController/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+visible = false
+script = ExtResource("5_p7lir")
+collision_mask = 4
+boolean_class_mask = 4
+n_rays_width = 15.0
+n_rays_height = 3.0
+ray_length = 60.0
+cone_width = 135.0
+cone_height = 45.0
+
+[node name="@RayCast3D@35416" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-51.6388, -15.5291, 26.3113)
+collision_mask = 4
+
+[node name="@RayCast3D@35417" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-53.4604, 0, 27.2394)
+collision_mask = 4
+
+[node name="@RayCast3D@35418" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-51.6388, 15.5291, 26.3113)
+collision_mask = 4
+
+[node name="@RayCast3D@35419" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-46.887, -15.5291, 34.0654)
+collision_mask = 4
+
+[node name="@RayCast3D@35420" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-48.541, 0, 35.2671)
+collision_mask = 4
+
+[node name="@RayCast3D@35421" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-46.887, 15.5291, 34.0654)
+collision_mask = 4
+
+[node name="@RayCast3D@35422" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-40.9808, -15.5291, 40.9808)
+collision_mask = 4
+
+[node name="@RayCast3D@35423" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-42.4264, 0, 42.4264)
+collision_mask = 4
+
+[node name="@RayCast3D@35424" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-40.9808, 15.5291, 40.9808)
+collision_mask = 4
+
+[node name="@RayCast3D@35425" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-34.0654, -15.5291, 46.887)
+collision_mask = 4
+
+[node name="@RayCast3D@35426" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-35.2671, 0, 48.541)
+collision_mask = 4
+
+[node name="@RayCast3D@35427" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-34.0654, 15.5291, 46.887)
+collision_mask = 4
+
+[node name="@RayCast3D@35428" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-26.3113, -15.5291, 51.6388)
+collision_mask = 4
+
+[node name="@RayCast3D@35429" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-27.2394, 0, 53.4604)
+collision_mask = 4
+
+[node name="@RayCast3D@35430" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-26.3113, 15.5291, 51.6388)
+collision_mask = 4
+
+[node name="@RayCast3D@35431" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-17.9093, -15.5291, 55.119)
+collision_mask = 4
+
+[node name="@RayCast3D@35432" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-18.541, 0, 57.0634)
+collision_mask = 4
+
+[node name="@RayCast3D@35433" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-17.9093, 15.5291, 55.119)
+collision_mask = 4
+
+[node name="@RayCast3D@35434" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-9.06625, -15.5291, 57.242)
+collision_mask = 4
+
+[node name="@RayCast3D@35435" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-9.38607, 0, 59.2613)
+collision_mask = 4
+
+[node name="@RayCast3D@35436" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(-9.06625, 15.5291, 57.242)
+collision_mask = 4
+
+[node name="@RayCast3D@35437" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(0, -15.5291, 57.9556)
+collision_mask = 4
+
+[node name="@RayCast3D@35438" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(0, 0, 60)
+collision_mask = 4
+
+[node name="@RayCast3D@35439" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(0, 15.5291, 57.9556)
+collision_mask = 4
+
+[node name="@RayCast3D@35440" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(9.06625, -15.5291, 57.242)
+collision_mask = 4
+
+[node name="@RayCast3D@35441" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(9.38607, 0, 59.2613)
+collision_mask = 4
+
+[node name="@RayCast3D@35442" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(9.06625, 15.5291, 57.242)
+collision_mask = 4
+
+[node name="@RayCast3D@35443" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(17.9093, -15.5291, 55.119)
+collision_mask = 4
+
+[node name="@RayCast3D@35444" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(18.541, 0, 57.0634)
+collision_mask = 4
+
+[node name="@RayCast3D@35445" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(17.9093, 15.5291, 55.119)
+collision_mask = 4
+
+[node name="@RayCast3D@35446" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(26.3113, -15.5291, 51.6388)
+collision_mask = 4
+
+[node name="@RayCast3D@35447" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(27.2394, 0, 53.4604)
+collision_mask = 4
+
+[node name="@RayCast3D@35448" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(26.3113, 15.5291, 51.6388)
+collision_mask = 4
+
+[node name="@RayCast3D@35449" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(34.0654, -15.5291, 46.887)
+collision_mask = 4
+
+[node name="@RayCast3D@35450" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(35.2671, 0, 48.541)
+collision_mask = 4
+
+[node name="@RayCast3D@35451" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(34.0654, 15.5291, 46.887)
+collision_mask = 4
+
+[node name="@RayCast3D@35452" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(40.9808, -15.5291, 40.9808)
+collision_mask = 4
+
+[node name="@RayCast3D@35453" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(42.4264, 0, 42.4264)
+collision_mask = 4
+
+[node name="@RayCast3D@35454" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(40.9808, 15.5291, 40.9808)
+collision_mask = 4
+
+[node name="@RayCast3D@35455" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(46.887, -15.5291, 34.0654)
+collision_mask = 4
+
+[node name="@RayCast3D@35456" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(48.541, 0, 35.2671)
+collision_mask = 4
+
+[node name="@RayCast3D@35457" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(46.887, 15.5291, 34.0654)
+collision_mask = 4
+
+[node name="@RayCast3D@35458" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(51.6388, -15.5291, 26.3113)
+collision_mask = 4
+
+[node name="@RayCast3D@35459" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(53.4604, 0, 27.2394)
+collision_mask = 4
+
+[node name="@RayCast3D@35460" type="RayCast3D" parent="Head/PlayerController/Sensors/Static"]
+target_position = Vector3(51.6388, 15.5291, 26.3113)
+collision_mask = 4
+
+[node name="Floor" type="Node3D" parent="Head/PlayerController/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+visible = false
+script = ExtResource("5_p7lir")
+collision_mask = 2
+boolean_class_mask = 2
+n_rays_width = 15.0
+n_rays_height = 1.0
+ray_length = 30.0
+cone_width = 135.0
+
+[node name="@RayCast3D@29980" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-26.7302, 0, 13.6197)
+collision_mask = 2
+
+[node name="@RayCast3D@29981" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-24.2705, 0, 17.6336)
+collision_mask = 2
+
+[node name="@RayCast3D@29982" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-21.2132, 0, 21.2132)
+collision_mask = 2
+
+[node name="@RayCast3D@29983" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-17.6336, 0, 24.2705)
+collision_mask = 2
+
+[node name="@RayCast3D@29984" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-13.6197, 0, 26.7302)
+collision_mask = 2
+
+[node name="@RayCast3D@29985" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-9.27051, 0, 28.5317)
+collision_mask = 2
+
+[node name="@RayCast3D@29986" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(-4.69303, 0, 29.6306)
+collision_mask = 2
+
+[node name="@RayCast3D@29987" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(0, 0, 30)
+collision_mask = 2
+
+[node name="@RayCast3D@29988" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(4.69303, 0, 29.6306)
+collision_mask = 2
+
+[node name="@RayCast3D@29989" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(9.27051, 0, 28.5317)
+collision_mask = 2
+
+[node name="@RayCast3D@29990" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(13.6197, 0, 26.7302)
+collision_mask = 2
+
+[node name="@RayCast3D@29991" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(17.6336, 0, 24.2705)
+collision_mask = 2
+
+[node name="@RayCast3D@29992" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(21.2132, 0, 21.2132)
+collision_mask = 2
+
+[node name="@RayCast3D@29993" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(24.2705, 0, 17.6336)
+collision_mask = 2
+
+[node name="@RayCast3D@29994" type="RayCast3D" parent="Head/PlayerController/Sensors/Floor"]
+target_position = Vector3(26.7302, 0, 13.6197)
+collision_mask = 2
+
+[node name="Bullet" type="Node3D" parent="Head/PlayerController/Sensors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+visible = false
+script = ExtResource("5_p7lir")
+collision_mask = 8
+boolean_class_mask = 8
+n_rays_width = 15.0
+n_rays_height = 3.0
+ray_length = 60.0
+cone_width = 135.0
+cone_height = 45.0
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31789" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-51.6388, -15.5291, 26.3113)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31790" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-53.4604, 0, 27.2394)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31791" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-51.6388, 15.5291, 26.3113)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31792" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-46.887, -15.5291, 34.0654)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31793" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-48.541, 0, 35.2671)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31794" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-46.887, 15.5291, 34.0654)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31795" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-40.9808, -15.5291, 40.9808)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31796" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-42.4264, 0, 42.4264)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31797" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-40.9808, 15.5291, 40.9808)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31798" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-34.0654, -15.5291, 46.887)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31799" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-35.2671, 0, 48.541)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31800" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-34.0654, 15.5291, 46.887)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31801" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-26.3113, -15.5291, 51.6388)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31802" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-27.2394, 0, 53.4604)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31803" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-26.3113, 15.5291, 51.6388)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31804" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-17.9093, -15.5291, 55.119)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31805" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-18.541, 0, 57.0634)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31806" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-17.9093, 15.5291, 55.119)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31807" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-9.06625, -15.5291, 57.242)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31808" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-9.38607, 0, 59.2613)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31809" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(-9.06625, 15.5291, 57.242)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31810" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(0, -15.5291, 57.9556)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31811" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(0, 0, 60)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31812" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(0, 15.5291, 57.9556)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31813" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(9.06625, -15.5291, 57.242)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31814" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(9.38607, 0, 59.2613)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31815" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(9.06625, 15.5291, 57.242)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31816" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(17.9093, -15.5291, 55.119)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31817" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(18.541, 0, 57.0634)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31818" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(17.9093, 15.5291, 55.119)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31819" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(26.3113, -15.5291, 51.6388)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31820" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(27.2394, 0, 53.4604)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31821" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(26.3113, 15.5291, 51.6388)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31822" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(34.0654, -15.5291, 46.887)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31823" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(35.2671, 0, 48.541)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31824" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(34.0654, 15.5291, 46.887)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31825" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(40.9808, -15.5291, 40.9808)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31826" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(42.4264, 0, 42.4264)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31827" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(40.9808, 15.5291, 40.9808)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31828" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(46.887, -15.5291, 34.0654)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31829" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(48.541, 0, 35.2671)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31830" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(46.887, 15.5291, 34.0654)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31831" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(51.6388, -15.5291, 26.3113)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31832" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(53.4604, 0, 27.2394)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="@RayCast3D@31833" type="RayCast3D" parent="Head/PlayerController/Sensors/Bullet"]
+target_position = Vector3(51.6388, 15.5291, 26.3113)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false

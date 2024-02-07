@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1s7xk0ien713"]
+
+[ext_resource type="PackedScene" uid="uid://dqferuqdj8rru" path="res://scenes/env.tscn" id="1_a3of0"]
+[ext_resource type="PackedScene" uid="uid://cerc017j7q7i6" path="res://scenes/game.tscn" id="2_aecl3"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="3_3nye7"]
+
+[node name="Play" type="Node3D"]
+
+[node name="Env" parent="." instance=ExtResource("1_a3of0")]
+
+[node name="Game" parent="." instance=ExtResource("2_aecl3")]
+player_override = true
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("3_3nye7")

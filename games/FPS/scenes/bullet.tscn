@@ -1,25 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://iiqfchdx6aue"]
+[gd_scene load_steps=5 format=3 uid="uid://d2cscgfv5dty7"]
 
-[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_x2gye"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_p3dsf"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p0yim"]
-vertex_color_use_as_albedo = true
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwe1u"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_4mp4q"]
-material = SubResource("StandardMaterial3D_p0yim")
-size = Vector3(0.05, 0.05, 0.2)
+[sub_resource type="BoxMesh" id="BoxMesh_vfklf"]
+material = SubResource("StandardMaterial3D_uwe1u")
+size = Vector3(0.07, 0.07, 0.2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ewk0"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_b6hxx"]
+size = Vector3(0.125, 0.125, 1)
 
 [node name="Bullet" type="Node3D"]
-script = ExtResource("1_x2gye")
+script = ExtResource("1_p3dsf")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_4mp4q")
-surface_material_override/0 = SubResource("StandardMaterial3D_2ewk0")
+mesh = SubResource("BoxMesh_vfklf")
 
-[node name="RayCast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
-target_position = Vector3(0, 0, -0.5)
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_b6hxx")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_body_entered"]
