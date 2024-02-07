@@ -15,6 +15,28 @@ func init(player: Node3D):
 	if player.color == "blue":
 		_swap_color_sensors()
 
+"""
+--- OBS SPACE ---
+
+- Raycasts
+	- Teammate
+	- Enemies
+	- Static
+	- Ball
+	- Own Goal
+	- Enemy Goal
+- Previous Action Encoding
+- Is Sprinting
+- Ball Position
+- Ball Velocity
+- Ball Speed
+- Player Velocity
+- Player Position
+- Player Rotation
+- Distance to Ball
+
+"""
+
 func get_obs() -> Dictionary:
 	
 	var obs = []
@@ -23,29 +45,58 @@ func get_obs() -> Dictionary:
 	for sensor in _get_sensors():
 		sensor_obs += sensor.get_observation()
 	
+	var game = _player.game as Game
+
+	var ball_position = game.field.get_normalized_position(game.ball.global_position)
+	var ball_velocity = game.ball.linear_velocity.normalized()
+	var ball_speed = game.ball.linear_velocity.length() / game.ball.linear_speed_limit
+	
+	var player_position = game.field.get_normalized_position(_player.global_position)
 	var player_velocity = _player.velocity.normalized()
+	var player_rotation = _player.rotation_degrees / 360
+
+	var distance_to_ball = ball_position.distance_to(player_position)
 	
 	if _player.color == "blue":
+		ball_position *= Vector3(-1, 1, -1)
+		ball_velocity *= Vector3(-1, 1, -1)
+		player_position *= Vector3(-1, 1, -1)
 		player_velocity *= Vector3(-1, 1, -1)
+		player_rotation *= -1
 	
 	obs += sensor_obs
 	obs += [
-		float(_player.is_sprinting),
 		float(_player.input_left),
 		float(_player.input_right),
 		float(_player.input_up),
 		float(_player.input_down),
 		float(_player.input_rotate),
 		float(_player.input_sprint),
+		float(_player.is_sprinting),
+		ball_position.x,
+		ball_position.y,
+		ball_position.z,
+		ball_velocity.x,
+		ball_velocity.y,
+		ball_velocity.z,
+		ball_speed,
+		player_position.x,
+		player_position.y,
+		player_position.z,
 		player_velocity.x,
-		player_velocity.z
-	]
+		player_velocity.y,
+		player_velocity.z,
+		player_rotation.x,
+		player_rotation.y,
+		player_rotation.z,
+		distance_to_ball
+	].map(func(x): return clamp(x, -1.0, 1.0))
 	
 	return {"obs":obs}
 
 func get_reward() -> float:	
 	return reward
-	
+
 func get_action_space() -> Dictionary:
 	return {
 		"left" : {
@@ -77,7 +128,7 @@ func get_action_space() -> Dictionary:
 			"action_type": "discrete"
 		}
 	}
-	
+
 func set_action(action) -> void:	
 	action_left = action["left"]
 	action_right = action["right"]
@@ -90,11 +141,11 @@ func set_action(action) -> void:
 func give_reward(type: String, value: float):
 	var multiplier := 0.0
 	match type:
-		"goal_scored":          multiplier = 1.0
-		"ball_touch":           multiplier = 0.000125
-		"ball_distance_goal":   multiplier = 0.0005
-		"player_distance_ball": multiplier = 0.000125
-		"time_step":            multiplier = -0.000125
+		"goal_scored":          multiplier = 10.0
+		"ball_touch":           multiplier = 0.5
+		"ball_distance_goal":   multiplier = 0.05
+		"player_distance_ball": multiplier = 0.0125
+		"time_step":            multiplier = -0.0125
 	reward += multiplier * value
 
 func _swap_color_sensors():

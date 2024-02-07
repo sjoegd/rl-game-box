@@ -13,6 +13,7 @@ var needs_reset := false
 
 func _ready():
 	for player in _get_every_player():
+		player.init(self)
 		player.needs_reset.connect(_on_player_needs_reset)
 		player.human_override = human_override
 

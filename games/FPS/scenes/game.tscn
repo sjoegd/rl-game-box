@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cerc017j7q7i6"]
+[gd_scene load_steps=8 format=3 uid="uid://cerc017j7q7i6"]
 
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_7u5b5"]
 [ext_resource type="Texture2D" uid="uid://rmlm8arh4e5" path="res://assets/partly_cloudy_puresky_2k.hdr" id="1_tbhxs"]
 [ext_resource type="Material" uid="uid://b0rrwrnnknp4e" path="res://assets/static_material.tres" id="2_oyvfj"]
 [ext_resource type="PackedScene" uid="uid://bgbet7ucb7avh" path="res://scenes/player.tscn" id="3_tpqca"]
@@ -17,6 +18,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="Game" type="Node3D"]
+script = ExtResource("1_7u5b5")
 
 [node name="Env" type="Node3D" parent="."]
 
@@ -59,4 +61,13 @@ use_collision = true
 size = Vector3(40, 5, 1)
 material = ExtResource("2_oyvfj")
 
-[node name="Player" parent="." instance=ExtResource("3_tpqca")]
+[node name="Players" type="Node3D" parent="."]
+
+[node name="Player1" parent="Players" instance=ExtResource("3_tpqca")]
+color = "red"
+
+[node name="Player2" parent="Players" instance=ExtResource("3_tpqca")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+color = "blue"
+
+[node name="Bullets" type="Node3D" parent="."]

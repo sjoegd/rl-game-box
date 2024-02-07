@@ -134,11 +134,11 @@ if __name__ == "__main__":
             policy="MlpPolicy", 
             env=env, 
             verbose=1,
-            batch_size=256,
+            batch_size=2048,
             n_steps=512,
-            ent_coef=0.005,
-            learning_rate=0.0003,
-            n_epochs=16,
+            ent_coef=0.01,
+            learning_rate=1e-5,
+            n_epochs=32,
             device="cuda"
         )
     else:

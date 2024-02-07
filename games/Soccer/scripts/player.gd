@@ -26,8 +26,13 @@ var input_sprint := 0.0
 var human_override := false
 var is_sprinting := false
 
-func _ready():
+var game: Game
+
+func init(_game: Game):
+	game = _game
 	controller.init(self)
+
+func _ready():
 	_update_rigid_collider()
 	_update_color(color)
 

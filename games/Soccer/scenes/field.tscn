@@ -342,5 +342,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 [node name="Length" type="Marker3D" parent="Markers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30)
 
+[node name="Height" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+
 [connection signal="body_entered" from="GoalRed" to="." method="_on_goal_red_body_entered"]
 [connection signal="body_entered" from="GoalBlue" to="." method="_on_goal_blue_body_entered"]
