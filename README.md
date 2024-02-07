@@ -5,6 +5,8 @@ A collection of reinforcement learning games created using godot and godot-rl-ag
 
 ### In Progress
 - Racing
+- Soccer
+- FPS
 
 ### Racing
 
