@@ -10,6 +10,7 @@
 
 [node name="Game" parent="." instance=ExtResource("2_aecl3")]
 player_override = true
+instant_respawn = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("3_3nye7")

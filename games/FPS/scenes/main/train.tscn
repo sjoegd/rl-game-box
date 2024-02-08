@@ -6,6 +6,7 @@
 [node name="Train" type="Node3D"]
 
 [node name="Game" parent="." instance=ExtResource("1_m2jje")]
+instant_respawn = true
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_7mmtk")

@@ -11,6 +11,7 @@ signal needs_reset
 @export var color := "white"
 @export var base_hp := 100.0
 @export var player_override := false
+@export var is_main_player := false
 
 # Head is the raycast since otherwise the "Exlude Parent" property wouldn't work.
 @onready var head = $Head

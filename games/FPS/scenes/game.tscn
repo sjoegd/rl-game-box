@@ -115,6 +115,7 @@ transform = Transform3D(-0.218364, 0, -0.975867, 0, 1, 0, 0.975867, 0, -0.218364
 
 [node name="Player1" parent="Players" instance=ExtResource("3_tpqca")]
 color = "red"
+is_main_player = true
 
 [node name="Player2" parent="Players" instance=ExtResource("3_tpqca")]
 color = "blue"

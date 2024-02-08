@@ -2,6 +2,7 @@ extends Node3D
 class_name Game
 
 @export var player_override := false
+@export var instant_respawn := false
 
 @onready var spawns = $Spawns.get_children()
 @onready var players = $Players.get_children()
@@ -93,6 +94,8 @@ func _on_player_death():
 func _on_player_kill(player: Player, killed: Player):
 	player.controller.give_reward("kill", 1)
 	killed.controller.give_reward("death", 1)
+	if killed.is_main_player and instant_respawn:
+		_game_over(null)
 
 func _on_player_needs_reset():
 	needs_reset = true
