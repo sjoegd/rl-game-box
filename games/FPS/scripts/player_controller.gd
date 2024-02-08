@@ -27,10 +27,11 @@ var action_rotate_y := 0.0
 - Velocity
 - HP
 - Is On Floor
-- Previous Action Encoding
+? Previous Action Encoding
 - Players Left
 - Aiming at Enemy
 - Aiming at Ground
+- Aiming at Nothing
 
 """
 

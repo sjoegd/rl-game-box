@@ -18,6 +18,10 @@ func init(player: Node3D):
 """
 --- OBS SPACE ---
 
+Current problems:
+	- Player looses track of the ball
+		? Raycast radius to 360deg
+
 - Raycasts
 	- Teammate
 	- Enemies
