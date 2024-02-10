@@ -206,7 +206,7 @@ reset_after = 5000
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.5)
 
 [node name="Player" type="Node3D" parent="Head/Camera/PlayerController/Sensors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.64294e-08, 0, 1.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.64294e-08, 0, 1)
 visible = false
 script = ExtResource("3_h6vaw")
 n_rays_width = 35.0
@@ -741,7 +741,7 @@ target_position = Vector3(55.8164, 18.541, -11.8641)
 target_position = Vector3(47.4803, 35.2671, -10.0922)
 
 [node name="Tagger" type="Node3D" parent="Head/Camera/PlayerController/Sensors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.64294e-08, 0, 1.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.64294e-08, 0, 1)
 visible = false
 script = ExtResource("3_h6vaw")
 collision_mask = 8

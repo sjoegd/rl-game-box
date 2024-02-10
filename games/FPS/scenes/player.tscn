@@ -409,7 +409,7 @@ script = ExtResource("4_qvdsm")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.6, -0.574677)
 
 [node name="Player" type="Node3D" parent="Head/PlayerController/Sensors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
 visible = false
 script = ExtResource("5_p7lir")
 n_rays_width = 15.0
