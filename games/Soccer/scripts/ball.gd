@@ -3,7 +3,7 @@ class_name Ball
 
 signal player_collision(player: Player)
 
-@export var linear_speed_limit := 35.0
+@export var linear_speed_limit := 30.0
 @export var angular_speed_limit := PI*3
 
 @onready var base_transform := transform
@@ -31,7 +31,7 @@ func _handle_player_collision(state: PhysicsDirectBodyState3D, contact_id: int, 
 	if not player.is_sprinting or not _is_starting_player_collision(player):
 		return
 	var impulse = state.get_contact_impulse(contact_id)
-	apply_central_impulse(impulse*2)
+	apply_central_impulse(impulse*1.5)
 
 func _on_body_exited(body):
 	var player = body.get_parent()
