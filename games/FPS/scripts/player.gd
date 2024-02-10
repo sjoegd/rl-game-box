@@ -62,7 +62,7 @@ func _update_color():
 	mesh.set_surface_override_material(0, material)
 
 func _unhandled_input(event):
-	if camera.current and event is InputEventMouseMotion:
+	if (controller.heuristic == "human" or player_override) and camera.current and event is InputEventMouseMotion:
 		mouse_event_queue.append(event)
 
 func _physics_process(delta):
