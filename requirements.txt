@@ -12,7 +12,7 @@ filelock==3.13.1
 flatbuffers==23.5.26
 fonttools==4.44.0
 fsspec==2023.10.0
-godot-rl==0.6.2
+godot_rl @ https://github.com/edbeeching/godot_rl_agents/archive/refs/heads/main.zip#sha256=e57b5e14d98f70873d24241a26c274cd7867a392a1719ece9a6fe0b0528b7dd0
 google-auth==2.23.4
 google-auth-oauthlib==1.1.0
 grpcio==1.59.2
