@@ -6,16 +6,6 @@
 [node name="Train" type="Node3D"]
 
 [node name="Game1" parent="." instance=ExtResource("1_1hogx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 75)
-
-[node name="Game2" parent="." instance=ExtResource("1_1hogx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 75)
-
-[node name="Game3" parent="." instance=ExtResource("1_1hogx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, -75)
-
-[node name="Game4" parent="." instance=ExtResource("1_1hogx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -75)
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_5vw86")
