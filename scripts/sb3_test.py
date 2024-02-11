@@ -66,7 +66,6 @@ if __name__ == "__main__":
     try:
     
         for _ in range(args.sessions):
-            obs = env.reset()
             done = False
             while not done:
                 action, _ = main_model.predict(obs, deterministic=True)

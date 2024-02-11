@@ -58,7 +58,6 @@ if __name__ == "__main__":
     try:
     
         for _ in range(args.sessions):
-            env.reset()
             done = False
             while not done:
                 _, _, done, _ = env.step([np.zeros(shape=env.action_space.shape)])
