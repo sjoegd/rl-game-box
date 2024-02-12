@@ -64,6 +64,8 @@ if __name__ == "__main__":
     main_model = PPO.load(main_model_path, env=env)
     
     try:
+        
+        obs = env.reset()
     
         for _ in range(args.sessions):
             done = False

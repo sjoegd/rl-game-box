@@ -47,9 +47,6 @@ func _handle_extra_player_rewards(player: Player):
 	# Ball Speed
 	var ball_speed = ball.linear_velocity.length() / ball.linear_speed_limit
 	player.controller.give_reward("ball_speed", ball_speed)
-	# Player is Moving
-	var player_is_moving = player.velocity.length() > player.walk_speed/4
-	player.controller.give_reward("player_is_moving", player_is_moving)
 	
 func _on_player_needs_reset():
 	needs_reset = true

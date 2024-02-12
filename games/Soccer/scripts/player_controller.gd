@@ -149,7 +149,6 @@ func give_reward(type: String, value: float):
 		"ball_distance_goal":   multiplier = 0.05
 		"ball_touch":           multiplier = 0.025
 		"ball_speed":           multiplier = 0.025
-		"player_moving":        multiplier = 0.0125
 		"player_distance_ball": multiplier = 0.0125
 		"time_step":            multiplier = -0.0125
 	reward += multiplier * value

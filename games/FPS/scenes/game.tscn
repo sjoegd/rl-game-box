@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cerc017j7q7i6"]
+[gd_scene load_steps=6 format=3 uid="uid://cerc017j7q7i6"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7u5b5"]
 [ext_resource type="Material" uid="uid://b0rrwrnnknp4e" path="res://assets/static_material.tres" id="2_oyvfj"]
 [ext_resource type="PackedScene" uid="uid://bgbet7ucb7avh" path="res://scenes/player.tscn" id="3_tpqca"]
+[ext_resource type="PackedScene" uid="uid://dqferuqdj8rru" path="res://scenes/env.tscn" id="4_50pys"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_4sn6t"]
 material = ExtResource("2_oyvfj")
@@ -127,3 +128,5 @@ color = "green"
 color = "yellow"
 
 [node name="Bullets" type="Node3D" parent="."]
+
+[node name="Env" parent="." instance=ExtResource("4_50pys")]

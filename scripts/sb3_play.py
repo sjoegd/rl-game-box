@@ -56,7 +56,9 @@ if __name__ == "__main__":
         env.set_models(np.random.choice(model_paths, args.agents_per_env - 1))
     
     try:
-    
+        
+        env.reset()
+        
         for _ in range(args.sessions):
             done = False
             while not done:
