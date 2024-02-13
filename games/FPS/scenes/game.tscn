@@ -12,6 +12,7 @@ size = Vector3(2, 2, 2)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_7u5b5")
+instant_respawn = true
 
 [node name="Stage" type="Node3D" parent="."]
 
