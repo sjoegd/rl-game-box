@@ -97,15 +97,15 @@ func set_action(action) -> void:
 	action_backward = action["backward"]
 	action_rotate_x = action["rotate_x"][0]
 	action_rotate_y = action["rotate_y"][0]
-
+	
 func give_reward(type: String, value: float):
 	var multiplier = 0.0
 	match type:
 		"lost_tagger":            multiplier = 10.0
-		"became_tagger":          multiplier = -10.0
-		"distance_from_tagger":   multiplier = 0.025
+		"distance_from_tagger":   multiplier = 0.00625
 		"distance_from_taggable": multiplier = 0.025
-		"timestep":               multiplier = 0.1
+		"became_tagger":          multiplier = -5.0
+		"tagger_timestep":        multiplier = -0.03
 	reward += multiplier * value
 
 func _get_sensor_obs():
