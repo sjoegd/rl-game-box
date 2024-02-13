@@ -24,6 +24,14 @@ func init(
 	color = _color
 	player = _player
 
+func _physics_process(delta):
+	$"..".position.x = lerp($"..".position.x, 0.0, delta*5.0)
+	$"..".position.y = lerp($"..".position.y, 0.0, delta*5.0)
+
+func sway_gun(sway: Vector2):
+	$"..".position.x -= sway.x * 0.1
+	$"..".position.y += sway.y * 0.1
+
 func shoot():
 	if animation_player.is_playing():
 		return

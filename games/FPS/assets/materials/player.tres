@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dteo4c2hqfcnv"]
+
+[resource]
+resource_name = "Skin"
+transparency = 1
+diffuse_mode = 1
+vertex_color_use_as_albedo = true
+metallic_specular = 1.0
