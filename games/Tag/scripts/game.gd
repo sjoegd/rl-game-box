@@ -35,16 +35,18 @@ func _physics_process(_delta):
 
 func _handle_extra_player_rewards(player: Player):
 	if player.is_tagger:
+		# Distance From Taggable
+		var best_distance = 1
 		for taggable in taggables:
-			# Distance From Taggable
 			var distance = player.position.distance_to(taggable.position) / max_distance
-			player.controller.give_reward("distance_from_taggable", 2*exp(-distance) - 1)
+			best_distance = min(best_distance, distance)
+		player.controller.give_reward("distance_from_taggable", 2*exp(-best_distance) - 1)
+		# Tagger Timestep
+		player.controller.give_reward("tagger_timestep", 1)
 	else:
 		# Distance From Tagger
 		var distance = 1 - player.position.distance_to(tagger.position) / max_distance
 		player.controller.give_reward("distance_from_tagger", 2*exp(-distance) - 1)
-	# Timestep
-	player.controller.give_reward("timestep", -1 if player.is_tagger else 1)
 
 func _reset():
 	needs_reset = false
