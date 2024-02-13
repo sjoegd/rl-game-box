@@ -16,11 +16,12 @@ signal needs_reset
 # Head is the raycast since otherwise the "Exlude Parent" property wouldn't work.
 @onready var head = $Head
 @onready var camera = $Head/Camera
-@onready var gun = $Head/Camera/Gun as Gun
+@onready var gun = $Head/Camera/GunHolder/Gun as Gun
 @onready var aim_endpoint = $Head/Camera/AimEndPoint
 @onready var mesh = $Mesh
 @onready var collision_shape = $CollisionShape
 @onready var controller := $Head/PlayerController as PlayerController
+@onready var animation_player = $AnimationPlayer
 
 const sensitivity := 0.001
 const gravity := 9.8
@@ -79,6 +80,7 @@ func _physics_process(delta):
 	rotate_y(input_rotate_x)
 	head.rotate_x(input_rotate_y)
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-45), deg_to_rad(60))
+	gun.sway_gun(Vector2(input_rotate_x, input_rotate_y))
 	
 	if input_shoot:
 		gun.shoot()
@@ -144,6 +146,7 @@ func take_damage(damage: float):
 		return false
 	hp -= damage
 	controller.give_reward("take_damage", 1)
+	animation_player.play("hit")
 	if hp <= 0:
 		_die()
 		return true
