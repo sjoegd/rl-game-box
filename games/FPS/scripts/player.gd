@@ -18,7 +18,7 @@ signal needs_reset
 @onready var camera = $Head/Camera
 @onready var gun = $Head/Camera/GunHolder/Gun as Gun
 @onready var aim_endpoint = $Head/Camera/AimEndPoint
-@onready var mesh = $Mesh
+@onready var mesh = $Mesh/Body
 @onready var collision_shape = $CollisionShape
 @onready var controller := $Head/PlayerController as PlayerController
 @onready var animation_player = $AnimationPlayer
@@ -63,7 +63,7 @@ func _update_color():
 	mesh.set_surface_override_material(0, material)
 
 func _unhandled_input(event):
-	if (controller.heuristic == "human" or player_override) and camera.current and event is InputEventMouseMotion:
+	if _allow_human_input() and event is InputEventMouseMotion:
 		mouse_event_queue.append(event)
 
 func _physics_process(delta):
@@ -117,7 +117,7 @@ func _zero_input():
 	input_rotate_y = 0.0
 
 func _handle_input():
-	if (controller.heuristic == "human" or player_override) and camera.current:
+	if _allow_human_input():
 		input_shoot = float(Input.is_action_pressed("shoot"))
 		input_sprint = float(Input.is_action_pressed("sprint"))
 		input_left = float(Input.is_action_pressed("left"))
@@ -153,6 +153,7 @@ func take_damage(damage: float):
 	return false
 
 func _die():
+	animation_player.play("RESET")
 	collision_shape.disabled = true
 	visible = false
 	hp = 0
@@ -165,3 +166,6 @@ func spawn(_transform: Transform3D):
 	visible = true
 	hp = base_hp
 	is_alive = true
+
+func _allow_human_input():
+	return (controller.heuristic == "human" or player_override) and camera.current 

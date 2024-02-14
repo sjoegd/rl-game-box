@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FPS"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/main/dev.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 run/main_scene.play="res://scenes/main/play.tscn"
@@ -66,6 +66,8 @@ menu={
 
 [layer_names]
 
+3d_render/layer_1="main"
+3d_render/layer_2="player_gun"
 3d_physics/layer_1="player"
 3d_physics/layer_2="floor"
 3d_physics/layer_3="static"
