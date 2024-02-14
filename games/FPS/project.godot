@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 run/main_scene.play="res://scenes/main/play.tscn"
 run/main_scene.test="res://scenes/main/test.tscn"
-run/main_scene.train="res://scenes/main/traintscn"
+run/main_scene.train="res://scenes/main/train.tscn"
 
 [dotnet]
 
