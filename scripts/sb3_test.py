@@ -46,9 +46,6 @@ if __name__ == "__main__":
     main_model_path = model_paths[0]
     other_model_paths = model_paths[1:]
     
-    if len(other_model_paths) == 0:
-        other_model_paths = model_paths
-    
     env = SelfplayGodotEnv(
         env_path=args.env_path,
         agents_per_env=args.agents_per_env,
@@ -58,7 +55,7 @@ if __name__ == "__main__":
     
     if len(other_model_paths) == args.agents_per_env - 1:
         env.set_models(other_model_paths)
-    else:
+    elif len(other_model_paths) > 0:
         env.set_models(np.random.choice(other_model_paths, args.agents_per_env - 1))
     
     main_model = PPO.load(main_model_path, env=env)
@@ -66,7 +63,7 @@ if __name__ == "__main__":
     try:
         
         obs = env.reset()
-    
+        
         for _ in range(args.sessions):
             done = False
             while not done:
